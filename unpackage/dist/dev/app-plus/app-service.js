@@ -31,6 +31,13 @@ if (uni.restoreGlobal) {
 }
 (function(vue) {
   "use strict";
+  function formatAppLog(type, filename, ...args) {
+    if (uni.__log__) {
+      uni.__log__(type, filename, ...args);
+    } else {
+      console[type].apply(console, [...args, filename]);
+    }
+  }
   const _imports_0 = "/static/logo.png";
   const _export_sfc = (sfc, props) => {
     const target = sfc.__vccOpts || sfc;
@@ -46,8 +53,36 @@ if (uni.restoreGlobal) {
       };
     },
     onLoad() {
+      this.getData();
     },
-    methods: {}
+    methods: {
+      clickevent: function() {
+        this.title = "AbortController13";
+        formatAppLog("log", "at pages/index/index.vue:28", "123");
+      },
+      getData: function() {
+        formatAppLog("log", "at pages/index/index.vue:31", "call api");
+        uni.request({
+          url: "http://127.0.0.1:8080/dgt-core/user/login",
+          data: {
+            "offline_id": "abc",
+            "tel_no": "15942635321",
+            "password": "3"
+          },
+          header: {
+            "content-type": "application/json"
+          },
+          method: "POST",
+          success: (res) => {
+            formatAppLog("log", "at pages/index/index.vue:44", res);
+          },
+          fail: () => {
+          },
+          complete: () => {
+          }
+        });
+      }
+    }
   };
   function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "content" }, [
@@ -64,7 +99,10 @@ if (uni.restoreGlobal) {
           /* TEXT */
         )
       ]),
-      vue.createElementVNode("view", { class: "text-area" }, [
+      vue.createElementVNode("view", {
+        class: "text-area",
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.clickevent && $options.clickevent(...args))
+      }, [
         vue.createElementVNode("view", {
           class: "animate__animated",
           "hover-class": "animate__shakeX",
@@ -80,13 +118,6 @@ if (uni.restoreGlobal) {
   }
   const PagesIndexIndex = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["render", _sfc_render], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/index/index.vue"]]);
   __definePage("pages/index/index", PagesIndexIndex);
-  function formatAppLog(type, filename, ...args) {
-    if (uni.__log__) {
-      uni.__log__(type, filename, ...args);
-    } else {
-      console[type].apply(console, [...args, filename]);
-    }
-  }
   const _sfc_main = {
     onLaunch: function() {
       formatAppLog("log", "at App.vue:4", "App Launch");

@@ -4,7 +4,7 @@
 		<view class="text-area">
 			<text class="title">{{title}}111</text>
 		</view>
-		<view class="text-area">
+		<view class="text-area" @tap='clickevent'>
 			<view class="animate__animated" hover-class="animate__shakeX" style="border: 1rpx solid red; padding: 10rpx;">
 				<text class="iconfont icon-a-11-xianghuozhuizong" style="color: red; font-size: 24px;"></text>
 			</view>
@@ -20,10 +20,37 @@
 			}
 		},
 		onLoad() {
-
+			this.getData()
 		},
 		methods: {
-
+			clickevent:function(){
+				this.title= 'AbortController13'
+				console.log('123')
+			},
+			getData:function(){
+				console.log('call api');
+				uni.request({
+					url:'http://127.0.0.1:8080/dgt-core/user/login',
+					data:{
+						  "offline_id": "abc",
+						  "tel_no": "15942635321",
+						  "password": "3"
+					},
+					header:{
+						'content-type':'application/json',
+					},
+					method: 'POST',
+					success:res=>{
+						console.log(res)
+					},
+					fail:()=>{
+						
+					},
+					complete:()=>{
+						
+					}
+				})
+			}
 		}
 	}
 </script>
