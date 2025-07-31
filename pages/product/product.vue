@@ -189,9 +189,8 @@ export default {
     },
 
     addProduct() {
-      uni.showToast({
-        title: '新增商品功能开发中',
-        icon: 'none',
+      uni.navigateTo({
+        url: '/pages/product/add'
       })
     },
   },

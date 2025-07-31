@@ -74,6 +74,12 @@
 			}
 		},
 		{
+			"path": "pages/product/add",
+			"style": {
+				"navigationBarTitleText": "添加商品"
+			}
+		},
+		{
 			"path": "pages/customer/detail",
 			"style": {
 				"navigationBarTitleText": "客户详情"

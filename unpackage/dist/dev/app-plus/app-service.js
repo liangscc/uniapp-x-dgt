@@ -504,7 +504,7 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$d = {
+  const _sfc_main$e = {
     data() {
       return {
         loginForm: {
@@ -694,7 +694,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "login-container" }, [
       vue.createCommentVNode(" 顶部Logo区域 "),
       vue.createElementVNode("view", { class: "logo-section" }, [
@@ -848,8 +848,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-e4e4508d"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/login/login.vue"]]);
-  const _sfc_main$c = {
+  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-e4e4508d"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/login/login.vue"]]);
+  const _sfc_main$d = {
     data() {
       return {
         userInfo: {},
@@ -923,7 +923,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "welcome-container" }, [
       vue.createCommentVNode(" 欢迎区域 "),
       vue.createElementVNode("view", { class: "welcome-section" }, [
@@ -1031,8 +1031,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesWelcomeWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-085f0530"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/welcome/welcome.vue"]]);
-  const _sfc_main$b = {
+  const PagesWelcomeWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-085f0530"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/welcome/welcome.vue"]]);
+  const _sfc_main$c = {
     data() {
       return {
         currentFilter: "all",
@@ -1210,7 +1210,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "order-container" }, [
       vue.createCommentVNode(" 订单统计 "),
       vue.createElementVNode("view", { class: "stats-section" }, [
@@ -1415,8 +1415,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesOrderOrder = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-93207a4f"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/order/order.vue"]]);
-  const _sfc_main$a = {
+  const PagesOrderOrder = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-93207a4f"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/order/order.vue"]]);
+  const _sfc_main$b = {
     data() {
       return {
         purchaseStats: {
@@ -1579,7 +1579,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "purchase-container" }, [
       vue.createCommentVNode(" 采购统计 "),
       vue.createElementVNode("view", { class: "stats-section" }, [
@@ -1903,8 +1903,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesPurchasePurchase = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-313e55f0"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/purchase/purchase.vue"]]);
-  const _sfc_main$9 = {
+  const PagesPurchasePurchase = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-313e55f0"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/purchase/purchase.vue"]]);
+  const _sfc_main$a = {
     data() {
       return {
         leftSideActive: 0,
@@ -2026,14 +2026,13 @@ if (uni.restoreGlobal) {
         });
       },
       addProduct() {
-        uni.showToast({
-          title: "新增商品功能开发中",
-          icon: "none"
+        uni.navigateTo({
+          url: "/pages/product/add"
         });
       }
     }
   };
-  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "product-container" }, [
       vue.createCommentVNode(" 头部导航 "),
       vue.createElementVNode("view", { class: "header" }, [
@@ -2139,8 +2138,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesProductProduct = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-946a9793"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/product/product.vue"]]);
-  const _sfc_main$8 = {
+  const PagesProductProduct = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-946a9793"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/product/product.vue"]]);
+  const _sfc_main$9 = {
     data() {
       return {
         warehouseStats: {
@@ -2339,7 +2338,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "warehouse-container" }, [
       vue.createCommentVNode(" 仓库统计 "),
       vue.createElementVNode("view", { class: "stats-section" }, [
@@ -2731,8 +2730,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesWarehouseWarehouse = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-41554ef3"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/warehouse/warehouse.vue"]]);
-  const _sfc_main$7 = {
+  const PagesWarehouseWarehouse = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-41554ef3"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/warehouse/warehouse.vue"]]);
+  const _sfc_main$8 = {
     data() {
       return {
         currentLevel: "all",
@@ -2865,7 +2864,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "customer-container" }, [
       vue.createCommentVNode(" 客户统计 "),
       vue.createElementVNode("view", { class: "stats-section" }, [
@@ -3076,8 +3075,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-02222c4a"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/customer/customer.vue"]]);
-  const _sfc_main$6 = {
+  const PagesCustomerCustomer = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["render", _sfc_render$7], ["__scopeId", "data-v-02222c4a"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/customer/customer.vue"]]);
+  const _sfc_main$7 = {
     data() {
       return {
         userInfo: {
@@ -3217,7 +3216,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$6(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "profile-container" }, [
       vue.createCommentVNode(" 用户信息头部 "),
       vue.createElementVNode("view", { class: "user-header" }, [
@@ -3442,8 +3441,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesProfileProfile = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-dd383ca2"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/profile/profile.vue"]]);
-  const _sfc_main$5 = {
+  const PagesProfileProfile = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["render", _sfc_render$6], ["__scopeId", "data-v-dd383ca2"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/profile/profile.vue"]]);
+  const _sfc_main$6 = {
     data() {
       return {
         startDate: "2024-12-01",
@@ -3538,7 +3537,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$5(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "statistics-container" }, [
       vue.createCommentVNode(" 时间筛选 "),
       vue.createElementVNode("view", { class: "filter-section" }, [
@@ -3921,8 +3920,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesStatisticsStatistics = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-fc23ec97"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/statistics/statistics.vue"]]);
-  const _sfc_main$4 = {
+  const PagesStatisticsStatistics = /* @__PURE__ */ _export_sfc(_sfc_main$6, [["render", _sfc_render$5], ["__scopeId", "data-v-fc23ec97"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/statistics/statistics.vue"]]);
+  const _sfc_main$5 = {
     data() {
       return {
         searchKeyword: "",
@@ -4076,7 +4075,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$4(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "search-container" }, [
       vue.createCommentVNode(" 搜索栏 "),
       vue.createElementVNode("view", { class: "search-header" }, [
@@ -4428,8 +4427,8 @@ if (uni.restoreGlobal) {
       ])) : vue.createCommentVNode("v-if", true)
     ]);
   }
-  const PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-c10c040c"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/search/search.vue"]]);
-  const _sfc_main$3 = {
+  const PagesSearchSearch = /* @__PURE__ */ _export_sfc(_sfc_main$5, [["render", _sfc_render$4], ["__scopeId", "data-v-c10c040c"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/search/search.vue"]]);
+  const _sfc_main$4 = {
     data() {
       return {
         orderInfo: {
@@ -4538,7 +4537,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$3(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "order-detail-container" }, [
       vue.createCommentVNode(" 订单状态 "),
       vue.createElementVNode("view", { class: "status-section" }, [
@@ -4835,8 +4834,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesOrderDetail = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-6b23c96c"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/order/detail.vue"]]);
-  const _sfc_main$2 = {
+  const PagesOrderDetail = /* @__PURE__ */ _export_sfc(_sfc_main$4, [["render", _sfc_render$3], ["__scopeId", "data-v-6b23c96c"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/order/detail.vue"]]);
+  const _sfc_main$3 = {
     data() {
       return {
         productInfo: {
@@ -4932,7 +4931,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$2(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "product-detail-container" }, [
       vue.createCommentVNode(" 商品图片 "),
       vue.createElementVNode("view", { class: "product-image-section" }, [
@@ -5182,7 +5181,664 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesProductDetail = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-acf502d9"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/product/detail.vue"]]);
+  const PagesProductDetail = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["render", _sfc_render$2], ["__scopeId", "data-v-acf502d9"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/product/detail.vue"]]);
+  const _sfc_main$2 = {
+    data() {
+      return {
+        formData: {
+          name: "",
+          code: "",
+          description: "",
+          categoryId: "",
+          costPrice: "",
+          salePrice: "",
+          marketPrice: "",
+          stock: "",
+          stockWarning: "",
+          brand: "",
+          specification: "",
+          unit: "",
+          weight: "",
+          images: []
+        },
+        categoryList: {
+          first: [],
+          second: [],
+          third: []
+        },
+        categoryIndex: {
+          first: 0,
+          second: 0,
+          third: 0
+        }
+      };
+    },
+    onLoad() {
+      this.loadCategories();
+    },
+    methods: {
+      // 加载分类数据
+      async loadCategories() {
+        try {
+          const response = await apiService.getCategory({});
+          if (response && response.data) {
+            this.categoryList.first = response.data;
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/product/add.vue:295", "加载分类失败:", error);
+          uni.showToast({
+            title: "加载分类失败",
+            icon: "none"
+          });
+        }
+      },
+      // 一级分类变化
+      onFirstCategoryChange(e) {
+        const index = e.detail.value;
+        this.categoryIndex.first = index;
+        this.categoryIndex.second = 0;
+        this.categoryIndex.third = 0;
+        this.categoryList.second = [];
+        this.categoryList.third = [];
+        if (this.categoryList.first[index]) {
+          this.loadSecondCategories(this.categoryList.first[index].id);
+        }
+      },
+      // 二级分类变化
+      onSecondCategoryChange(e) {
+        const index = e.detail.value;
+        this.categoryIndex.second = index;
+        this.categoryIndex.third = 0;
+        this.categoryList.third = [];
+        if (this.categoryList.second[index]) {
+          this.loadThirdCategories(this.categoryList.second[index].id);
+        }
+      },
+      // 三级分类变化
+      onThirdCategoryChange(e) {
+        const index = e.detail.value;
+        this.categoryIndex.third = index;
+      },
+      // 加载二级分类
+      async loadSecondCategories(parentId) {
+        try {
+          const response = await apiService.getSecondCategory({ parentId });
+          if (response && response.data) {
+            this.categoryList.second = response.data;
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/product/add.vue:343", "加载二级分类失败:", error);
+        }
+      },
+      // 加载三级分类
+      async loadThirdCategories(parentId) {
+        try {
+          const response = await apiService.getThirdCategory({ parentId });
+          if (response && response.data) {
+            this.categoryList.third = response.data;
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/product/add.vue:355", "加载三级分类失败:", error);
+        }
+      },
+      // 选择图片
+      chooseImage() {
+        formatAppLog("log", "at pages/product/add.vue:361", "开始选择图片");
+        uni.chooseImage({
+          count: 5 - this.formData.images.length,
+          sizeType: ["compressed"],
+          sourceType: ["album", "camera"],
+          success: (res) => {
+            formatAppLog("log", "at pages/product/add.vue:367", "选择图片成功:", res);
+            formatAppLog("log", "at pages/product/add.vue:368", "选择的图片路径:", res.tempFilePaths);
+            this.addLocalImages(res.tempFilePaths);
+            this.uploadImages(res.tempFilePaths);
+          },
+          fail: (error) => {
+            formatAppLog("error", "at pages/product/add.vue:375", "选择图片失败:", error);
+            uni.showToast({
+              title: "选择图片失败",
+              icon: "none"
+            });
+          }
+        });
+      },
+      // 添加本地图片到显示列表
+      addLocalImages(tempFilePaths) {
+        formatAppLog("log", "at pages/product/add.vue:386", "添加本地图片到显示列表:", tempFilePaths);
+        for (let i = 0; i < tempFilePaths.length; i++) {
+          const imageData = {
+            url: tempFilePaths[i],
+            isLocal: true,
+            uploading: true
+          };
+          formatAppLog("log", "at pages/product/add.vue:393", "添加图片数据:", imageData);
+          this.formData.images.push(imageData);
+        }
+        formatAppLog("log", "at pages/product/add.vue:396", "当前图片列表:", this.formData.images);
+      },
+      // 上传图片
+      async uploadImages(tempFilePaths) {
+        try {
+          for (let i = 0; i < tempFilePaths.length; i++) {
+            const filePath = tempFilePaths[i];
+            const imageIndex = this.formData.images.findIndex((img) => img.url === filePath);
+            if (imageIndex === -1)
+              continue;
+            try {
+              const uploadResult = await new Promise((resolve, reject) => {
+                uni.uploadFile({
+                  url: `${apiService.configUrl}/goods/uploadImg`,
+                  filePath,
+                  name: "file",
+                  header: {
+                    "Content-Type": "multipart/form-data"
+                  },
+                  success: (res) => {
+                    try {
+                      const data = JSON.parse(res.data);
+                      resolve(data);
+                    } catch (e) {
+                      reject(new Error("解析响应失败"));
+                    }
+                  },
+                  fail: (error) => {
+                    reject(error);
+                  }
+                });
+              });
+              if (uploadResult && uploadResult.code === 200 && uploadResult.data) {
+                this.formData.images[imageIndex] = {
+                  url: uploadResult.data.url || uploadResult.data,
+                  isLocal: false,
+                  uploading: false
+                };
+              } else {
+                this.formData.images[imageIndex].uploading = false;
+              }
+            } catch (error) {
+              formatAppLog("error", "at pages/product/add.vue:444", "上传单张图片失败:", error);
+              this.formData.images[imageIndex].uploading = false;
+            }
+          }
+          uni.showToast({
+            title: "图片处理完成",
+            icon: "success"
+          });
+        } catch (error) {
+          formatAppLog("error", "at pages/product/add.vue:455", "上传失败:", error);
+          uni.showToast({
+            title: "部分图片上传失败",
+            icon: "none"
+          });
+        }
+      },
+      // 删除图片
+      deleteImage(index) {
+        this.formData.images.splice(index, 1);
+      },
+      // 验证表单
+      validateForm() {
+        if (!this.formData.name.trim()) {
+          uni.showToast({
+            title: "请输入商品名称",
+            icon: "none"
+          });
+          return false;
+        }
+        if (!this.formData.costPrice) {
+          uni.showToast({
+            title: "请输入成本价",
+            icon: "none"
+          });
+          return false;
+        }
+        if (!this.formData.salePrice) {
+          uni.showToast({
+            title: "请输入销售价",
+            icon: "none"
+          });
+          return false;
+        }
+        if (!this.formData.stock) {
+          uni.showToast({
+            title: "请输入初始库存",
+            icon: "none"
+          });
+          return false;
+        }
+        return true;
+      },
+      // 获取分类ID
+      getCategoryId() {
+        let categoryId = "";
+        if (this.categoryIndex.third >= 0 && this.categoryList.third[this.categoryIndex.third]) {
+          categoryId = this.categoryList.third[this.categoryIndex.third].id;
+        } else if (this.categoryIndex.second >= 0 && this.categoryList.second[this.categoryIndex.second]) {
+          categoryId = this.categoryList.second[this.categoryIndex.second].id;
+        } else if (this.categoryIndex.first >= 0 && this.categoryList.first[this.categoryIndex.first]) {
+          categoryId = this.categoryList.first[this.categoryIndex.first].id;
+        }
+        return categoryId;
+      },
+      // 保存商品
+      async saveProduct() {
+        if (!this.validateForm()) {
+          return;
+        }
+        const categoryId = this.getCategoryId();
+        if (!categoryId) {
+          uni.showToast({
+            title: "请选择商品分类",
+            icon: "none"
+          });
+          return;
+        }
+        uni.showLoading({
+          title: "保存中..."
+        });
+        try {
+          const imageUrls = this.formData.images.map((img) => img.url);
+          const productData = {
+            ...this.formData,
+            images: imageUrls,
+            categoryId,
+            costPrice: parseFloat(this.formData.costPrice),
+            salePrice: parseFloat(this.formData.salePrice),
+            marketPrice: this.formData.marketPrice ? parseFloat(this.formData.marketPrice) : 0,
+            stock: parseInt(this.formData.stock),
+            stockWarning: this.formData.stockWarning ? parseInt(this.formData.stockWarning) : 0,
+            weight: this.formData.weight ? parseFloat(this.formData.weight) : 0
+          };
+          const response = await apiService.addProduct(productData);
+          uni.hideLoading();
+          if (response && response.code === 200) {
+            uni.showToast({
+              title: "保存成功",
+              icon: "success"
+            });
+            setTimeout(() => {
+              uni.navigateBack();
+            }, 1500);
+          } else {
+            uni.showToast({
+              title: (response == null ? void 0 : response.message) || "保存失败",
+              icon: "none"
+            });
+          }
+        } catch (error) {
+          uni.hideLoading();
+          uni.showToast({
+            title: "保存失败",
+            icon: "none"
+          });
+        }
+      },
+      // 返回上一页
+      goBack() {
+        uni.navigateBack();
+      }
+    }
+  };
+  function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
+    var _a, _b, _c;
+    return vue.openBlock(), vue.createElementBlock("view", { class: "add-product-container" }, [
+      vue.createCommentVNode(" 表单内容 "),
+      vue.createElementVNode("scroll-view", {
+        class: "form-scroll",
+        "scroll-y": "true"
+      }, [
+        vue.createElementVNode("view", { class: "form-content" }, [
+          vue.createCommentVNode(" 基本信息 "),
+          vue.createElementVNode("view", { class: "form-section" }, [
+            vue.createElementVNode("view", { class: "section-title" }, [
+              vue.createElementVNode("text", { class: "title-text" }, "基本信息")
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "商品名称 *"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => $data.formData.name = $event),
+                  placeholder: "请输入商品名称",
+                  maxlength: "50"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.name]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "商品编码"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => $data.formData.code = $event),
+                  placeholder: "请输入商品编码",
+                  maxlength: "20"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.code]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "商品描述"),
+              vue.withDirectives(vue.createElementVNode(
+                "textarea",
+                {
+                  class: "textarea-field",
+                  "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => $data.formData.description = $event),
+                  placeholder: "请输入商品描述",
+                  maxlength: "200"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.description]
+              ])
+            ])
+          ]),
+          vue.createCommentVNode(" 分类信息 "),
+          vue.createElementVNode("view", { class: "form-section" }, [
+            vue.createElementVNode("view", { class: "section-title" }, [
+              vue.createElementVNode("text", { class: "title-text" }, "分类信息")
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "一级分类 *"),
+              vue.createElementVNode("picker", {
+                class: "picker-field",
+                value: $data.categoryIndex.first,
+                range: $data.categoryList.first,
+                "range-key": "name",
+                onChange: _cache[3] || (_cache[3] = (...args) => $options.onFirstCategoryChange && $options.onFirstCategoryChange(...args))
+              }, [
+                vue.createElementVNode(
+                  "view",
+                  { class: "picker-text" },
+                  vue.toDisplayString(((_a = $data.categoryList.first[$data.categoryIndex.first]) == null ? void 0 : _a.name) || "请选择一级分类"),
+                  1
+                  /* TEXT */
+                )
+              ], 40, ["value", "range"])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "二级分类"),
+              vue.createElementVNode("picker", {
+                class: "picker-field",
+                value: $data.categoryIndex.second,
+                range: $data.categoryList.second,
+                "range-key": "name",
+                onChange: _cache[4] || (_cache[4] = (...args) => $options.onSecondCategoryChange && $options.onSecondCategoryChange(...args))
+              }, [
+                vue.createElementVNode(
+                  "view",
+                  { class: "picker-text" },
+                  vue.toDisplayString(((_b = $data.categoryList.second[$data.categoryIndex.second]) == null ? void 0 : _b.name) || "请选择二级分类"),
+                  1
+                  /* TEXT */
+                )
+              ], 40, ["value", "range"])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "三级分类"),
+              vue.createElementVNode("picker", {
+                class: "picker-field",
+                value: $data.categoryIndex.third,
+                range: $data.categoryList.third,
+                "range-key": "name",
+                onChange: _cache[5] || (_cache[5] = (...args) => $options.onThirdCategoryChange && $options.onThirdCategoryChange(...args))
+              }, [
+                vue.createElementVNode(
+                  "view",
+                  { class: "picker-text" },
+                  vue.toDisplayString(((_c = $data.categoryList.third[$data.categoryIndex.third]) == null ? void 0 : _c.name) || "请选择三级分类"),
+                  1
+                  /* TEXT */
+                )
+              ], 40, ["value", "range"])
+            ])
+          ]),
+          vue.createCommentVNode(" 价格信息 "),
+          vue.createElementVNode("view", { class: "form-section" }, [
+            vue.createElementVNode("view", { class: "section-title" }, [
+              vue.createElementVNode("text", { class: "title-text" }, "价格信息")
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "成本价 *"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[6] || (_cache[6] = ($event) => $data.formData.costPrice = $event),
+                  type: "digit",
+                  placeholder: "请输入成本价"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.costPrice]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "销售价 *"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[7] || (_cache[7] = ($event) => $data.formData.salePrice = $event),
+                  type: "digit",
+                  placeholder: "请输入销售价"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.salePrice]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "市场价"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[8] || (_cache[8] = ($event) => $data.formData.marketPrice = $event),
+                  type: "digit",
+                  placeholder: "请输入市场价"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.marketPrice]
+              ])
+            ])
+          ]),
+          vue.createCommentVNode(" 库存信息 "),
+          vue.createElementVNode("view", { class: "form-section" }, [
+            vue.createElementVNode("view", { class: "section-title" }, [
+              vue.createElementVNode("text", { class: "title-text" }, "库存信息")
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "初始库存 *"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[9] || (_cache[9] = ($event) => $data.formData.stock = $event),
+                  type: "number",
+                  placeholder: "请输入初始库存"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.stock]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "库存预警值"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[10] || (_cache[10] = ($event) => $data.formData.stockWarning = $event),
+                  type: "number",
+                  placeholder: "请输入库存预警值"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.stockWarning]
+              ])
+            ])
+          ]),
+          vue.createCommentVNode(" 商品图片 "),
+          vue.createElementVNode("view", { class: "form-section" }, [
+            vue.createElementVNode("view", { class: "section-title" }, [
+              vue.createElementVNode("text", { class: "title-text" }, "商品图片")
+            ]),
+            vue.createElementVNode("view", { class: "image-upload" }, [
+              vue.createElementVNode("view", { class: "image-list" }, [
+                _ctx.image && _ctx.image.url ? (vue.openBlock(true), vue.createElementBlock(
+                  vue.Fragment,
+                  { key: 0 },
+                  vue.renderList($data.formData.images, (image, index) => {
+                    return vue.openBlock(), vue.createElementBlock("view", {
+                      class: "image-item",
+                      key: index
+                    }, [
+                      vue.createElementVNode("image", {
+                        class: "uploaded-image",
+                        src: image.url,
+                        mode: "aspectFill"
+                      }, null, 8, ["src"]),
+                      image.uploading ? (vue.openBlock(), vue.createElementBlock("view", {
+                        key: 0,
+                        class: "upload-status"
+                      }, [
+                        vue.createElementVNode("text", { class: "status-text" }, "上传中...")
+                      ])) : vue.createCommentVNode("v-if", true),
+                      vue.createElementVNode("view", {
+                        class: "delete-btn",
+                        onClick: ($event) => $options.deleteImage(index)
+                      }, [
+                        vue.createElementVNode("text", { class: "delete-icon" }, "×")
+                      ], 8, ["onClick"])
+                    ]);
+                  }),
+                  128
+                  /* KEYED_FRAGMENT */
+                )) : vue.createCommentVNode("v-if", true),
+                $data.formData.images.length < 5 ? (vue.openBlock(), vue.createElementBlock("view", {
+                  key: 1,
+                  class: "upload-btn",
+                  onClick: _cache[11] || (_cache[11] = (...args) => $options.chooseImage && $options.chooseImage(...args))
+                }, [
+                  vue.createElementVNode("text", { class: "upload-icon" }, "+"),
+                  vue.createElementVNode("text", { class: "upload-text" }, "添加图片")
+                ])) : vue.createCommentVNode("v-if", true)
+              ]),
+              vue.createElementVNode("text", { class: "upload-tip" }, "最多上传5张图片")
+            ])
+          ]),
+          vue.createCommentVNode(" 其他信息 "),
+          vue.createElementVNode("view", { class: "form-section" }, [
+            vue.createElementVNode("view", { class: "section-title" }, [
+              vue.createElementVNode("text", { class: "title-text" }, "其他信息")
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "品牌"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[12] || (_cache[12] = ($event) => $data.formData.brand = $event),
+                  placeholder: "请输入品牌"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.brand]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "规格"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[13] || (_cache[13] = ($event) => $data.formData.specification = $event),
+                  placeholder: "请输入规格"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.specification]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "单位"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[14] || (_cache[14] = ($event) => $data.formData.unit = $event),
+                  placeholder: "请输入单位"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.unit]
+              ])
+            ]),
+            vue.createElementVNode("view", { class: "form-item" }, [
+              vue.createElementVNode("text", { class: "label" }, "重量(kg)"),
+              vue.withDirectives(vue.createElementVNode(
+                "input",
+                {
+                  class: "input-field",
+                  "onUpdate:modelValue": _cache[15] || (_cache[15] = ($event) => $data.formData.weight = $event),
+                  type: "digit",
+                  placeholder: "请输入重量"
+                },
+                null,
+                512
+                /* NEED_PATCH */
+              ), [
+                [vue.vModelText, $data.formData.weight]
+              ])
+            ])
+          ])
+        ])
+      ]),
+      vue.createCommentVNode(" 底部操作按钮 "),
+      vue.createElementVNode("view", { class: "bottom-actions" }, [
+        vue.createElementVNode("button", {
+          class: "btn btn-cancel",
+          onClick: _cache[16] || (_cache[16] = (...args) => $options.goBack && $options.goBack(...args))
+        }, "取消"),
+        vue.createElementVNode("button", {
+          class: "btn btn-save",
+          onClick: _cache[17] || (_cache[17] = (...args) => $options.saveProduct && $options.saveProduct(...args))
+        }, "保存商品")
+      ])
+    ]);
+  }
+  const PagesProductAdd = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["render", _sfc_render$1], ["__scopeId", "data-v-53c69cd1"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/product/add.vue"]]);
   const _sfc_main$1 = {
     data() {
       return {
@@ -5592,6 +6248,7 @@ if (uni.restoreGlobal) {
   __definePage("pages/search/search", PagesSearchSearch);
   __definePage("pages/order/detail", PagesOrderDetail);
   __definePage("pages/product/detail", PagesProductDetail);
+  __definePage("pages/product/add", PagesProductAdd);
   __definePage("pages/customer/detail", PagesCustomerDetail);
   const _sfc_main = {
     globalData: {
