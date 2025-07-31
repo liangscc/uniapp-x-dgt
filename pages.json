@@ -1,17 +1,128 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
 		{
-			"path": "pages/index/index",
+			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": "登录"
+			}
+		},
+		{
+			"path": "pages/welcome/welcome",
+			"style": {
+				"navigationBarTitleText": "欢迎页",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "订单管理"
+			}
+		},
+		{
+			"path": "pages/purchase/purchase",
+			"style": {
+				"navigationBarTitleText": "采购管理"
+			}
+		},
+		{
+			"path": "pages/product/product",
+			"style": {
+				"navigationBarTitleText": "商品管理"
+			}
+		},
+		{
+			"path": "pages/warehouse/warehouse",
+			"style": {
+				"navigationBarTitleText": "仓库管理"
+			}
+		},
+		{
+			"path": "pages/customer/customer",
+			"style": {
+				"navigationBarTitleText": "客户管理"
+			}
+		},
+		{
+			"path": "pages/profile/profile",
+			"style": {
+				"navigationBarTitleText": "我的"
+			}
+		},
+		{
+			"path": "pages/statistics/statistics",
+			"style": {
+				"navigationBarTitleText": "统计分析"
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "搜索"
+			}
+		},
+		{
+			"path": "pages/order/detail",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
+			"path": "pages/product/detail",
+			"style": {
+				"navigationBarTitleText": "商品详情"
+			}
+		},
+		{
+			"path": "pages/customer/detail",
+			"style": {
+				"navigationBarTitleText": "客户详情"
 			}
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "业务管理系统",
+		"navigationBarBackgroundColor": "#007AFF",
 		"backgroundColor": "#F8F8F8"
+	},
+		"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/order/order",
+				"iconPath": "static/tabbar/order.png",
+				"selectedIconPath": "static/tabbar/order-active.png",
+				"text": "订单"
+			},
+			{
+				"pagePath": "pages/purchase/purchase",
+				"iconPath": "static/tabbar/purchase.png",
+				"selectedIconPath": "static/tabbar/purchase-active.png",
+				"text": "采购"
+			},
+			{
+				"pagePath": "pages/product/product",
+				"iconPath": "static/tabbar/product.png",
+				"selectedIconPath": "static/tabbar/product-active.png",
+				"text": "商品"
+			},
+			{
+				"pagePath": "pages/warehouse/warehouse",
+				"iconPath": "static/tabbar/warehouse.png",
+				"selectedIconPath": "static/tabbar/warehouse-active.png",
+				"text": "仓库"
+			},
+			{
+				"pagePath": "pages/customer/customer",
+				"iconPath": "static/tabbar/customer.png",
+				"selectedIconPath": "static/tabbar/customer-active.png",
+				"text": "客户"
+			}
+		]
 	},
 	"uniIdRouter": {}
 }
