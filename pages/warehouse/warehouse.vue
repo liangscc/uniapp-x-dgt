@@ -205,7 +205,7 @@ export default {
 	data() {
 		return {
 			warehouseStats: {
-				totalProducts: 1,256,
+				totalProducts: 1256,
 				totalValue: 89.5,
 				lowStock: 23,
 				expiring: 8

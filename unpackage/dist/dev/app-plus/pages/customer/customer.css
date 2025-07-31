@@ -1,0 +1,215 @@
+
+.customer-container[data-v-02222c4a] {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 3.75rem;
+}
+.stats-section[data-v-02222c4a] {
+  background: #fff;
+  margin: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+}
+.stat-item[data-v-02222c4a] {
+  text-align: center;
+  flex: 1;
+}
+.stat-number[data-v-02222c4a] {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #007aff;
+  margin-bottom: 0.3125rem;
+}
+.stat-label[data-v-02222c4a] {
+  font-size: 0.75rem;
+  color: #666;
+}
+.level-section[data-v-02222c4a] {
+  background: #fff;
+  margin: 0 1.25rem 0.625rem;
+  border-radius: 0.625rem;
+  padding: 0.9375rem 0;
+}
+.level-scroll[data-v-02222c4a] {
+  white-space: nowrap;
+}
+.level-list[data-v-02222c4a] {
+  display: flex;
+  padding: 0 1.25rem;
+}
+.level-item[data-v-02222c4a] {
+  display: inline-block;
+  padding: 0.46875rem 0.9375rem;
+  margin-right: 0.625rem;
+  background: #f8f9fa;
+  border-radius: 0.78125rem;
+  font-size: 0.8125rem;
+  color: #666;
+  transition: all 0.3s;
+}
+.level-item.active[data-v-02222c4a] {
+  background: #007aff;
+  color: #fff;
+}
+.customer-list[data-v-02222c4a] {
+  padding: 0 1.25rem;
+}
+.customer-item[data-v-02222c4a] {
+  background: #fff;
+  border-radius: 0.625rem;
+  padding: 0.9375rem;
+  margin-bottom: 0.625rem;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 0.0625rem 0.3125rem rgba(0, 0, 0, 0.05);
+}
+.customer-avatar[data-v-02222c4a] {
+  position: relative;
+  margin-right: 0.9375rem;
+}
+.avatar-text[data-v-02222c4a] {
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #007aff;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.vip-badge[data-v-02222c4a] {
+  position: absolute;
+  top: -0.15625rem;
+  right: -0.15625rem;
+  background: #ffd700;
+  color: #333;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.3125rem;
+  font-size: 0.5625rem;
+  font-weight: bold;
+}
+.customer-info[data-v-02222c4a] {
+  flex: 1;
+}
+.customer-header[data-v-02222c4a] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.46875rem;
+}
+.customer-name[data-v-02222c4a] {
+  font-size: 0.875rem;
+  color: #333;
+  font-weight: bold;
+  margin-right: 0.46875rem;
+}
+.customer-level[data-v-02222c4a] {
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.3125rem;
+  font-size: 0.625rem;
+}
+.customer-level.vip[data-v-02222c4a] {
+  background: #ffd700;
+  color: #333;
+}
+.customer-level.regular[data-v-02222c4a] {
+  background: #8e8e93;
+  color: #fff;
+}
+.customer-level.new[data-v-02222c4a] {
+  background: #34c759;
+  color: #fff;
+}
+.customer-details[data-v-02222c4a] {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.46875rem;
+}
+.customer-phone[data-v-02222c4a] {
+  font-size: 0.75rem;
+  color: #666;
+  margin-right: 0.625rem;
+}
+.customer-orders[data-v-02222c4a] {
+  font-size: 0.75rem;
+  color: #007aff;
+}
+.customer-stats[data-v-02222c4a] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+.stat-item[data-v-02222c4a] {
+  display: flex;
+  align-items: center;
+}
+.stat-label[data-v-02222c4a] {
+  font-size: 0.6875rem;
+  color: #666;
+  margin-right: 0.3125rem;
+}
+.stat-value[data-v-02222c4a] {
+  font-size: 0.6875rem;
+  color: #333;
+  font-weight: bold;
+}
+.customer-actions[data-v-02222c4a] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3125rem;
+}
+.action-btn[data-v-02222c4a] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.46875rem;
+  font-size: 0.6875rem;
+  text-align: center;
+}
+.action-btn.edit[data-v-02222c4a] {
+  background: #ff9500;
+  color: #fff;
+}
+.action-btn.delete[data-v-02222c4a] {
+  background: #ff3b30;
+  color: #fff;
+}
+.empty-state[data-v-02222c4a] {
+  text-align: center;
+  padding: 3.125rem 1.25rem;
+}
+.empty-icon[data-v-02222c4a] {
+  font-size: 2.5rem;
+  margin-bottom: 0.9375rem;
+  display: block;
+}
+.empty-text[data-v-02222c4a] {
+  display: block;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.625rem;
+}
+.empty-tip[data-v-02222c4a] {
+  font-size: 0.8125rem;
+  color: #999;
+}
+.fab-button[data-v-02222c4a] {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  width: 3.125rem;
+  height: 3.125rem;
+  background: #007aff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.125rem 0.625rem rgba(0, 122, 255, 0.3);
+}
+.fab-icon[data-v-02222c4a] {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: bold;
+}

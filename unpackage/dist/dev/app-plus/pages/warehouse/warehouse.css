@@ -1,0 +1,233 @@
+
+.warehouse-container[data-v-41554ef3] {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 3.75rem;
+}
+.stats-section[data-v-41554ef3] {
+  background: #fff;
+  margin: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+}
+.stat-item[data-v-41554ef3] {
+  text-align: center;
+  flex: 1;
+}
+.stat-number[data-v-41554ef3] {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #007aff;
+  margin-bottom: 0.3125rem;
+}
+.stat-label[data-v-41554ef3] {
+  font-size: 0.75rem;
+  color: #666;
+}
+.warehouse-section[data-v-41554ef3],
+.inbound-section[data-v-41554ef3],
+.inventory-section[data-v-41554ef3],
+.expiry-section[data-v-41554ef3],
+.summary-section[data-v-41554ef3] {
+  background: #fff;
+  margin: 0 1.25rem 0.625rem;
+  border-radius: 0.625rem;
+  padding: 1.25rem;
+}
+.section-header[data-v-41554ef3] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.9375rem;
+}
+.section-title[data-v-41554ef3] {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+.section-action[data-v-41554ef3] {
+  font-size: 0.875rem;
+  color: #007aff;
+}
+.warehouse-list[data-v-41554ef3],
+.inbound-list[data-v-41554ef3],
+.inventory-list[data-v-41554ef3],
+.expiry-list[data-v-41554ef3] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.warehouse-item[data-v-41554ef3],
+.inbound-item[data-v-41554ef3],
+.inventory-item[data-v-41554ef3],
+.expiry-item[data-v-41554ef3] {
+  padding: 0.78125rem;
+  background: #f8f9fa;
+  border-radius: 0.46875rem;
+}
+.warehouse-header[data-v-41554ef3],
+.inbound-header[data-v-41554ef3],
+.inventory-header[data-v-41554ef3],
+.expiry-header[data-v-41554ef3] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.46875rem;
+}
+.warehouse-name[data-v-41554ef3],
+.inbound-id[data-v-41554ef3],
+.inventory-name[data-v-41554ef3],
+.expiry-product[data-v-41554ef3] {
+  font-size: 0.875rem;
+  color: #333;
+  font-weight: bold;
+}
+.warehouse-status[data-v-41554ef3],
+.inbound-status[data-v-41554ef3],
+.inventory-status[data-v-41554ef3],
+.expiry-status[data-v-41554ef3] {
+  padding: 0.1875rem 0.375rem;
+  border-radius: 0.46875rem;
+  font-size: 0.6875rem;
+}
+.warehouse-status.active[data-v-41554ef3],
+.inbound-status.completed[data-v-41554ef3],
+.inventory-status.normal[data-v-41554ef3],
+.expiry-status.normal[data-v-41554ef3] {
+  background: #34c759;
+  color: #fff;
+}
+.warehouse-status.maintenance[data-v-41554ef3],
+.inbound-status.pending[data-v-41554ef3],
+.inventory-status.low[data-v-41554ef3],
+.expiry-status.warning[data-v-41554ef3] {
+  background: #ff9500;
+  color: #fff;
+}
+.inbound-status.processing[data-v-41554ef3] {
+  background: #007aff;
+  color: #fff;
+}
+.inventory-status.out[data-v-41554ef3],
+.expiry-status.urgent[data-v-41554ef3] {
+  background: #ff3b30;
+  color: #fff;
+}
+.warehouse-info[data-v-41554ef3],
+.inbound-info[data-v-41554ef3],
+.inventory-info[data-v-41554ef3],
+.expiry-info[data-v-41554ef3] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.46875rem;
+}
+.warehouse-location[data-v-41554ef3],
+.inbound-supplier[data-v-41554ef3],
+.inventory-stock[data-v-41554ef3],
+.expiry-date[data-v-41554ef3] {
+  font-size: 0.75rem;
+  color: #666;
+}
+.warehouse-capacity[data-v-41554ef3],
+.inbound-items[data-v-41554ef3],
+.inventory-value[data-v-41554ef3],
+.expiry-days[data-v-41554ef3] {
+  font-size: 0.8125rem;
+  color: #333;
+  font-weight: bold;
+}
+.inventory-details[data-v-41554ef3] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.46875rem;
+}
+.inventory-location[data-v-41554ef3],
+.inventory-expiry[data-v-41554ef3] {
+  font-size: 0.75rem;
+  color: #666;
+}
+.warehouse-actions[data-v-41554ef3],
+.inbound-actions[data-v-41554ef3],
+.inventory-actions[data-v-41554ef3],
+.expiry-actions[data-v-41554ef3] {
+  display: flex;
+  gap: 0.625rem;
+}
+.action-btn[data-v-41554ef3] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.46875rem;
+  font-size: 0.6875rem;
+}
+.action-btn.view[data-v-41554ef3] {
+  background: #007aff;
+  color: #fff;
+}
+.action-btn.edit[data-v-41554ef3] {
+  background: #ff9500;
+  color: #fff;
+}
+.action-btn.process[data-v-41554ef3] {
+  background: #34c759;
+  color: #fff;
+}
+.action-btn.adjust[data-v-41554ef3] {
+  background: #af52de;
+  color: #fff;
+}
+.action-btn.move[data-v-41554ef3] {
+  background: #5856d6;
+  color: #fff;
+}
+.action-btn.extend[data-v-41554ef3] {
+  background: #ff9500;
+  color: #fff;
+}
+.action-btn.dispose[data-v-41554ef3] {
+  background: #ff3b30;
+  color: #fff;
+}
+.summary-content[data-v-41554ef3] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.625rem;
+}
+.summary-item[data-v-41554ef3] {
+  background: #f8f9fa;
+  padding: 0.78125rem;
+  border-radius: 0.46875rem;
+  text-align: center;
+}
+.summary-label[data-v-41554ef3] {
+  display: block;
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 0.3125rem;
+}
+.summary-value[data-v-41554ef3] {
+  font-size: 1rem;
+  color: #007aff;
+  font-weight: bold;
+}
+.fab-button[data-v-41554ef3] {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  width: 3.125rem;
+  height: 3.125rem;
+  background: #007aff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.125rem 0.625rem rgba(0, 122, 255, 0.3);
+}
+.fab-icon[data-v-41554ef3] {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: bold;
+}

@@ -1,0 +1,277 @@
+
+.search-container[data-v-c10c040c] {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+.search-header[data-v-c10c040c] {
+  background: #fff;
+  padding: 0.9375rem 1.25rem;
+}
+.search-bar[data-v-c10c040c] {
+  display: flex;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: 0.78125rem;
+  padding: 0.625rem 0.9375rem;
+}
+.search-icon[data-v-c10c040c] {
+  font-size: 0.875rem;
+  color: #999;
+  margin-right: 0.625rem;
+}
+.search-input[data-v-c10c040c] {
+  flex: 1;
+  font-size: 0.875rem;
+}
+.search-btn[data-v-c10c040c] {
+  color: #007aff;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+.search-types[data-v-c10c040c] {
+  background: #fff;
+  padding: 0.625rem 1.25rem;
+  border-bottom: 0.03125rem solid #f0f0f0;
+}
+.type-tabs[data-v-c10c040c] {
+  display: flex;
+  gap: 0.625rem;
+}
+.type-tab[data-v-c10c040c] {
+  padding: 0.46875rem 0.9375rem;
+  background: #f8f9fa;
+  border-radius: 0.78125rem;
+  font-size: 0.8125rem;
+  color: #666;
+}
+.type-tab.active[data-v-c10c040c] {
+  background: #007aff;
+  color: #fff;
+}
+.filter-section[data-v-c10c040c] {
+  background: #fff;
+  padding: 0.9375rem 1.25rem;
+  margin-bottom: 0.625rem;
+}
+.filter-row[data-v-c10c040c] {
+  display: flex;
+  gap: 0.625rem;
+  margin-bottom: 0.625rem;
+}
+.filter-item[data-v-c10c040c] {
+  flex: 1;
+}
+.filter-label[data-v-c10c040c] {
+  display: block;
+  font-size: 0.8125rem;
+  color: #666;
+  margin-bottom: 0.3125rem;
+}
+.filter-input[data-v-c10c040c] {
+  width: 100%;
+  background: #f8f9fa;
+  padding: 0.46875rem 0.625rem;
+  border-radius: 0.3125rem;
+  font-size: 0.8125rem;
+}
+.date-picker[data-v-c10c040c],
+.status-picker[data-v-c10c040c] {
+  width: 100%;
+  background: #f8f9fa;
+  padding: 0.46875rem 0.625rem;
+  border-radius: 0.3125rem;
+  font-size: 0.8125rem;
+  color: #333;
+}
+.filter-actions[data-v-c10c040c] {
+  display: flex;
+  gap: 0.625rem;
+  margin-top: 0.9375rem;
+}
+.filter-btn[data-v-c10c040c] {
+  flex: 1;
+  height: 2.1875rem;
+  border-radius: 1.09375rem;
+  font-size: 0.875rem;
+}
+.filter-btn.clear[data-v-c10c040c] {
+  background: #f8f9fa;
+  color: #666;
+}
+.filter-btn.apply[data-v-c10c040c] {
+  background: #007aff;
+  color: #fff;
+}
+.search-results[data-v-c10c040c] {
+  background: #fff;
+  margin: 0 1.25rem;
+  border-radius: 0.625rem;
+  padding: 1.25rem;
+}
+.results-header[data-v-c10c040c] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.9375rem;
+}
+.results-title[data-v-c10c040c] {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+.results-count[data-v-c10c040c] {
+  font-size: 0.8125rem;
+  color: #666;
+}
+.result-section[data-v-c10c040c] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+.result-item[data-v-c10c040c] {
+  display: flex;
+  align-items: center;
+  padding: 0.78125rem;
+  background: #f8f9fa;
+  border-radius: 0.46875rem;
+}
+.result-icon[data-v-c10c040c] {
+  width: 1.875rem;
+  height: 1.875rem;
+  background: #007aff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  margin-right: 0.78125rem;
+}
+.result-content[data-v-c10c040c] {
+  flex: 1;
+}
+.result-title[data-v-c10c040c] {
+  display: block;
+  font-size: 0.875rem;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 0.15625rem;
+}
+.result-desc[data-v-c10c040c] {
+  display: block;
+  font-size: 0.8125rem;
+  color: #666;
+  margin-bottom: 0.15625rem;
+}
+.result-time[data-v-c10c040c],
+.result-stock[data-v-c10c040c],
+.result-level[data-v-c10c040c] {
+  font-size: 0.75rem;
+  color: #999;
+}
+.result-status[data-v-c10c040c] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.625rem;
+  font-size: 0.6875rem;
+}
+.result-status.pending[data-v-c10c040c] {
+  background: #ff9500;
+  color: #fff;
+}
+.result-status.confirmed[data-v-c10c040c] {
+  background: #34c759;
+  color: #fff;
+}
+.result-status.shipped[data-v-c10c040c] {
+  background: #007aff;
+  color: #fff;
+}
+.result-status.completed[data-v-c10c040c] {
+  background: #8e8e93;
+  color: #fff;
+}
+.result-status.inStock[data-v-c10c040c] {
+  background: #34c759;
+  color: #fff;
+}
+.result-status.lowStock[data-v-c10c040c] {
+  background: #ff9500;
+  color: #fff;
+}
+.result-status.outOfStock[data-v-c10c040c] {
+  background: #ff3b30;
+  color: #fff;
+}
+.result-status.vip[data-v-c10c040c] {
+  background: #ffd700;
+  color: #333;
+}
+.result-status.regular[data-v-c10c040c] {
+  background: #34c759;
+  color: #fff;
+}
+.empty-state[data-v-c10c040c] {
+  text-align: center;
+  padding: 3.125rem 1.25rem;
+}
+.empty-icon[data-v-c10c040c] {
+  font-size: 2.5rem;
+  margin-bottom: 0.9375rem;
+  display: block;
+}
+.empty-text[data-v-c10c040c] {
+  display: block;
+  font-size: 1rem;
+  color: #333;
+  margin-bottom: 0.46875rem;
+}
+.empty-desc[data-v-c10c040c] {
+  font-size: 0.8125rem;
+  color: #999;
+}
+.search-history[data-v-c10c040c] {
+  background: #fff;
+  margin: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  padding: 1.25rem;
+}
+.history-header[data-v-c10c040c] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.9375rem;
+}
+.history-title[data-v-c10c040c] {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+.history-clear[data-v-c10c040c] {
+  font-size: 0.875rem;
+  color: #007aff;
+}
+.history-list[data-v-c10c040c] {
+  display: flex;
+  flex-direction: column;
+  gap: 0.46875rem;
+}
+.history-item[data-v-c10c040c] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.625rem;
+  background: #f8f9fa;
+  border-radius: 0.46875rem;
+}
+.history-text[data-v-c10c040c] {
+  font-size: 0.875rem;
+  color: #333;
+}
+.history-delete[data-v-c10c040c] {
+  font-size: 1rem;
+  color: #999;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

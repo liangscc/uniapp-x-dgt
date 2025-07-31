@@ -1,0 +1,209 @@
+
+.order-container[data-v-93207a4f] {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 3.75rem;
+}
+.stats-section[data-v-93207a4f] {
+  background: #fff;
+  margin: 0.625rem 1.25rem;
+  border-radius: 0.625rem;
+  padding: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+}
+.stat-item[data-v-93207a4f] {
+  text-align: center;
+  flex: 1;
+}
+.stat-number[data-v-93207a4f] {
+  display: block;
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #007aff;
+  margin-bottom: 0.3125rem;
+}
+.stat-label[data-v-93207a4f] {
+  font-size: 0.75rem;
+  color: #666;
+}
+.filter-section[data-v-93207a4f] {
+  background: #fff;
+  margin: 0 1.25rem 0.625rem;
+  border-radius: 0.625rem;
+  padding: 0.9375rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.filter-tabs[data-v-93207a4f] {
+  display: flex;
+  gap: 1.25rem;
+}
+.filter-tab[data-v-93207a4f] {
+  font-size: 0.875rem;
+  color: #666;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 0.625rem;
+  transition: all 0.3s;
+}
+.filter-tab.active[data-v-93207a4f] {
+  background: #007aff;
+  color: #fff;
+}
+.search-btn[data-v-93207a4f] {
+  width: 1.875rem;
+  height: 1.875rem;
+  background: #f8f9fa;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-icon[data-v-93207a4f] {
+  font-size: 0.875rem;
+}
+.order-list[data-v-93207a4f] {
+  padding: 0 1.25rem;
+}
+.order-item[data-v-93207a4f] {
+  background: #fff;
+  border-radius: 0.625rem;
+  padding: 0.9375rem;
+  margin-bottom: 0.625rem;
+  box-shadow: 0 0.0625rem 0.3125rem rgba(0, 0, 0, 0.05);
+}
+.order-header[data-v-93207a4f] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+.order-number[data-v-93207a4f] {
+  font-size: 0.875rem;
+  color: #333;
+  font-weight: bold;
+}
+.order-status[data-v-93207a4f] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.46875rem;
+  font-size: 0.6875rem;
+}
+.order-status.pending[data-v-93207a4f] {
+  background: #ff9500;
+  color: #fff;
+}
+.order-status.processing[data-v-93207a4f] {
+  background: #007aff;
+  color: #fff;
+}
+.order-status.completed[data-v-93207a4f] {
+  background: #34c759;
+  color: #fff;
+}
+.order-info[data-v-93207a4f] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.625rem;
+}
+.customer-info[data-v-93207a4f] {
+  flex: 1;
+}
+.customer-name[data-v-93207a4f] {
+  display: block;
+  font-size: 0.8125rem;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 0.15625rem;
+}
+.customer-phone[data-v-93207a4f] {
+  font-size: 0.75rem;
+  color: #666;
+}
+.order-amount[data-v-93207a4f] {
+  text-align: right;
+}
+.amount-label[data-v-93207a4f] {
+  display: block;
+  font-size: 0.6875rem;
+  color: #666;
+  margin-bottom: 0.15625rem;
+}
+.amount-value[data-v-93207a4f] {
+  font-size: 0.875rem;
+  color: #ff3b30;
+  font-weight: bold;
+}
+.order-details[data-v-93207a4f] {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.product-info[data-v-93207a4f] {
+  display: flex;
+  flex-direction: column;
+}
+.product-count[data-v-93207a4f] {
+  font-size: 0.75rem;
+  color: #666;
+  margin-bottom: 0.15625rem;
+}
+.order-time[data-v-93207a4f] {
+  font-size: 0.6875rem;
+  color: #999;
+}
+.order-actions[data-v-93207a4f] {
+  display: flex;
+  gap: 0.46875rem;
+}
+.action-btn[data-v-93207a4f] {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.46875rem;
+  font-size: 0.6875rem;
+}
+.action-btn.edit[data-v-93207a4f] {
+  background: #ff9500;
+  color: #fff;
+}
+.action-btn.delete[data-v-93207a4f] {
+  background: #ff3b30;
+  color: #fff;
+}
+.empty-state[data-v-93207a4f] {
+  text-align: center;
+  padding: 3.125rem 1.25rem;
+}
+.empty-icon[data-v-93207a4f] {
+  font-size: 2.5rem;
+  margin-bottom: 0.9375rem;
+  display: block;
+}
+.empty-text[data-v-93207a4f] {
+  display: block;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 0.625rem;
+}
+.empty-tip[data-v-93207a4f] {
+  font-size: 0.8125rem;
+  color: #999;
+}
+.fab-button[data-v-93207a4f] {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  width: 3.125rem;
+  height: 3.125rem;
+  background: #007aff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0.125rem 0.625rem rgba(0, 122, 255, 0.3);
+}
+.fab-icon[data-v-93207a4f] {
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
