@@ -16,31 +16,36 @@
 		{
 			"path": "pages/order/order",
 			"style": {
-				"navigationBarTitleText": "订单管理"
+				"navigationBarTitleText": "订单管理",
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/purchase/purchase",
 			"style": {
-				"navigationBarTitleText": "采购管理"
+				"navigationBarTitleText": "采购管理",
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/product/product",
 			"style": {
-				"navigationBarTitleText": "商品管理"
+				"navigationBarTitleText": "商品管理",
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/warehouse/warehouse",
 			"style": {
-				"navigationBarTitleText": "仓库管理"
+				"navigationBarTitleText": "仓库管理",
+				"navigationStyle": "custom"
 			}
 		},
 		{
 			"path": "pages/customer/customer",
 			"style": {
-				"navigationBarTitleText": "客户管理"
+				"navigationBarTitleText": "客户管理",
+				"navigationStyle": "custom"
 			}
 		},
 		{

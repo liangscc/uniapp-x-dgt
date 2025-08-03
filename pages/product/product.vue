@@ -2,13 +2,19 @@
   <view class="product-container">
     <!-- 头部导航 -->
     <view class="header">
-      <view class="header-left">
+      <view class="header-left" @click="showSlideMenu">
+        <text class="header-icon">👤</text>
+      </view>
+      <view class="header-center">
         <text class="header-title">商品管理</text>
       </view>
-      <view class="header-right">
-        <text class="header-btn" @click="gotoChart">统计</text>
+      <view class="header-right" @click="gotoChart">
+        <text class="header-icon">📊</text>
       </view>
     </view>
+
+    <!-- 侧滑菜单 -->
+    <SlideMenu :visible="slideMenuVisible" @close="hideSlideMenu" />
 
     <!-- 分类商品布局 -->
     <view class="category-wrap">
@@ -61,9 +67,15 @@
 </template>
 
 <script>
+import SlideMenu from '../../components/SlideMenu.vue'
+
 export default {
+  components: {
+    SlideMenu
+  },
   data() {
     return {
+      slideMenuVisible: false,
       leftSideActive: 0,
       cateA: '',
       categoryAll: [
@@ -193,6 +205,16 @@ export default {
         url: '/pages/product/add'
       })
     },
+    
+    // 显示侧滑菜单
+    showSlideMenu() {
+      this.slideMenuVisible = true
+    },
+    
+    // 隐藏侧滑菜单
+    hideSlideMenu() {
+      this.slideMenuVisible = false
+    },
   },
 }
 </script>
@@ -208,22 +230,36 @@ export default {
 .header {
   background: #007aff;
   padding: 20rpx 40rpx;
+  padding-top: calc(20rpx + var(--status-bar-height));
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #fff;
 }
 
+.header-left,
+.header-right {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.header-icon {
+  font-size: 32rpx;
+}
+
+.header-center {
+  flex: 1;
+  text-align: center;
+}
+
 .header-title {
   font-size: 32rpx;
   font-weight: bold;
-}
-
-.header-btn {
-  font-size: 28rpx;
-  padding: 10rpx 20rpx;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 20rpx;
 }
 
 .category-wrap {

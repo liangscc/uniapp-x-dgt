@@ -4,6 +4,36 @@
   background: #f5f5f5;
   padding-bottom: 3.75rem;
 }
+.header[data-v-02222c4a] {
+  background: #007aff;
+  padding: 0.625rem 1.25rem;
+  padding-top: calc(0.625rem + var(--status-bar-height));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+.header-left[data-v-02222c4a],
+.header-right[data-v-02222c4a] {
+  width: 1.875rem;
+  height: 1.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+.header-icon[data-v-02222c4a] {
+  font-size: 1rem;
+}
+.header-center[data-v-02222c4a] {
+  flex: 1;
+  text-align: center;
+}
+.header-title[data-v-02222c4a] {
+  font-size: 1rem;
+  font-weight: bold;
+}
 .stats-section[data-v-02222c4a] {
   background: #fff;
   margin: 0.625rem 1.25rem;

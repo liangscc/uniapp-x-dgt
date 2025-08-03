@@ -1,5 +1,21 @@
 <template>
   <view class="purchase-container">
+    <!-- 头部导航 -->
+    <view class="header">
+      <view class="header-left" @click="showSlideMenu">
+        <text class="header-icon">👤</text>
+      </view>
+      <view class="header-center">
+        <text class="header-title">采购管理</text>
+      </view>
+      <view class="header-right" @click="gotoChart">
+        <text class="header-icon">📊</text>
+      </view>
+    </view>
+
+    <!-- 侧滑菜单 -->
+    <SlideMenu :visible="slideMenuVisible" @close="hideSlideMenu" />
+
     <!-- 采购统计 -->
     <view class="stats-section">
       <view class="stat-item">
@@ -174,9 +190,15 @@
 </template>
 
 <script>
+import SlideMenu from '../../components/SlideMenu.vue'
+
 export default {
+  components: {
+    SlideMenu
+  },
   data() {
     return {
+      slideMenuVisible: false,
       purchaseStats: {
         total: 45,
         pending: 12,
@@ -344,6 +366,23 @@ export default {
         icon: 'none',
       })
     },
+    
+    // 显示侧滑菜单
+    showSlideMenu() {
+      this.slideMenuVisible = true
+    },
+    
+    // 隐藏侧滑菜单
+    hideSlideMenu() {
+      this.slideMenuVisible = false
+    },
+    
+    // 跳转到统计页面
+    gotoChart() {
+      uni.navigateTo({
+        url: '/pages/statistics/statistics'
+      })
+    },
   },
 }
 </script>
@@ -353,6 +392,41 @@ export default {
   min-height: 100vh;
   background: #f5f5f5;
   padding-bottom: 120rpx;
+}
+
+.header {
+  background: #007aff;
+  padding: 20rpx 40rpx;
+  padding-top: calc(20rpx + var(--status-bar-height));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.header-left,
+.header-right {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.header-icon {
+  font-size: 32rpx;
+}
+
+.header-center {
+  flex: 1;
+  text-align: center;
+}
+
+.header-title {
+  font-size: 32rpx;
+  font-weight: bold;
 }
 
 .stats-section {

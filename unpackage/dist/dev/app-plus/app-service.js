@@ -504,12 +504,12 @@ if (uni.restoreGlobal) {
     }
     return target;
   };
-  const _sfc_main$e = {
+  const _sfc_main$f = {
     data() {
       return {
         loginForm: {
           offline_id: "abc",
-          tel_no: "13478433372",
+          tel_no: "17709816336",
           password: "1"
         },
         rememberPassword: false
@@ -694,7 +694,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$e(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "login-container" }, [
       vue.createCommentVNode(" 顶部Logo区域 "),
       vue.createElementVNode("view", { class: "logo-section" }, [
@@ -848,8 +848,8 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-e4e4508d"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/login/login.vue"]]);
-  const _sfc_main$d = {
+  const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$f, [["render", _sfc_render$e], ["__scopeId", "data-v-e4e4508d"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/login/login.vue"]]);
+  const _sfc_main$e = {
     data() {
       return {
         userInfo: {},
@@ -923,7 +923,7 @@ if (uni.restoreGlobal) {
       }
     }
   };
-  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+  function _sfc_render$d(_ctx, _cache, $props, $setup, $data, $options) {
     return vue.openBlock(), vue.createElementBlock("view", { class: "welcome-container" }, [
       vue.createCommentVNode(" 欢迎区域 "),
       vue.createElementVNode("view", { class: "welcome-section" }, [
@@ -1031,10 +1031,247 @@ if (uni.restoreGlobal) {
       ])
     ]);
   }
-  const PagesWelcomeWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-085f0530"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/welcome/welcome.vue"]]);
-  const _sfc_main$c = {
+  const PagesWelcomeWelcome = /* @__PURE__ */ _export_sfc(_sfc_main$e, [["render", _sfc_render$d], ["__scopeId", "data-v-085f0530"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/welcome/welcome.vue"]]);
+  const _sfc_main$d = {
+    name: "SlideMenu",
+    props: {
+      visible: {
+        type: Boolean,
+        default: false
+      }
+    },
     data() {
       return {
+        userInfo: {
+          name: "管理员",
+          phone: "138****8888",
+          level: "VIP会员"
+        },
+        settings: {
+          notifications: true,
+          hideAmount: false
+        }
+      };
+    },
+    methods: {
+      closeMenu() {
+        this.$emit("close");
+      },
+      handleMenuClick(action) {
+        this.closeMenu();
+        switch (action) {
+          case "editProfile":
+            uni.showToast({
+              title: "编辑资料功能开发中",
+              icon: "none"
+            });
+            break;
+          case "changePassword":
+            uni.showToast({
+              title: "改密码功能开发中",
+              icon: "none"
+            });
+            break;
+          case "upgradeMember":
+            uni.showToast({
+              title: "开通会员功能开发中",
+              icon: "none"
+            });
+            break;
+          case "customColors":
+            uni.showToast({
+              title: "自定义颜色功能开发中",
+              icon: "none"
+            });
+            break;
+          case "customCategories":
+            uni.showToast({
+              title: "自定义分类功能开发中",
+              icon: "none"
+            });
+            break;
+        }
+      },
+      toggleNotifications(e) {
+        this.settings.notifications = e.detail.value;
+        uni.showToast({
+          title: this.settings.notifications ? "已开启通知" : "已关闭通知",
+          icon: "none"
+        });
+      },
+      toggleHideAmount(e) {
+        this.settings.hideAmount = e.detail.value;
+        uni.showToast({
+          title: this.settings.hideAmount ? "已隐藏金额" : "已显示金额",
+          icon: "none"
+        });
+      },
+      handleLogout() {
+        uni.showModal({
+          title: "确认退出",
+          content: "确定要退出登录吗？",
+          success: (res) => {
+            if (res.confirm) {
+              this.closeMenu();
+              uni.reLaunch({
+                url: "/pages/login/login"
+              });
+            }
+          }
+        });
+      }
+    }
+  };
+  function _sfc_render$c(_ctx, _cache, $props, $setup, $data, $options) {
+    return $props.visible ? (vue.openBlock(), vue.createElementBlock("view", {
+      key: 0,
+      class: "slide-menu-container"
+    }, [
+      vue.createCommentVNode(" 遮罩层 "),
+      vue.createElementVNode("view", {
+        class: "mask",
+        onClick: _cache[0] || (_cache[0] = (...args) => $options.closeMenu && $options.closeMenu(...args))
+      }),
+      vue.createCommentVNode(" 侧滑菜单 "),
+      vue.createElementVNode(
+        "view",
+        {
+          class: vue.normalizeClass(["slide-menu", { "slide-in": $props.visible }])
+        },
+        [
+          vue.createCommentVNode(" 个人中心内容 "),
+          vue.createElementVNode("view", { class: "profile-content" }, [
+            vue.createCommentVNode(" 用户信息头部 "),
+            vue.createElementVNode("view", { class: "user-header" }, [
+              vue.createElementVNode("view", { class: "user-info" }, [
+                vue.createElementVNode("view", { class: "user-avatar" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "avatar-text" },
+                    vue.toDisplayString($data.userInfo.name.charAt(0)),
+                    1
+                    /* TEXT */
+                  )
+                ]),
+                vue.createElementVNode("view", { class: "user-details" }, [
+                  vue.createElementVNode(
+                    "text",
+                    { class: "user-name" },
+                    vue.toDisplayString($data.userInfo.name),
+                    1
+                    /* TEXT */
+                  ),
+                  vue.createElementVNode(
+                    "text",
+                    { class: "user-phone" },
+                    vue.toDisplayString($data.userInfo.phone),
+                    1
+                    /* TEXT */
+                  ),
+                  vue.createElementVNode(
+                    "text",
+                    { class: "user-level" },
+                    vue.toDisplayString($data.userInfo.level),
+                    1
+                    /* TEXT */
+                  )
+                ])
+              ])
+            ]),
+            vue.createCommentVNode(" 基本功能 "),
+            vue.createElementVNode("view", { class: "section" }, [
+              vue.createElementVNode("view", { class: "section-title" }, "基本功能"),
+              vue.createElementVNode("view", { class: "menu-list" }, [
+                vue.createElementVNode("view", {
+                  class: "menu-item",
+                  onClick: _cache[1] || (_cache[1] = ($event) => $options.handleMenuClick("editProfile"))
+                }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "👤"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "编辑资料"),
+                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
+                ]),
+                vue.createElementVNode("view", {
+                  class: "menu-item",
+                  onClick: _cache[2] || (_cache[2] = ($event) => $options.handleMenuClick("changePassword"))
+                }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "🔑"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "改密码"),
+                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
+                ]),
+                vue.createElementVNode("view", {
+                  class: "menu-item",
+                  onClick: _cache[3] || (_cache[3] = ($event) => $options.handleMenuClick("upgradeMember"))
+                }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "👑"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "开通会员"),
+                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
+                ])
+              ])
+            ]),
+            vue.createCommentVNode(" 设置 "),
+            vue.createElementVNode("view", { class: "section" }, [
+              vue.createElementVNode("view", { class: "section-title" }, "设置"),
+              vue.createElementVNode("view", { class: "menu-list" }, [
+                vue.createElementVNode("view", {
+                  class: "menu-item",
+                  onClick: _cache[4] || (_cache[4] = ($event) => $options.handleMenuClick("customColors"))
+                }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "🎨"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "自定义颜色"),
+                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
+                ]),
+                vue.createElementVNode("view", {
+                  class: "menu-item",
+                  onClick: _cache[5] || (_cache[5] = ($event) => $options.handleMenuClick("customCategories"))
+                }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "📂"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "自定义分类"),
+                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
+                ]),
+                vue.createElementVNode("view", { class: "menu-item" }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "🔔"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "消息通知"),
+                  vue.createElementVNode("switch", {
+                    checked: $data.settings.notifications,
+                    onChange: _cache[6] || (_cache[6] = (...args) => $options.toggleNotifications && $options.toggleNotifications(...args))
+                  }, null, 40, ["checked"])
+                ]),
+                vue.createElementVNode("view", { class: "menu-item" }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "👁️"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "隐藏金额"),
+                  vue.createElementVNode("switch", {
+                    checked: $data.settings.hideAmount,
+                    onChange: _cache[7] || (_cache[7] = (...args) => $options.toggleHideAmount && $options.toggleHideAmount(...args))
+                  }, null, 40, ["checked"])
+                ])
+              ])
+            ]),
+            vue.createCommentVNode(" 退出登录 "),
+            vue.createElementVNode("view", { class: "logout-section" }, [
+              vue.createElementVNode("button", {
+                class: "logout-btn",
+                onClick: _cache[8] || (_cache[8] = (...args) => $options.handleLogout && $options.handleLogout(...args))
+              }, "退出登录")
+            ])
+          ])
+        ],
+        2
+        /* CLASS */
+      )
+    ])) : vue.createCommentVNode("v-if", true);
+  }
+  const SlideMenu = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-edaabf93"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/components/SlideMenu.vue"]]);
+  const SlideMenu$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+    __proto__: null,
+    default: SlideMenu
+  }, Symbol.toStringTag, { value: "Module" }));
+  const _sfc_main$c = {
+    components: {
+      SlideMenu
+    },
+    data() {
+      return {
+        slideMenuVisible: false,
         currentFilter: "all",
         orderStats: {
           total: 0,
@@ -1076,7 +1313,7 @@ if (uni.restoreGlobal) {
             this.loadMockData();
           }
         } catch (error) {
-          formatAppLog("error", "at pages/order/order.vue:163", "加载订单数据失败:", error);
+          formatAppLog("error", "at pages/order/order.vue:184", "加载订单数据失败:", error);
           this.loadMockData();
         }
       },
@@ -1198,7 +1435,7 @@ if (uni.restoreGlobal) {
                   });
                 }
               } catch (error) {
-                formatAppLog("error", "at pages/order/order.vue:297", "删除订单失败:", error);
+                formatAppLog("error", "at pages/order/order.vue:318", "删除订单失败:", error);
                 uni.showToast({
                   title: "删除失败，请重试",
                   icon: "none"
@@ -1207,11 +1444,49 @@ if (uni.restoreGlobal) {
             }
           }
         });
+      },
+      // 显示侧滑菜单
+      showSlideMenu() {
+        this.slideMenuVisible = true;
+      },
+      // 隐藏侧滑菜单
+      hideSlideMenu() {
+        this.slideMenuVisible = false;
+      },
+      // 跳转到统计页面
+      gotoChart() {
+        uni.navigateTo({
+          url: "/pages/statistics/statistics"
+        });
       }
     }
   };
   function _sfc_render$b(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_SlideMenu = vue.resolveComponent("SlideMenu");
     return vue.openBlock(), vue.createElementBlock("view", { class: "order-container" }, [
+      vue.createCommentVNode(" 头部导航 "),
+      vue.createElementVNode("view", { class: "header" }, [
+        vue.createElementVNode("view", {
+          class: "header-left",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.showSlideMenu && $options.showSlideMenu(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "👤")
+        ]),
+        vue.createElementVNode("view", { class: "header-center" }, [
+          vue.createElementVNode("text", { class: "header-title" }, "订单管理")
+        ]),
+        vue.createElementVNode("view", {
+          class: "header-right",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.gotoChart && $options.gotoChart(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "📊")
+        ])
+      ]),
+      vue.createCommentVNode(" 侧滑菜单 "),
+      vue.createVNode(_component_SlideMenu, {
+        visible: $data.slideMenuVisible,
+        onClose: $options.hideSlideMenu
+      }, null, 8, ["visible", "onClose"]),
       vue.createCommentVNode(" 订单统计 "),
       vue.createElementVNode("view", { class: "stats-section" }, [
         vue.createElementVNode("view", { class: "stat-item" }, [
@@ -1262,7 +1537,7 @@ if (uni.restoreGlobal) {
             "text",
             {
               class: vue.normalizeClass(["filter-tab", { active: $data.currentFilter === "all" }]),
-              onClick: _cache[0] || (_cache[0] = ($event) => $options.setFilter("all"))
+              onClick: _cache[2] || (_cache[2] = ($event) => $options.setFilter("all"))
             },
             "全部",
             2
@@ -1272,7 +1547,7 @@ if (uni.restoreGlobal) {
             "text",
             {
               class: vue.normalizeClass(["filter-tab", { active: $data.currentFilter === "pending" }]),
-              onClick: _cache[1] || (_cache[1] = ($event) => $options.setFilter("pending"))
+              onClick: _cache[3] || (_cache[3] = ($event) => $options.setFilter("pending"))
             },
             "待处理",
             2
@@ -1282,7 +1557,7 @@ if (uni.restoreGlobal) {
             "text",
             {
               class: vue.normalizeClass(["filter-tab", { active: $data.currentFilter === "processing" }]),
-              onClick: _cache[2] || (_cache[2] = ($event) => $options.setFilter("processing"))
+              onClick: _cache[4] || (_cache[4] = ($event) => $options.setFilter("processing"))
             },
             "处理中",
             2
@@ -1292,7 +1567,7 @@ if (uni.restoreGlobal) {
             "text",
             {
               class: vue.normalizeClass(["filter-tab", { active: $data.currentFilter === "completed" }]),
-              onClick: _cache[3] || (_cache[3] = ($event) => $options.setFilter("completed"))
+              onClick: _cache[5] || (_cache[5] = ($event) => $options.setFilter("completed"))
             },
             "已完成",
             2
@@ -1301,7 +1576,7 @@ if (uni.restoreGlobal) {
         ]),
         vue.createElementVNode("view", {
           class: "search-btn",
-          onClick: _cache[4] || (_cache[4] = (...args) => $options.showSearch && $options.showSearch(...args))
+          onClick: _cache[6] || (_cache[6] = (...args) => $options.showSearch && $options.showSearch(...args))
         }, [
           vue.createElementVNode("text", { class: "search-icon" }, "🔍")
         ])
@@ -1409,7 +1684,7 @@ if (uni.restoreGlobal) {
       vue.createCommentVNode(" 悬浮添加按钮 "),
       vue.createElementVNode("view", {
         class: "fab-button",
-        onClick: _cache[5] || (_cache[5] = (...args) => $options.addOrder && $options.addOrder(...args))
+        onClick: _cache[7] || (_cache[7] = (...args) => $options.addOrder && $options.addOrder(...args))
       }, [
         vue.createElementVNode("text", { class: "fab-icon" }, "+")
       ])
@@ -1417,8 +1692,12 @@ if (uni.restoreGlobal) {
   }
   const PagesOrderOrder = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$b], ["__scopeId", "data-v-93207a4f"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/order/order.vue"]]);
   const _sfc_main$b = {
+    components: {
+      SlideMenu
+    },
     data() {
       return {
+        slideMenuVisible: false,
         purchaseStats: {
           total: 45,
           pending: 12,
@@ -1576,11 +1855,49 @@ if (uni.restoreGlobal) {
           title: "跟踪拼箱功能开发中",
           icon: "none"
         });
+      },
+      // 显示侧滑菜单
+      showSlideMenu() {
+        this.slideMenuVisible = true;
+      },
+      // 隐藏侧滑菜单
+      hideSlideMenu() {
+        this.slideMenuVisible = false;
+      },
+      // 跳转到统计页面
+      gotoChart() {
+        uni.navigateTo({
+          url: "/pages/statistics/statistics"
+        });
       }
     }
   };
   function _sfc_render$a(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_SlideMenu = vue.resolveComponent("SlideMenu");
     return vue.openBlock(), vue.createElementBlock("view", { class: "purchase-container" }, [
+      vue.createCommentVNode(" 头部导航 "),
+      vue.createElementVNode("view", { class: "header" }, [
+        vue.createElementVNode("view", {
+          class: "header-left",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.showSlideMenu && $options.showSlideMenu(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "👤")
+        ]),
+        vue.createElementVNode("view", { class: "header-center" }, [
+          vue.createElementVNode("text", { class: "header-title" }, "采购管理")
+        ]),
+        vue.createElementVNode("view", {
+          class: "header-right",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.gotoChart && $options.gotoChart(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "📊")
+        ])
+      ]),
+      vue.createCommentVNode(" 侧滑菜单 "),
+      vue.createVNode(_component_SlideMenu, {
+        visible: $data.slideMenuVisible,
+        onClose: $options.hideSlideMenu
+      }, null, 8, ["visible", "onClose"]),
       vue.createCommentVNode(" 采购统计 "),
       vue.createElementVNode("view", { class: "stats-section" }, [
         vue.createElementVNode("view", { class: "stat-item" }, [
@@ -1630,7 +1947,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("text", { class: "section-title" }, "采购计划"),
           vue.createElementVNode("text", {
             class: "section-action",
-            onClick: _cache[0] || (_cache[0] = (...args) => $options.generatePlan && $options.generatePlan(...args))
+            onClick: _cache[2] || (_cache[2] = (...args) => $options.generatePlan && $options.generatePlan(...args))
           }, "生成计划")
         ]),
         vue.createElementVNode("view", { class: "plan-content" }, [
@@ -1699,7 +2016,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("text", { class: "section-title" }, "采购单管理"),
           vue.createElementVNode("text", {
             class: "section-action",
-            onClick: _cache[1] || (_cache[1] = (...args) => $options.addPurchase && $options.addPurchase(...args))
+            onClick: _cache[3] || (_cache[3] = (...args) => $options.addPurchase && $options.addPurchase(...args))
           }, "新增采购单")
         ]),
         vue.createElementVNode("view", { class: "purchase-list" }, [
@@ -1785,7 +2102,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("text", { class: "section-title" }, "拼箱管理"),
           vue.createElementVNode("text", {
             class: "section-action",
-            onClick: _cache[2] || (_cache[2] = (...args) => $options.createConsolidation && $options.createConsolidation(...args))
+            onClick: _cache[4] || (_cache[4] = (...args) => $options.createConsolidation && $options.createConsolidation(...args))
           }, "创建拼箱")
         ]),
         vue.createElementVNode("view", { class: "consolidation-list" }, [
@@ -1897,7 +2214,7 @@ if (uni.restoreGlobal) {
       vue.createCommentVNode(" 悬浮添加按钮 "),
       vue.createElementVNode("view", {
         class: "fab-button",
-        onClick: _cache[3] || (_cache[3] = (...args) => $options.addPurchase && $options.addPurchase(...args))
+        onClick: _cache[5] || (_cache[5] = (...args) => $options.addPurchase && $options.addPurchase(...args))
       }, [
         vue.createElementVNode("text", { class: "fab-icon" }, "+")
       ])
@@ -1905,8 +2222,12 @@ if (uni.restoreGlobal) {
   }
   const PagesPurchasePurchase = /* @__PURE__ */ _export_sfc(_sfc_main$b, [["render", _sfc_render$a], ["__scopeId", "data-v-313e55f0"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/purchase/purchase.vue"]]);
   const _sfc_main$a = {
+    components: {
+      SlideMenu
+    },
     data() {
       return {
+        slideMenuVisible: false,
         leftSideActive: 0,
         cateA: "",
         categoryAll: [
@@ -2015,7 +2336,7 @@ if (uni.restoreGlobal) {
         }
       },
       gotoProductList(item, subItem, cateA, category_id) {
-        formatAppLog("log", "at pages/product/product.vue:179", "跳转到商品列表:", item, subItem, cateA, category_id);
+        formatAppLog("log", "at pages/product/product.vue:191", "跳转到商品列表:", item, subItem, cateA, category_id);
         uni.navigateTo({
           url: `/pages/product/detail?cate1=${cateA}&cate2=${item}&cate3=${subItem}&category_id=${category_id}`
         });
@@ -2029,23 +2350,43 @@ if (uni.restoreGlobal) {
         uni.navigateTo({
           url: "/pages/product/add"
         });
+      },
+      // 显示侧滑菜单
+      showSlideMenu() {
+        this.slideMenuVisible = true;
+      },
+      // 隐藏侧滑菜单
+      hideSlideMenu() {
+        this.slideMenuVisible = false;
       }
     }
   };
   function _sfc_render$9(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_SlideMenu = vue.resolveComponent("SlideMenu");
     return vue.openBlock(), vue.createElementBlock("view", { class: "product-container" }, [
       vue.createCommentVNode(" 头部导航 "),
       vue.createElementVNode("view", { class: "header" }, [
-        vue.createElementVNode("view", { class: "header-left" }, [
+        vue.createElementVNode("view", {
+          class: "header-left",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.showSlideMenu && $options.showSlideMenu(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "👤")
+        ]),
+        vue.createElementVNode("view", { class: "header-center" }, [
           vue.createElementVNode("text", { class: "header-title" }, "商品管理")
         ]),
-        vue.createElementVNode("view", { class: "header-right" }, [
-          vue.createElementVNode("text", {
-            class: "header-btn",
-            onClick: _cache[0] || (_cache[0] = (...args) => $options.gotoChart && $options.gotoChart(...args))
-          }, "统计")
+        vue.createElementVNode("view", {
+          class: "header-right",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.gotoChart && $options.gotoChart(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "📊")
         ])
       ]),
+      vue.createCommentVNode(" 侧滑菜单 "),
+      vue.createVNode(_component_SlideMenu, {
+        visible: $data.slideMenuVisible,
+        onClose: $options.hideSlideMenu
+      }, null, 8, ["visible", "onClose"]),
       vue.createCommentVNode(" 分类商品布局 "),
       vue.createElementVNode("view", { class: "category-wrap" }, [
         vue.createCommentVNode(" 左侧分类列表 "),
@@ -2132,7 +2473,7 @@ if (uni.restoreGlobal) {
       vue.createCommentVNode(" 悬浮添加按钮 "),
       vue.createElementVNode("view", {
         class: "fab-button",
-        onClick: _cache[1] || (_cache[1] = (...args) => $options.addProduct && $options.addProduct(...args))
+        onClick: _cache[2] || (_cache[2] = (...args) => $options.addProduct && $options.addProduct(...args))
       }, [
         vue.createElementVNode("text", { class: "fab-icon" }, "+")
       ])
@@ -2140,8 +2481,12 @@ if (uni.restoreGlobal) {
   }
   const PagesProductProduct = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["render", _sfc_render$9], ["__scopeId", "data-v-946a9793"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/product/product.vue"]]);
   const _sfc_main$9 = {
+    components: {
+      SlideMenu
+    },
     data() {
       return {
+        slideMenuVisible: false,
         warehouseStats: {
           totalProducts: 1256,
           totalValue: 89.5,
@@ -2335,11 +2680,49 @@ if (uni.restoreGlobal) {
           title: "处理过期商品功能开发中",
           icon: "none"
         });
+      },
+      // 显示侧滑菜单
+      showSlideMenu() {
+        this.slideMenuVisible = true;
+      },
+      // 隐藏侧滑菜单
+      hideSlideMenu() {
+        this.slideMenuVisible = false;
+      },
+      // 跳转到统计页面
+      gotoChart() {
+        uni.navigateTo({
+          url: "/pages/statistics/statistics"
+        });
       }
     }
   };
   function _sfc_render$8(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_SlideMenu = vue.resolveComponent("SlideMenu");
     return vue.openBlock(), vue.createElementBlock("view", { class: "warehouse-container" }, [
+      vue.createCommentVNode(" 头部导航 "),
+      vue.createElementVNode("view", { class: "header" }, [
+        vue.createElementVNode("view", {
+          class: "header-left",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.showSlideMenu && $options.showSlideMenu(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "👤")
+        ]),
+        vue.createElementVNode("view", { class: "header-center" }, [
+          vue.createElementVNode("text", { class: "header-title" }, "仓库管理")
+        ]),
+        vue.createElementVNode("view", {
+          class: "header-right",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.gotoChart && $options.gotoChart(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "📊")
+        ])
+      ]),
+      vue.createCommentVNode(" 侧滑菜单 "),
+      vue.createVNode(_component_SlideMenu, {
+        visible: $data.slideMenuVisible,
+        onClose: $options.hideSlideMenu
+      }, null, 8, ["visible", "onClose"]),
       vue.createCommentVNode(" 仓库统计 "),
       vue.createElementVNode("view", { class: "stats-section" }, [
         vue.createElementVNode("view", { class: "stat-item" }, [
@@ -2389,7 +2772,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("text", { class: "section-title" }, "仓库管理"),
           vue.createElementVNode("text", {
             class: "section-action",
-            onClick: _cache[0] || (_cache[0] = (...args) => $options.addWarehouse && $options.addWarehouse(...args))
+            onClick: _cache[2] || (_cache[2] = (...args) => $options.addWarehouse && $options.addWarehouse(...args))
           }, "新增仓库")
         ]),
         vue.createElementVNode("view", { class: "warehouse-list" }, [
@@ -2458,7 +2841,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("text", { class: "section-title" }, "采购单入仓"),
           vue.createElementVNode("text", {
             class: "section-action",
-            onClick: _cache[1] || (_cache[1] = (...args) => $options.processInbound && $options.processInbound(...args))
+            onClick: _cache[3] || (_cache[3] = (...args) => $options.processInbound && $options.processInbound(...args))
           }, "处理入仓")
         ]),
         vue.createElementVNode("view", { class: "inbound-list" }, [
@@ -2527,7 +2910,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("text", { class: "section-title" }, "库存状态"),
           vue.createElementVNode("text", {
             class: "section-action",
-            onClick: _cache[2] || (_cache[2] = (...args) => $options.updateStatus && $options.updateStatus(...args))
+            onClick: _cache[4] || (_cache[4] = (...args) => $options.updateStatus && $options.updateStatus(...args))
           }, "更新状态")
         ]),
         vue.createElementVNode("view", { class: "inventory-list" }, [
@@ -2612,7 +2995,7 @@ if (uni.restoreGlobal) {
           vue.createElementVNode("text", { class: "section-title" }, "货期提醒"),
           vue.createElementVNode("text", {
             class: "section-action",
-            onClick: _cache[3] || (_cache[3] = (...args) => $options.setExpiryReminder && $options.setExpiryReminder(...args))
+            onClick: _cache[5] || (_cache[5] = (...args) => $options.setExpiryReminder && $options.setExpiryReminder(...args))
           }, "设置提醒")
         ]),
         vue.createElementVNode("view", { class: "expiry-list" }, [
@@ -2724,16 +3107,77 @@ if (uni.restoreGlobal) {
       vue.createCommentVNode(" 悬浮添加按钮 "),
       vue.createElementVNode("view", {
         class: "fab-button",
-        onClick: _cache[4] || (_cache[4] = (...args) => $options.addWarehouse && $options.addWarehouse(...args))
+        onClick: _cache[6] || (_cache[6] = (...args) => $options.addWarehouse && $options.addWarehouse(...args))
       }, [
         vue.createElementVNode("text", { class: "fab-icon" }, "+")
       ])
     ]);
   }
   const PagesWarehouseWarehouse = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-41554ef3"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/warehouse/warehouse.vue"]]);
+  const scriptRel = "modulepreload";
+  const assetsURL = function(dep) {
+    return "/" + dep;
+  };
+  const seen = {};
+  const __vitePreload = function preload(baseModule, deps, importerUrl) {
+    let promise = Promise.resolve();
+    if (false) {
+      const links = document.getElementsByTagName("link");
+      const cspNonceMeta = document.querySelector("meta[property=csp-nonce]");
+      const cspNonce = (cspNonceMeta == null ? void 0 : cspNonceMeta.nonce) || (cspNonceMeta == null ? void 0 : cspNonceMeta.getAttribute("nonce"));
+      promise = Promise.all(deps.map((dep) => {
+        dep = assetsURL(dep);
+        if (dep in seen)
+          return;
+        seen[dep] = true;
+        const isCss = dep.endsWith(".css");
+        const cssSelector = isCss ? '[rel="stylesheet"]' : "";
+        const isBaseRelative = !!importerUrl;
+        if (isBaseRelative) {
+          for (let i = links.length - 1; i >= 0; i--) {
+            const link2 = links[i];
+            if (link2.href === dep && (!isCss || link2.rel === "stylesheet")) {
+              return;
+            }
+          }
+        } else if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
+          return;
+        }
+        const link = document.createElement("link");
+        link.rel = isCss ? "stylesheet" : scriptRel;
+        if (!isCss) {
+          link.as = "script";
+          link.crossOrigin = "";
+        }
+        link.href = dep;
+        if (cspNonce) {
+          link.setAttribute("nonce", cspNonce);
+        }
+        document.head.appendChild(link);
+        if (isCss) {
+          return new Promise((res, rej) => {
+            link.addEventListener("load", res);
+            link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
+          });
+        }
+      }));
+    }
+    return promise.then(() => baseModule()).catch((err) => {
+      const e = new Event("vite:preloadError", { cancelable: true });
+      e.payload = err;
+      window.dispatchEvent(e);
+      if (!e.defaultPrevented) {
+        throw err;
+      }
+    });
+  };
   const _sfc_main$8 = {
+    components: {
+      SlideMenu: () => __vitePreload(() => Promise.resolve().then(() => SlideMenu$1), false ? "__VITE_PRELOAD__" : void 0)
+    },
     data() {
       return {
+        slideMenuVisible: false,
         currentLevel: "all",
         customerStats: {
           total: 234,
@@ -2861,11 +3305,49 @@ if (uni.restoreGlobal) {
             }
           }
         });
+      },
+      // 显示侧滑菜单
+      showSlideMenu() {
+        this.slideMenuVisible = true;
+      },
+      // 隐藏侧滑菜单
+      hideSlideMenu() {
+        this.slideMenuVisible = false;
+      },
+      // 跳转到统计页面
+      gotoChart() {
+        uni.navigateTo({
+          url: "/pages/statistics/statistics"
+        });
       }
     }
   };
   function _sfc_render$7(_ctx, _cache, $props, $setup, $data, $options) {
+    const _component_SlideMenu = vue.resolveComponent("SlideMenu");
     return vue.openBlock(), vue.createElementBlock("view", { class: "customer-container" }, [
+      vue.createCommentVNode(" 头部导航 "),
+      vue.createElementVNode("view", { class: "header" }, [
+        vue.createElementVNode("view", {
+          class: "header-left",
+          onClick: _cache[0] || (_cache[0] = (...args) => $options.showSlideMenu && $options.showSlideMenu(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "👤")
+        ]),
+        vue.createElementVNode("view", { class: "header-center" }, [
+          vue.createElementVNode("text", { class: "header-title" }, "客户管理")
+        ]),
+        vue.createElementVNode("view", {
+          class: "header-right",
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.gotoChart && $options.gotoChart(...args))
+        }, [
+          vue.createElementVNode("text", { class: "header-icon" }, "📊")
+        ])
+      ]),
+      vue.createCommentVNode(" 侧滑菜单 "),
+      vue.createVNode(_component_SlideMenu, {
+        visible: $data.slideMenuVisible,
+        onClose: $options.hideSlideMenu
+      }, null, 8, ["visible", "onClose"]),
       vue.createCommentVNode(" 客户统计 "),
       vue.createElementVNode("view", { class: "stats-section" }, [
         vue.createElementVNode("view", { class: "stat-item" }, [
@@ -2920,7 +3402,7 @@ if (uni.restoreGlobal) {
               "text",
               {
                 class: vue.normalizeClass(["level-item", { active: $data.currentLevel === "all" }]),
-                onClick: _cache[0] || (_cache[0] = ($event) => $options.setLevel("all"))
+                onClick: _cache[2] || (_cache[2] = ($event) => $options.setLevel("all"))
               },
               "全部",
               2
@@ -2930,7 +3412,7 @@ if (uni.restoreGlobal) {
               "text",
               {
                 class: vue.normalizeClass(["level-item", { active: $data.currentLevel === "vip" }]),
-                onClick: _cache[1] || (_cache[1] = ($event) => $options.setLevel("vip"))
+                onClick: _cache[3] || (_cache[3] = ($event) => $options.setLevel("vip"))
               },
               "VIP",
               2
@@ -2940,7 +3422,7 @@ if (uni.restoreGlobal) {
               "text",
               {
                 class: vue.normalizeClass(["level-item", { active: $data.currentLevel === "regular" }]),
-                onClick: _cache[2] || (_cache[2] = ($event) => $options.setLevel("regular"))
+                onClick: _cache[4] || (_cache[4] = ($event) => $options.setLevel("regular"))
               },
               "普通",
               2
@@ -2950,7 +3432,7 @@ if (uni.restoreGlobal) {
               "text",
               {
                 class: vue.normalizeClass(["level-item", { active: $data.currentLevel === "new" }]),
-                onClick: _cache[3] || (_cache[3] = ($event) => $options.setLevel("new"))
+                onClick: _cache[5] || (_cache[5] = ($event) => $options.setLevel("new"))
               },
               "新客户",
               2
@@ -3069,7 +3551,7 @@ if (uni.restoreGlobal) {
       vue.createCommentVNode(" 悬浮添加按钮 "),
       vue.createElementVNode("view", {
         class: "fab-button",
-        onClick: _cache[4] || (_cache[4] = (...args) => $options.addCustomer && $options.addCustomer(...args))
+        onClick: _cache[6] || (_cache[6] = (...args) => $options.addCustomer && $options.addCustomer(...args))
       }, [
         vue.createElementVNode("text", { class: "fab-icon" }, "+")
       ])
@@ -6259,39 +6741,49 @@ if (uni.restoreGlobal) {
     },
     onLaunch: function() {
       formatAppLog("log", "at App.vue:11", "App Launch");
-      this.initApp();
-      this.checkNetworkStatus();
-      this.checkLoginStatus();
+      try {
+        this.initStorage();
+        this.checkNetworkStatus();
+        this.checkLoginStatus();
+      } catch (error) {
+        formatAppLog("error", "at App.vue:24", "应用初始化失败:", error);
+      }
     },
     onShow: function() {
-      formatAppLog("log", "at App.vue:24", "App Show");
-      this.startNetworkListener();
+      formatAppLog("log", "at App.vue:29", "App Show");
     },
     onHide: function() {
-      formatAppLog("log", "at App.vue:31", "App Hide");
-      this.stopNetworkListener();
+      formatAppLog("log", "at App.vue:35", "App Hide");
     },
-    // 初始化应用
+    // 初始化应用（简化版）
     initApp() {
-      this.setupGlobalErrorHandler();
-      this.initStorage();
+      try {
+        this.setupGlobalErrorHandler();
+        this.initStorage();
+      } catch (error) {
+        formatAppLog("error", "at App.vue:49", "初始化应用失败:", error);
+      }
     },
     // 设置全局错误处理
     setupGlobalErrorHandler() {
-      uni.onUnhandledRejection(({ reason, promise }) => {
-        formatAppLog("error", "at App.vue:50", "未处理的Promise错误:", reason);
-        uni.showToast({
-          title: "操作失败，请重试",
-          icon: "none"
+      try {
+        uni.onUnhandledRejection(({ reason, promise }) => {
+          formatAppLog("error", "at App.vue:58", "未处理的Promise错误:", reason);
+          uni.showToast({
+            title: "操作失败，请重试",
+            icon: "none"
+          });
         });
-      });
-      uni.onError((error) => {
-        formatAppLog("error", "at App.vue:59", "全局错误:", error);
-        uni.showToast({
-          title: "系统异常，请重启应用",
-          icon: "none"
+        uni.onError((error) => {
+          formatAppLog("error", "at App.vue:67", "全局错误:", error);
+          uni.showToast({
+            title: "系统异常，请重启应用",
+            icon: "none"
+          });
         });
-      });
+      } catch (error) {
+        formatAppLog("error", "at App.vue:74", "设置全局错误处理失败:", error);
+      }
     },
     // 初始化存储
     initStorage() {
@@ -6304,69 +6796,81 @@ if (uni.restoreGlobal) {
           this.globalData.isLogin = true;
         }
       } catch (error) {
-        formatAppLog("error", "at App.vue:80", "初始化存储失败:", error);
+        formatAppLog("error", "at App.vue:91", "初始化存储失败:", error);
       }
     },
     // 检查网络状态
     checkNetworkStatus() {
-      uni.getNetworkType({
-        success: (res) => {
-          this.globalData.networkStatus = res.networkType !== "none";
-          if (!this.globalData.networkStatus) {
-            uni.showToast({
-              title: "网络连接异常",
-              icon: "none"
-            });
+      try {
+        uni.getNetworkType({
+          success: (res) => {
+            this.globalData.networkStatus = res.networkType !== "none";
+            if (!this.globalData.networkStatus) {
+              uni.showToast({
+                title: "网络连接异常",
+                icon: "none"
+              });
+            }
+          },
+          fail: (error) => {
+            formatAppLog("error", "at App.vue:109", "获取网络状态失败:", error);
+            this.globalData.networkStatus = true;
           }
-        }
-      });
+        });
+      } catch (error) {
+        formatAppLog("error", "at App.vue:114", "检查网络状态失败:", error);
+        this.globalData.networkStatus = true;
+      }
     },
-    // 开始网络监听
+    // 开始网络监听（简化版）
     startNetworkListener() {
-      uni.onNetworkStatusChange((res) => {
-        this.globalData.networkStatus = res.isConnected;
-        if (!res.isConnected) {
-          uni.showToast({
-            title: "网络连接已断开",
-            icon: "none"
-          });
-        } else {
-          uni.showToast({
-            title: "网络已连接",
-            icon: "success"
-          });
-        }
-      });
+      formatAppLog("log", "at App.vue:121", "网络监听功能已禁用");
     },
-    // 停止网络监听
+    // 停止网络监听（简化版）
     stopNetworkListener() {
-      formatAppLog("log", "at App.vue:120", "停止网络监听");
+      formatAppLog("log", "at App.vue:127", "网络监听功能已禁用");
     },
     // 检查登录状态
     checkLoginStatus() {
-      if (this.globalData.isLogin) {
-        this.validateToken();
+      try {
+        if (this.globalData.isLogin) {
+          this.validateToken();
+        }
+      } catch (error) {
+        formatAppLog("error", "at App.vue:139", "检查登录状态失败:", error);
       }
     },
     // 验证token
     validateToken() {
-      setTimeout(() => {
-        if (Math.random() > 0.8) {
-          this.clearLoginStatus();
-          uni.showToast({
-            title: "登录已过期，请重新登录",
-            icon: "none"
-          });
-        }
-      }, 1e3);
+      try {
+        setTimeout(() => {
+          try {
+            if (Math.random() > 0.8) {
+              this.clearLoginStatus();
+              uni.showToast({
+                title: "登录已过期，请重新登录",
+                icon: "none"
+              });
+            }
+          } catch (error) {
+            formatAppLog("error", "at App.vue:160", "验证token失败:", error);
+          }
+        }, 1e3);
+      } catch (error) {
+        formatAppLog("error", "at App.vue:164", "验证token失败:", error);
+      }
     },
     // 清除登录状态
     clearLoginStatus() {
-      this.globalData.userInfo = null;
-      this.globalData.token = null;
-      this.globalData.isLogin = false;
-      uni.removeStorageSync("userInfo");
-      uni.removeStorageSync("token");
+      try {
+        this.globalData.userInfo = null;
+        this.globalData.token = null;
+        this.globalData.isLogin = false;
+        uni.removeStorageSync("userInfo");
+        uni.removeStorageSync("token");
+      } catch (error) {
+        formatAppLog("error", "at App.vue:179", "清除登录状态失败:", error);
+      }
     },
     // 保存登录状态
     saveLoginStatus(userInfo, token) {
