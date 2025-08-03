@@ -125,9 +125,8 @@ export default {
           })
           break
         case 'settingCategoryPage':
-          uni.showToast({
-            title: '商品分类设置功能开发中',
-            icon: 'none',
+          uni.navigateTo({
+            url: '/pages/setting-category/setting-category'
           })
           break
         case 'settingExchangeratePage':

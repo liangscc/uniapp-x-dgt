@@ -89,6 +89,13 @@
 			"style": {
 				"navigationBarTitleText": "客户详情"
 			}
+		},
+		{
+			"path": "pages/setting-category/setting-category",
+			"style": {
+				"navigationBarTitleText": "商品分类设置",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {
