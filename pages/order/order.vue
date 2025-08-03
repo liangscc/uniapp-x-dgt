@@ -354,11 +354,8 @@ export default {
 <style scoped>
 .order-container {
   min-height: 100vh;
-  background: #f5f5f5;
-  padding-bottom: 120rpx;
-  /* 为自定义 tabbar 留出空间 */
+  background: var(--background-color);
   padding-bottom: calc(120rpx + 100rpx);
-  /* 为固定 header 留出空间 */
   padding-top: calc(120rpx + var(--status-bar-height));
 }
 
@@ -368,14 +365,14 @@ export default {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #007aff;
-  padding: 20rpx 40rpx;
-  padding-top: calc(20rpx + var(--status-bar-height));
+  background: var(--primary-color);
+  padding: var(--spacing-md) var(--spacing-xl);
+  padding-top: calc(var(--spacing-md) + var(--status-bar-height));
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-medium);
 }
 
 .header-left,
@@ -385,12 +382,20 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   background: rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.header-left:active,
+.header-right:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
 }
 
 .header-icon {
-  font-size: 32rpx;
+  font-size: var(--font-size-lg);
+  color: #FFFFFF;
 }
 
 .header-center {
@@ -399,17 +404,19 @@ export default {
 }
 
 .header-title {
-  font-size: 32rpx;
-  font-weight: bold;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: #FFFFFF;
 }
 
 .stats-section {
-  background: #fff;
-  margin: 20rpx 40rpx;
-  border-radius: 20rpx;
-  padding: 40rpx;
+  background: var(--card-background);
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-xl);
+  margin: var(--spacing-md) var(--spacing-xl);
   display: flex;
   justify-content: space-between;
+  box-shadow: var(--shadow-light);
 }
 
 .stat-item {
@@ -419,69 +426,83 @@ export default {
 
 .stat-number {
   display: block;
-  font-size: 36rpx;
+  font-size: var(--font-size-xl);
   font-weight: bold;
-  color: #007aff;
-  margin-bottom: 10rpx;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-xs);
 }
 
 .stat-label {
-  font-size: 24rpx;
-  color: #666;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
 }
 
 .filter-section {
-  background: #fff;
-  margin: 0 40rpx 20rpx;
-  border-radius: 20rpx;
-  padding: 30rpx 40rpx;
+  background: var(--card-background);
+  margin: 0 var(--spacing-xl) var(--spacing-md);
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-lg) var(--spacing-xl);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: var(--shadow-light);
 }
 
 .filter-tabs {
   display: flex;
-  gap: 40rpx;
+  gap: var(--spacing-xl);
 }
 
 .filter-tab {
-  font-size: 28rpx;
-  color: #666;
-  padding: 10rpx 20rpx;
-  border-radius: 20rpx;
-  transition: all 0.3s;
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-medium);
+  transition: all 0.3s ease;
 }
 
 .filter-tab.active {
-  background: #007aff;
-  color: #fff;
+  background: var(--primary-color);
+  color: #FFFFFF;
 }
 
 .search-btn {
   width: 60rpx;
   height: 60rpx;
-  background: #f8f9fa;
-  border-radius: 50%;
+  background: var(--divider-color);
+  border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.search-btn:active {
+  background: var(--border-color);
+  transform: scale(0.95);
 }
 
 .search-icon {
-  font-size: 28rpx;
+  font-size: var(--font-size-md);
+  color: var(--text-secondary);
 }
 
 .order-list {
-  padding: 0 40rpx;
+  padding: 0 var(--spacing-xl);
 }
 
 .order-item {
-  background: #fff;
-  border-radius: 20rpx;
-  padding: 30rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  background: var(--card-background);
+  border-radius: var(--radius-medium);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-light);
+  transition: all 0.2s ease;
+}
+
+.order-item:active {
+  transform: scale(0.98);
+  box-shadow: var(--shadow-medium);
 }
 
 .order-header {
@@ -604,44 +625,54 @@ export default {
 
 .empty-state {
   text-align: center;
-  padding: 100rpx 40rpx;
+  padding: 200rpx var(--spacing-xl);
 }
 
 .empty-icon {
-  font-size: 80rpx;
-  margin-bottom: 30rpx;
+  font-size: 120rpx;
+  margin-bottom: var(--spacing-xl);
+  opacity: 0.6;
   display: block;
 }
 
 .empty-text {
   display: block;
-  font-size: 32rpx;
-  color: #666;
-  margin-bottom: 20rpx;
+  font-size: var(--font-size-lg);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-md);
+  font-weight: 500;
 }
 
 .empty-tip {
-  font-size: 26rpx;
-  color: #999;
+  font-size: var(--font-size-md);
+  color: var(--text-tertiary);
+  line-height: var(--line-height-relaxed);
 }
 
 .fab-button {
   position: fixed;
-  bottom: 40rpx;
-  right: 40rpx;
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
   width: 100rpx;
   height: 100rpx;
-  background: #007aff;
-  border-radius: 50%;
+  background: var(--primary-color);
+  border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 20rpx rgba(0, 122, 255, 0.3);
+  box-shadow: var(--shadow-heavy);
+  transition: all 0.2s ease;
+  z-index: 999;
+}
+
+.fab-button:active {
+  transform: scale(0.9);
+  box-shadow: var(--shadow-medium);
 }
 
 .fab-icon {
-  color: #fff;
-  font-size: 40rpx;
+  color: #FFFFFF;
+  font-size: var(--font-size-xl);
   font-weight: bold;
 }
 </style>

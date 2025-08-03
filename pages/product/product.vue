@@ -227,12 +227,10 @@ export default {
 <style scoped>
 .product-container {
   height: 100vh;
-  background: #f5f5f5;
+  background: var(--background-color);
   display: flex;
   flex-direction: column;
-  /* 为自定义 tabbar 留出空间 */
   padding-bottom: 100rpx;
-  /* 为固定 header 留出空间 */
   padding-top: calc(120rpx + var(--status-bar-height));
 }
 
@@ -242,14 +240,14 @@ export default {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #007aff;
-  padding: 20rpx 40rpx;
-  padding-top: calc(20rpx + var(--status-bar-height));
+  background: var(--primary-color);
+  padding: var(--spacing-md) var(--spacing-xl);
+  padding-top: calc(var(--spacing-md) + var(--status-bar-height));
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #fff;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-medium);
 }
 
 .header-left,
@@ -259,12 +257,20 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   background: rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+}
+
+.header-left:active,
+.header-right:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
 }
 
 .header-icon {
-  font-size: 32rpx;
+  font-size: var(--font-size-lg);
+  color: #FFFFFF;
 }
 
 .header-center {
@@ -273,8 +279,9 @@ export default {
 }
 
 .header-title {
-  font-size: 32rpx;
-  font-weight: bold;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+  color: #FFFFFF;
 }
 
 .category-wrap {
@@ -366,21 +373,28 @@ export default {
 
 .fab-button {
   position: fixed;
-  bottom: 40rpx;
-  right: 40rpx;
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
   width: 100rpx;
   height: 100rpx;
-  background: #007aff;
-  border-radius: 50%;
+  background: var(--primary-color);
+  border-radius: var(--radius-circle);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 20rpx rgba(0, 122, 255, 0.3);
+  box-shadow: var(--shadow-heavy);
+  transition: all 0.2s ease;
+  z-index: 999;
+}
+
+.fab-button:active {
+  transform: scale(0.9);
+  box-shadow: var(--shadow-medium);
 }
 
 .fab-icon {
-  color: #fff;
-  font-size: 40rpx;
+  color: #FFFFFF;
+  font-size: var(--font-size-xl);
   font-weight: bold;
 }
 </style>

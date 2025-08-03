@@ -203,6 +203,8 @@ export default {
 /*每个页面公共css */
 /* 官方 css 库 */
 @import './common/uni.css';
+/* UI设计规范样式 */
+@import './common/ui-design.css';
 /* iconfont */
 @import './common/iconfont/iconfont.css';
 /* 动画库 */
@@ -214,12 +216,6 @@ export default {
 *:after {
   box-sizing: border-box;
 }
-page {
-  background-color: #f8f8f8;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
-    'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
-    sans-serif;
-}
 
 /* 应用容器 */
 #app {
@@ -228,74 +224,7 @@ page {
 
 /* 通用容器样式 */
 .container {
-  padding: 20rpx;
-}
-
-/* 卡片样式 */
-.card {
-  background: #fff;
-  border-radius: 16rpx;
-  padding: 24rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
-}
-
-/* 按钮样式 */
-.btn-primary {
-  background: linear-gradient(135deg, #007aff 0%, #0056cc 100%);
-  color: #fff;
-  border: none;
-  border-radius: 12rpx;
-  padding: 20rpx 40rpx;
-  font-size: 28rpx;
-  font-weight: 500;
-}
-
-.btn-secondary {
-  background: #f0f0f0;
-  color: #333;
-  border: 1rpx solid #ddd;
-  border-radius: 12rpx;
-  padding: 20rpx 40rpx;
-  font-size: 28rpx;
-}
-
-/* 输入框样式 */
-.input-field {
-  background: #fff;
-  border: 1rpx solid #e0e0e0;
-  border-radius: 12rpx;
-  padding: 24rpx;
-  font-size: 28rpx;
-  margin-bottom: 20rpx;
-}
-
-/* 状态标签样式 */
-.status-tag {
-  padding: 8rpx 16rpx;
-  border-radius: 20rpx;
-  font-size: 24rpx;
-  font-weight: 500;
-}
-
-.status-success {
-  background: #e8f5e8;
-  color: #52c41a;
-}
-
-.status-warning {
-  background: #fff7e6;
-  color: #fa8c16;
-}
-
-.status-error {
-  background: #fff2f0;
-  color: #ff4d4f;
-}
-
-.status-info {
-  background: #e6f7ff;
-  color: #1890ff;
+  padding: var(--spacing-md);
 }
 
 /* 加载状态 */
@@ -303,20 +232,7 @@ page {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40rpx;
-  color: #999;
-}
-
-/* 空状态 */
-.empty-state {
-  text-align: center;
-  padding: 80rpx 40rpx;
-  color: #999;
-}
-
-.empty-state image {
-  width: 200rpx;
-  height: 200rpx;
-  margin-bottom: 20rpx;
+  padding: var(--spacing-xl);
+  color: var(--text-tertiary);
 }
 </style>
