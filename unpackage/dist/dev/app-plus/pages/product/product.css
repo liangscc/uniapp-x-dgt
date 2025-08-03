@@ -229,8 +229,15 @@ to {
   flex-direction: column;
   /* 为自定义 tabbar 留出空间 */
   padding-bottom: 3.125rem;
+  /* 为固定 header 留出空间 */
+  padding-top: calc(3.75rem + var(--status-bar-height));
 }
 .header[data-v-946a9793] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background: #007aff;
   padding: 0.625rem 1.25rem;
   padding-top: calc(0.625rem + var(--status-bar-height));
@@ -238,6 +245,7 @@ to {
   justify-content: space-between;
   align-items: center;
   color: #fff;
+  box-shadow: 0 0.0625rem 0.3125rem rgba(0, 0, 0, 0.1);
 }
 .header-left[data-v-946a9793],
 .header-right[data-v-946a9793] {

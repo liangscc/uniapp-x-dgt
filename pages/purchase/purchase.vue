@@ -399,9 +399,16 @@ export default {
   padding-bottom: 120rpx;
   /* 为自定义 tabbar 留出空间 */
   padding-bottom: calc(120rpx + 100rpx);
+  /* 为固定 header 留出空间 */
+  padding-top: calc(120rpx + var(--status-bar-height));
 }
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background: #007aff;
   padding: 20rpx 40rpx;
   padding-top: calc(20rpx + var(--status-bar-height));
@@ -409,6 +416,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   color: #fff;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
 }
 
 .header-left,
