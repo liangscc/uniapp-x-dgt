@@ -5,77 +5,72 @@
     
     <!-- 侧滑菜单 -->
     <view class="slide-menu" :class="{ 'slide-in': visible }">
-      <!-- 个人中心内容 -->
-      <view class="profile-content">
-        <!-- 用户信息头部 -->
-        <view class="user-header">
-          <view class="user-info">
+      <!-- 菜单内容 -->
+      <view class="menu-content">
+        <!-- 头部区域 -->
+        <view class="margin-top" :style="{ paddingTop: statusBarHeight + 'px' }">
+          <view class="close-icon" @click="closeMenu">
+            <text class="icon">✕</text>
+          </view>
+          <view class="user-item" @click="gotoUserPage">
             <view class="user-avatar">
-              <text class="avatar-text">{{ userInfo.name.charAt(0) }}</text>
-            </view>
-            <view class="user-details">
-              <text class="user-name">{{ userInfo.name }}</text>
-              <text class="user-phone">{{ userInfo.phone }}</text>
-              <text class="user-level">{{ userInfo.level }}</text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 基本功能 -->
-        <view class="section">
-          <view class="section-title">基本功能</view>
-          <view class="menu-list">
-            <view class="menu-item" @click="handleMenuClick('editProfile')">
-              <view class="menu-icon">👤</view>
-              <text class="menu-text">编辑资料</text>
-              <text class="menu-arrow">></text>
-            </view>
-            <view class="menu-item" @click="handleMenuClick('changePassword')">
-              <view class="menu-icon">🔑</view>
-              <text class="menu-text">改密码</text>
-              <text class="menu-arrow">></text>
-            </view>
-            <view class="menu-item" @click="handleMenuClick('upgradeMember')">
-              <view class="menu-icon">👑</view>
-              <text class="menu-text">开通会员</text>
-              <text class="menu-arrow">></text>
-            </view>
-          </view>
-        </view>
-
-        <!-- 设置 -->
-        <view class="section">
-          <view class="section-title">设置</view>
-          <view class="menu-list">
-            <view class="menu-item" @click="handleMenuClick('customColors')">
-              <view class="menu-icon">🎨</view>
-              <text class="menu-text">自定义颜色</text>
-              <text class="menu-arrow">></text>
-            </view>
-            <view class="menu-item" @click="handleMenuClick('customCategories')">
-              <view class="menu-icon">📂</view>
-              <text class="menu-text">自定义分类</text>
-              <text class="menu-arrow">></text>
-            </view>
-            <view class="menu-item">
-              <view class="menu-icon">🔔</view>
-              <text class="menu-text">消息通知</text>
-              <switch
-                :checked="settings.notifications"
-                @change="toggleNotifications"
+              <image 
+                :src="userInfo.avatar || '/static/default-avatar.png'" 
+                class="avatar-img"
+                mode="aspectFill"
               />
             </view>
-            <view class="menu-item">
-              <view class="menu-icon">👁️</view>
-              <text class="menu-text">隐藏金额</text>
-              <switch :checked="settings.hideAmount" @change="toggleHideAmount" />
+            <view class="user-info">
+              <text class="username">{{ userInfo.name }}</text>
+              <text class="user-desc">查看个人主页或编辑简介</text>
             </view>
           </view>
         </view>
 
-        <!-- 退出登录 -->
-        <view class="logout-section">
-          <button class="logout-btn" @click="handleLogout">退出登录</button>
+        <!-- 菜单列表 -->
+        <view class="list-wrap">
+          <view class="menu-list">
+            <view class="menu-item" @click="openPage('todoPage')">
+              <view class="menu-icon">📋</view>
+              <text class="menu-text">待办查看</text>
+              <view class="menu-arrow">›</view>
+            </view>
+            <view class="menu-item" @click="openPage('settingCategoryPage')">
+              <view class="menu-icon">📂</view>
+              <text class="menu-text">商品分类设置</text>
+              <view class="menu-arrow">›</view>
+            </view>
+            <view class="menu-item" @click="openPage('settingExchangeratePage')">
+              <view class="menu-icon">💱</view>
+              <text class="menu-text">汇率设置</text>
+              <view class="menu-arrow">›</view>
+            </view>
+            <view class="menu-item" @click="openPage('settingColorPage')">
+              <view class="menu-icon">🎨</view>
+              <text class="menu-text">颜色设置</text>
+              <view class="menu-arrow">›</view>
+            </view>
+            <view class="menu-item" @click="openPage('settingSharePage')">
+              <view class="menu-icon">📤</view>
+              <text class="menu-text">分享</text>
+              <view class="menu-arrow">›</view>
+            </view>
+            <view class="menu-item" @click="openPage('settingMemberPage')">
+              <view class="menu-icon">👑</view>
+              <text class="menu-text">开通会员</text>
+              <view class="menu-arrow">›</view>
+            </view>
+            <view class="menu-item" @click="openPage('settingHelpPage')">
+              <view class="menu-icon">❓</view>
+              <text class="menu-text">帮助与留言</text>
+              <view class="menu-arrow">›</view>
+            </view>
+            <view class="menu-item" @click="openPage('settingContactusPage')">
+              <view class="menu-icon">📞</view>
+              <text class="menu-text">联系我们</text>
+              <view class="menu-arrow">›</view>
+            </view>
+          </view>
         </view>
       </view>
     </view>
@@ -93,87 +88,85 @@ export default {
   },
   data() {
     return {
+      statusBarHeight: 0,
       userInfo: {
         name: '管理员',
+        avatar: '',
         phone: '138****8888',
         level: 'VIP会员',
       },
-      settings: {
-        notifications: true,
-        hideAmount: false,
-      },
     }
+  },
+  mounted() {
+    // 获取状态栏高度
+    const systemInfo = uni.getSystemInfoSync()
+    this.statusBarHeight = systemInfo.statusBarHeight || 0
   },
   methods: {
     closeMenu() {
       this.$emit('close')
     },
     
-    handleMenuClick(action) {
+    gotoUserPage() {
       this.closeMenu()
-      switch (action) {
-        case 'editProfile':
+      uni.showToast({
+        title: '个人主页功能开发中',
+        icon: 'none',
+      })
+    },
+    
+    openPage(pageName) {
+      this.closeMenu()
+      switch (pageName) {
+        case 'todoPage':
           uni.showToast({
-            title: '编辑资料功能开发中',
+            title: '待办查看功能开发中',
             icon: 'none',
           })
           break
-        case 'changePassword':
+        case 'settingCategoryPage':
           uni.showToast({
-            title: '改密码功能开发中',
+            title: '商品分类设置功能开发中',
             icon: 'none',
           })
           break
-        case 'upgradeMember':
+        case 'settingExchangeratePage':
+          uni.showToast({
+            title: '汇率设置功能开发中',
+            icon: 'none',
+          })
+          break
+        case 'settingColorPage':
+          uni.showToast({
+            title: '颜色设置功能开发中',
+            icon: 'none',
+          })
+          break
+        case 'settingSharePage':
+          uni.showToast({
+            title: '分享功能开发中',
+            icon: 'none',
+          })
+          break
+        case 'settingMemberPage':
           uni.showToast({
             title: '开通会员功能开发中',
             icon: 'none',
           })
           break
-        case 'customColors':
+        case 'settingHelpPage':
           uni.showToast({
-            title: '自定义颜色功能开发中',
+            title: '帮助与留言功能开发中',
             icon: 'none',
           })
           break
-        case 'customCategories':
+        case 'settingContactusPage':
           uni.showToast({
-            title: '自定义分类功能开发中',
+            title: '联系我们功能开发中',
             icon: 'none',
           })
           break
       }
-    },
-    
-    toggleNotifications(e) {
-      this.settings.notifications = e.detail.value
-      uni.showToast({
-        title: this.settings.notifications ? '已开启通知' : '已关闭通知',
-        icon: 'none',
-      })
-    },
-    
-    toggleHideAmount(e) {
-      this.settings.hideAmount = e.detail.value
-      uni.showToast({
-        title: this.settings.hideAmount ? '已隐藏金额' : '已显示金额',
-        icon: 'none',
-      })
-    },
-    
-    handleLogout() {
-      uni.showModal({
-        title: '确认退出',
-        content: '确定要退出登录吗？',
-        success: (res) => {
-          if (res.confirm) {
-            this.closeMenu()
-            uni.reLaunch({
-              url: '/pages/login/login',
-            })
-          }
-        },
-      })
     }
   }
 }
@@ -196,157 +189,182 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.4);
   animation: fadeIn 0.3s ease;
   z-index: 9998;
-  /* 确保覆盖tabBar */
   height: 100vh;
+  backdrop-filter: blur(4rpx);
 }
 
 .slide-menu {
   position: fixed;
   top: 0;
   left: -100%;
-  width: 80%;
+  width: 85%;
   height: 100vh;
-  background: #fff;
-  box-shadow: 2rpx 0 20rpx rgba(0, 0, 0, 0.1);
-  transition: left 0.3s ease;
+  background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+  box-shadow: 8rpx 0 40rpx rgba(0, 0, 0, 0.15);
+  transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   overflow-y: auto;
   z-index: 10000;
-  /* 确保覆盖tabBar */
   bottom: 0;
+  border-radius: 0 24rpx 24rpx 0;
 }
 
 .slide-menu.slide-in {
   left: 0;
 }
 
-.profile-content {
+.menu-content {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.user-header {
+.margin-top {
+  padding: 30rpx 40rpx;
+  position: relative;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 60rpx 40rpx 40rpx;
-  color: #fff;
-  padding-top: calc(60rpx + var(--status-bar-height));
+  border-radius: 0 24rpx 0 0;
 }
 
-.user-info {
+.close-icon {
+  position: absolute;
+  top: 30rpx;
+  right: 40rpx;
+  width: 70rpx;
+  height: 70rpx;
   display: flex;
   align-items: center;
+  justify-content: center;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(10rpx);
+}
+
+.close-icon .icon {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: 300;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  padding: 40rpx 0;
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.1);
 }
 
 .user-avatar {
   margin-right: 30rpx;
+  position: relative;
 }
 
-.avatar-text {
-  width: 100rpx;
-  height: 100rpx;
-  background: rgba(255, 255, 255, 0.2);
-  color: #fff;
+.avatar-img {
+  width: 120rpx;
+  height: 120rpx;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40rpx;
-  font-weight: bold;
+  background: rgba(255, 255, 255, 0.2);
+  border: 4rpx solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
 }
 
-.user-details {
+.user-info {
   display: flex;
   flex-direction: column;
-}
-
-.user-name {
-  font-size: 36rpx;
-  font-weight: bold;
-  margin-bottom: 10rpx;
-}
-
-.user-phone {
-  font-size: 28rpx;
-  opacity: 0.8;
-  margin-bottom: 5rpx;
-}
-
-.user-level {
-  font-size: 24rpx;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 4rpx 12rpx;
-  border-radius: 15rpx;
-  align-self: flex-start;
-}
-
-.section {
-  padding: 40rpx;
   flex: 1;
 }
 
-.section-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-  margin-bottom: 30rpx;
+.username {
+  font-size: 40rpx;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12rpx;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.user-desc {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.4;
+}
+
+.list-wrap {
+  flex: 1;
+  padding: 40rpx 0;
 }
 
 .menu-list {
   display: flex;
   flex-direction: column;
-  gap: 20rpx;
+  padding: 0 40rpx;
 }
 
 .menu-item {
   display: flex;
   align-items: center;
-  padding: 25rpx 0;
-  border-bottom: 1rpx solid #f0f0f0;
+  padding: 32rpx 24rpx;
+  margin-bottom: 8rpx;
+  border-radius: 16rpx;
+  background: #fff;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.menu-item:last-child {
-  border-bottom: none;
+.menu-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: -1;
+}
+
+.menu-item:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.menu-item:active::before {
+  opacity: 0.05;
 }
 
 .menu-icon {
   width: 60rpx;
   height: 60rpx;
-  background: #f8f9fa;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 28rpx;
-  margin-right: 25rpx;
+  margin-right: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
 }
 
 .menu-text {
-  font-size: 30rpx;
-  color: #333;
-  font-weight: bold;
+  font-size: 32rpx;
+  color: #2c3e50;
+  font-weight: 500;
   flex: 1;
 }
 
 .menu-arrow {
-  font-size: 28rpx;
-  color: #ccc;
-}
-
-.logout-section {
-  padding: 40rpx;
-}
-
-.logout-btn {
-  width: 100%;
-  height: 88rpx;
-  background: #ff3b30;
-  color: #fff;
-  border-radius: 44rpx;
   font-size: 32rpx;
-  border: none;
+  color: #bdc3c7;
+  font-weight: 300;
+  transition: transform 0.2s ease;
+}
+
+.menu-item:active .menu-arrow {
+  transform: translateX(4rpx);
 }
 
 @keyframes fadeIn {
@@ -356,5 +374,23 @@ export default {
   to {
     opacity: 1;
   }
+}
+
+/* 滚动条样式 */
+.slide-menu::-webkit-scrollbar {
+  width: 6rpx;
+}
+
+.slide-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slide-menu::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3rpx;
+}
+
+.slide-menu::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
 }
 </style> 

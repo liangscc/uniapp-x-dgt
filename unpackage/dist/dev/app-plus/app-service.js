@@ -1042,83 +1042,82 @@ if (uni.restoreGlobal) {
     },
     data() {
       return {
+        statusBarHeight: 0,
         userInfo: {
           name: "管理员",
+          avatar: "",
           phone: "138****8888",
           level: "VIP会员"
-        },
-        settings: {
-          notifications: true,
-          hideAmount: false
         }
       };
+    },
+    mounted() {
+      const systemInfo = uni.getSystemInfoSync();
+      this.statusBarHeight = systemInfo.statusBarHeight || 0;
     },
     methods: {
       closeMenu() {
         this.$emit("close");
       },
-      handleMenuClick(action) {
+      gotoUserPage() {
         this.closeMenu();
-        switch (action) {
-          case "editProfile":
+        uni.showToast({
+          title: "个人主页功能开发中",
+          icon: "none"
+        });
+      },
+      openPage(pageName) {
+        this.closeMenu();
+        switch (pageName) {
+          case "todoPage":
             uni.showToast({
-              title: "编辑资料功能开发中",
+              title: "待办查看功能开发中",
               icon: "none"
             });
             break;
-          case "changePassword":
+          case "settingCategoryPage":
             uni.showToast({
-              title: "改密码功能开发中",
+              title: "商品分类设置功能开发中",
               icon: "none"
             });
             break;
-          case "upgradeMember":
+          case "settingExchangeratePage":
+            uni.showToast({
+              title: "汇率设置功能开发中",
+              icon: "none"
+            });
+            break;
+          case "settingColorPage":
+            uni.showToast({
+              title: "颜色设置功能开发中",
+              icon: "none"
+            });
+            break;
+          case "settingSharePage":
+            uni.showToast({
+              title: "分享功能开发中",
+              icon: "none"
+            });
+            break;
+          case "settingMemberPage":
             uni.showToast({
               title: "开通会员功能开发中",
               icon: "none"
             });
             break;
-          case "customColors":
+          case "settingHelpPage":
             uni.showToast({
-              title: "自定义颜色功能开发中",
+              title: "帮助与留言功能开发中",
               icon: "none"
             });
             break;
-          case "customCategories":
+          case "settingContactusPage":
             uni.showToast({
-              title: "自定义分类功能开发中",
+              title: "联系我们功能开发中",
               icon: "none"
             });
             break;
         }
-      },
-      toggleNotifications(e) {
-        this.settings.notifications = e.detail.value;
-        uni.showToast({
-          title: this.settings.notifications ? "已开启通知" : "已关闭通知",
-          icon: "none"
-        });
-      },
-      toggleHideAmount(e) {
-        this.settings.hideAmount = e.detail.value;
-        uni.showToast({
-          title: this.settings.hideAmount ? "已隐藏金额" : "已显示金额",
-          icon: "none"
-        });
-      },
-      handleLogout() {
-        uni.showModal({
-          title: "确认退出",
-          content: "确定要退出登录吗？",
-          success: (res) => {
-            if (res.confirm) {
-              this.closeMenu();
-              uni.reLaunch({
-                url: "/pages/login/login"
-              });
-            }
-          }
-        });
       }
     }
   };
@@ -1139,119 +1138,116 @@ if (uni.restoreGlobal) {
           class: vue.normalizeClass(["slide-menu", { "slide-in": $props.visible }])
         },
         [
-          vue.createCommentVNode(" 个人中心内容 "),
-          vue.createElementVNode("view", { class: "profile-content" }, [
-            vue.createCommentVNode(" 用户信息头部 "),
-            vue.createElementVNode("view", { class: "user-header" }, [
-              vue.createElementVNode("view", { class: "user-info" }, [
-                vue.createElementVNode("view", { class: "user-avatar" }, [
-                  vue.createElementVNode(
-                    "text",
-                    { class: "avatar-text" },
-                    vue.toDisplayString($data.userInfo.name.charAt(0)),
-                    1
-                    /* TEXT */
-                  )
+          vue.createCommentVNode(" 菜单内容 "),
+          vue.createElementVNode("view", { class: "menu-content" }, [
+            vue.createCommentVNode(" 头部区域 "),
+            vue.createElementVNode(
+              "view",
+              {
+                class: "margin-top",
+                style: vue.normalizeStyle({ paddingTop: $data.statusBarHeight + "px" })
+              },
+              [
+                vue.createElementVNode("view", {
+                  class: "close-icon",
+                  onClick: _cache[1] || (_cache[1] = (...args) => $options.closeMenu && $options.closeMenu(...args))
+                }, [
+                  vue.createElementVNode("text", { class: "icon" }, "✕")
                 ]),
-                vue.createElementVNode("view", { class: "user-details" }, [
-                  vue.createElementVNode(
-                    "text",
-                    { class: "user-name" },
-                    vue.toDisplayString($data.userInfo.name),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode(
-                    "text",
-                    { class: "user-phone" },
-                    vue.toDisplayString($data.userInfo.phone),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode(
-                    "text",
-                    { class: "user-level" },
-                    vue.toDisplayString($data.userInfo.level),
-                    1
-                    /* TEXT */
-                  )
+                vue.createElementVNode("view", {
+                  class: "user-item",
+                  onClick: _cache[2] || (_cache[2] = (...args) => $options.gotoUserPage && $options.gotoUserPage(...args))
+                }, [
+                  vue.createElementVNode("view", { class: "user-avatar" }, [
+                    vue.createElementVNode("image", {
+                      src: $data.userInfo.avatar || "/static/default-avatar.png",
+                      class: "avatar-img",
+                      mode: "aspectFill"
+                    }, null, 8, ["src"])
+                  ]),
+                  vue.createElementVNode("view", { class: "user-info" }, [
+                    vue.createElementVNode(
+                      "text",
+                      { class: "username" },
+                      vue.toDisplayString($data.userInfo.name),
+                      1
+                      /* TEXT */
+                    ),
+                    vue.createElementVNode("text", { class: "user-desc" }, "查看个人主页或编辑简介")
+                  ])
                 ])
-              ])
-            ]),
-            vue.createCommentVNode(" 基本功能 "),
-            vue.createElementVNode("view", { class: "section" }, [
-              vue.createElementVNode("view", { class: "section-title" }, "基本功能"),
+              ],
+              4
+              /* STYLE */
+            ),
+            vue.createCommentVNode(" 菜单列表 "),
+            vue.createElementVNode("view", { class: "list-wrap" }, [
               vue.createElementVNode("view", { class: "menu-list" }, [
                 vue.createElementVNode("view", {
                   class: "menu-item",
-                  onClick: _cache[1] || (_cache[1] = ($event) => $options.handleMenuClick("editProfile"))
+                  onClick: _cache[3] || (_cache[3] = ($event) => $options.openPage("todoPage"))
                 }, [
-                  vue.createElementVNode("view", { class: "menu-icon" }, "👤"),
-                  vue.createElementVNode("text", { class: "menu-text" }, "编辑资料"),
-                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
+                  vue.createElementVNode("view", { class: "menu-icon" }, "📋"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "待办查看"),
+                  vue.createElementVNode("view", { class: "menu-arrow" }, "›")
                 ]),
                 vue.createElementVNode("view", {
                   class: "menu-item",
-                  onClick: _cache[2] || (_cache[2] = ($event) => $options.handleMenuClick("changePassword"))
+                  onClick: _cache[4] || (_cache[4] = ($event) => $options.openPage("settingCategoryPage"))
                 }, [
-                  vue.createElementVNode("view", { class: "menu-icon" }, "🔑"),
-                  vue.createElementVNode("text", { class: "menu-text" }, "改密码"),
-                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
+                  vue.createElementVNode("view", { class: "menu-icon" }, "📂"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "商品分类设置"),
+                  vue.createElementVNode("view", { class: "menu-arrow" }, "›")
                 ]),
                 vue.createElementVNode("view", {
                   class: "menu-item",
-                  onClick: _cache[3] || (_cache[3] = ($event) => $options.handleMenuClick("upgradeMember"))
+                  onClick: _cache[5] || (_cache[5] = ($event) => $options.openPage("settingExchangeratePage"))
+                }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "💱"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "汇率设置"),
+                  vue.createElementVNode("view", { class: "menu-arrow" }, "›")
+                ]),
+                vue.createElementVNode("view", {
+                  class: "menu-item",
+                  onClick: _cache[6] || (_cache[6] = ($event) => $options.openPage("settingColorPage"))
+                }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "🎨"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "颜色设置"),
+                  vue.createElementVNode("view", { class: "menu-arrow" }, "›")
+                ]),
+                vue.createElementVNode("view", {
+                  class: "menu-item",
+                  onClick: _cache[7] || (_cache[7] = ($event) => $options.openPage("settingSharePage"))
+                }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "📤"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "分享"),
+                  vue.createElementVNode("view", { class: "menu-arrow" }, "›")
+                ]),
+                vue.createElementVNode("view", {
+                  class: "menu-item",
+                  onClick: _cache[8] || (_cache[8] = ($event) => $options.openPage("settingMemberPage"))
                 }, [
                   vue.createElementVNode("view", { class: "menu-icon" }, "👑"),
                   vue.createElementVNode("text", { class: "menu-text" }, "开通会员"),
-                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
-                ])
-              ])
-            ]),
-            vue.createCommentVNode(" 设置 "),
-            vue.createElementVNode("view", { class: "section" }, [
-              vue.createElementVNode("view", { class: "section-title" }, "设置"),
-              vue.createElementVNode("view", { class: "menu-list" }, [
-                vue.createElementVNode("view", {
-                  class: "menu-item",
-                  onClick: _cache[4] || (_cache[4] = ($event) => $options.handleMenuClick("customColors"))
-                }, [
-                  vue.createElementVNode("view", { class: "menu-icon" }, "🎨"),
-                  vue.createElementVNode("text", { class: "menu-text" }, "自定义颜色"),
-                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
+                  vue.createElementVNode("view", { class: "menu-arrow" }, "›")
                 ]),
                 vue.createElementVNode("view", {
                   class: "menu-item",
-                  onClick: _cache[5] || (_cache[5] = ($event) => $options.handleMenuClick("customCategories"))
+                  onClick: _cache[9] || (_cache[9] = ($event) => $options.openPage("settingHelpPage"))
                 }, [
-                  vue.createElementVNode("view", { class: "menu-icon" }, "📂"),
-                  vue.createElementVNode("text", { class: "menu-text" }, "自定义分类"),
-                  vue.createElementVNode("text", { class: "menu-arrow" }, ">")
+                  vue.createElementVNode("view", { class: "menu-icon" }, "❓"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "帮助与留言"),
+                  vue.createElementVNode("view", { class: "menu-arrow" }, "›")
                 ]),
-                vue.createElementVNode("view", { class: "menu-item" }, [
-                  vue.createElementVNode("view", { class: "menu-icon" }, "🔔"),
-                  vue.createElementVNode("text", { class: "menu-text" }, "消息通知"),
-                  vue.createElementVNode("switch", {
-                    checked: $data.settings.notifications,
-                    onChange: _cache[6] || (_cache[6] = (...args) => $options.toggleNotifications && $options.toggleNotifications(...args))
-                  }, null, 40, ["checked"])
-                ]),
-                vue.createElementVNode("view", { class: "menu-item" }, [
-                  vue.createElementVNode("view", { class: "menu-icon" }, "👁️"),
-                  vue.createElementVNode("text", { class: "menu-text" }, "隐藏金额"),
-                  vue.createElementVNode("switch", {
-                    checked: $data.settings.hideAmount,
-                    onChange: _cache[7] || (_cache[7] = (...args) => $options.toggleHideAmount && $options.toggleHideAmount(...args))
-                  }, null, 40, ["checked"])
+                vue.createElementVNode("view", {
+                  class: "menu-item",
+                  onClick: _cache[10] || (_cache[10] = ($event) => $options.openPage("settingContactusPage"))
+                }, [
+                  vue.createElementVNode("view", { class: "menu-icon" }, "📞"),
+                  vue.createElementVNode("text", { class: "menu-text" }, "联系我们"),
+                  vue.createElementVNode("view", { class: "menu-arrow" }, "›")
                 ])
               ])
-            ]),
-            vue.createCommentVNode(" 退出登录 "),
-            vue.createElementVNode("view", { class: "logout-section" }, [
-              vue.createElementVNode("button", {
-                class: "logout-btn",
-                onClick: _cache[8] || (_cache[8] = (...args) => $options.handleLogout && $options.handleLogout(...args))
-              }, "退出登录")
             ])
           ])
         ],
