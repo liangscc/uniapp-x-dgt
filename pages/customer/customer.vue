@@ -134,9 +134,10 @@
 </template>
 
 <script>
+import SlideMenu from '../../components/SlideMenu.vue'
 export default {
   components: {
-    SlideMenu: () => import('../../components/SlideMenu.vue')
+    SlideMenu
   },
   data() {
     return {

@@ -1261,10 +1261,6 @@ if (uni.restoreGlobal) {
     ])) : vue.createCommentVNode("v-if", true);
   }
   const SlideMenu = /* @__PURE__ */ _export_sfc(_sfc_main$d, [["render", _sfc_render$c], ["__scopeId", "data-v-edaabf93"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/components/SlideMenu.vue"]]);
-  const SlideMenu$1 = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
-    __proto__: null,
-    default: SlideMenu
-  }, Symbol.toStringTag, { value: "Module" }));
   const _sfc_main$c = {
     components: {
       SlideMenu
@@ -3114,66 +3110,9 @@ if (uni.restoreGlobal) {
     ]);
   }
   const PagesWarehouseWarehouse = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["render", _sfc_render$8], ["__scopeId", "data-v-41554ef3"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/warehouse/warehouse.vue"]]);
-  const scriptRel = "modulepreload";
-  const assetsURL = function(dep) {
-    return "/" + dep;
-  };
-  const seen = {};
-  const __vitePreload = function preload(baseModule, deps, importerUrl) {
-    let promise = Promise.resolve();
-    if (false) {
-      const links = document.getElementsByTagName("link");
-      const cspNonceMeta = document.querySelector("meta[property=csp-nonce]");
-      const cspNonce = (cspNonceMeta == null ? void 0 : cspNonceMeta.nonce) || (cspNonceMeta == null ? void 0 : cspNonceMeta.getAttribute("nonce"));
-      promise = Promise.all(deps.map((dep) => {
-        dep = assetsURL(dep);
-        if (dep in seen)
-          return;
-        seen[dep] = true;
-        const isCss = dep.endsWith(".css");
-        const cssSelector = isCss ? '[rel="stylesheet"]' : "";
-        const isBaseRelative = !!importerUrl;
-        if (isBaseRelative) {
-          for (let i = links.length - 1; i >= 0; i--) {
-            const link2 = links[i];
-            if (link2.href === dep && (!isCss || link2.rel === "stylesheet")) {
-              return;
-            }
-          }
-        } else if (document.querySelector(`link[href="${dep}"]${cssSelector}`)) {
-          return;
-        }
-        const link = document.createElement("link");
-        link.rel = isCss ? "stylesheet" : scriptRel;
-        if (!isCss) {
-          link.as = "script";
-          link.crossOrigin = "";
-        }
-        link.href = dep;
-        if (cspNonce) {
-          link.setAttribute("nonce", cspNonce);
-        }
-        document.head.appendChild(link);
-        if (isCss) {
-          return new Promise((res, rej) => {
-            link.addEventListener("load", res);
-            link.addEventListener("error", () => rej(new Error(`Unable to preload CSS for ${dep}`)));
-          });
-        }
-      }));
-    }
-    return promise.then(() => baseModule()).catch((err) => {
-      const e = new Event("vite:preloadError", { cancelable: true });
-      e.payload = err;
-      window.dispatchEvent(e);
-      if (!e.defaultPrevented) {
-        throw err;
-      }
-    });
-  };
   const _sfc_main$8 = {
     components: {
-      SlideMenu: () => __vitePreload(() => Promise.resolve().then(() => SlideMenu$1), false ? "__VITE_PRELOAD__" : void 0)
+      SlideMenu
     },
     data() {
       return {
