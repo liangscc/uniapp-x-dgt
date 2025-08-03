@@ -97,43 +97,5 @@
 		"navigationBarBackgroundColor": "#007AFF",
 		"backgroundColor": "#F8F8F8"
 	},
-		"tabBar": {
-		"color": "#7A7E83",
-		"selectedColor": "#007AFF",
-		"borderStyle": "black",
-		"backgroundColor": "#ffffff",
-		"list": [
-			{
-				"pagePath": "pages/order/order",
-				"iconPath": "static/tabbar/order.png",
-				"selectedIconPath": "static/tabbar/order-active.png",
-				"text": "订单"
-			},
-			{
-				"pagePath": "pages/purchase/purchase",
-				"iconPath": "static/tabbar/purchase.png",
-				"selectedIconPath": "static/tabbar/purchase-active.png",
-				"text": "采购"
-			},
-			{
-				"pagePath": "pages/product/product",
-				"iconPath": "static/tabbar/product.png",
-				"selectedIconPath": "static/tabbar/product-active.png",
-				"text": "商品"
-			},
-			{
-				"pagePath": "pages/warehouse/warehouse",
-				"iconPath": "static/tabbar/warehouse.png",
-				"selectedIconPath": "static/tabbar/warehouse-active.png",
-				"text": "仓库"
-			},
-			{
-				"pagePath": "pages/customer/customer",
-				"iconPath": "static/tabbar/customer.png",
-				"selectedIconPath": "static/tabbar/customer-active.png",
-				"text": "客户"
-			}
-		]
-	},
 	"uniIdRouter": {}
 }

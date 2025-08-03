@@ -876,6 +876,10 @@ body {
     'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
 }
+/* 应用容器 */
+#app {
+  min-height: 100vh;
+}
 /* 通用容器样式 */
 .container {
   padding: 0.625rem;

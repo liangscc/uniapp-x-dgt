@@ -60,8 +60,6 @@ export default {
     this.setCurrentTab()
     // 监听页面更新事件
     uni.$on('updateTabBar', this.handleUpdateTabBar)
-    // 监听强制显示事件
-    uni.$on('forceShowTabBar', this.handleForceShow)
   },
   onShow() {
     // 每次页面显示时都重新设置当前tab
@@ -71,7 +69,6 @@ export default {
   beforeDestroy() {
     // 移除事件监听器
     uni.$off('updateTabBar', this.handleUpdateTabBar)
-    uni.$off('forceShowTabBar', this.handleForceShow)
   },
   methods: {
     // 切换tab
@@ -133,16 +130,6 @@ export default {
       console.log('收到页面更新事件:', pagePath)
       this.updateCurrentTab(pagePath)
     },
-
-    // 处理强制显示事件
-    handleForceShow() {
-      console.log('收到强制显示tabBar事件')
-      // 强制设置当前tab为客户页面
-      this.currentTab = 4 // 客户页面的索引
-      this.setCurrentTab()
-    },
-
-
 
     // 调试方法：检查组件状态
     debugTabBarStatus() {

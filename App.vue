@@ -1,3 +1,9 @@
+<template>
+  <view id="app">
+    <!-- 页面内容会在这里显示 -->
+  </view>
+</template>
+
 <script>
 export default {
   globalData: {
@@ -213,6 +219,11 @@ page {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC',
     'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial,
     sans-serif;
+}
+
+/* 应用容器 */
+#app {
+  min-height: 100vh;
 }
 
 /* 通用容器样式 */

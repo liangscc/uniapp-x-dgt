@@ -409,9 +409,9 @@ export default class CommonUtils {
     })
   }
 
-  // 切换Tab
+  // 切换Tab（使用 reLaunch 替代 switchTab）
   static switchTab(url) {
-    uni.switchTab({
+    uni.reLaunch({
       url: url,
       fail: () => {
         this.showError('切换失败')

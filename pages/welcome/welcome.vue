@@ -129,7 +129,7 @@ export default {
 
     goInto() {
       // 进入主系统，跳转到订单页面作为主页面
-      uni.switchTab({
+      uni.reLaunch({
         url: '/pages/order/order',
         success: () => {
           console.log('跳转到订单页面成功')

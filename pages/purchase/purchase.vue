@@ -186,15 +186,20 @@
     <view class="fab-button" @click="addPurchase">
       <text class="fab-icon">+</text>
     </view>
+
+    <!-- 自定义 TabBar -->
+    <CustomTabBar />
   </view>
 </template>
 
 <script>
 import SlideMenu from '../../components/SlideMenu.vue'
+import CustomTabBar from '../../components/CustomTabBar.vue'
 
 export default {
   components: {
-    SlideMenu
+    SlideMenu,
+    CustomTabBar
   },
   data() {
     return {
@@ -392,6 +397,8 @@ export default {
   min-height: 100vh;
   background: #f5f5f5;
   padding-bottom: 120rpx;
+  /* 为自定义 tabbar 留出空间 */
+  padding-bottom: calc(120rpx + 100rpx);
 }
 
 .header {
