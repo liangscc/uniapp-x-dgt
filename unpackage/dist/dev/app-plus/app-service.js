@@ -67,6 +67,8 @@ if (uni.restoreGlobal) {
     }
     // 通用请求方法
     async request(url, options = {}) {
+      const token = uni.getStorageSync("token");
+      const userInfo = uni.getStorageSync("userInfo");
       const defaultOptions = {
         url,
         timeout: this.timeout,
@@ -74,11 +76,32 @@ if (uni.restoreGlobal) {
           "Content-Type": "application/json"
         }
       };
+      if (token) {
+        defaultOptions.header["Authorization"] = `Bearer ${token}`;
+      }
+      if (userInfo && userInfo.offline_id) {
+        if (!options.data) {
+          options.data = {};
+        }
+        options.data.offline_id = userInfo.offline_id;
+      }
       const finalOptions = { ...defaultOptions, ...options };
+      formatAppLog("log", "at utils/api.js:42", "=== API请求调试信息 ===");
+      formatAppLog("log", "at utils/api.js:43", "请求URL:", finalOptions.url);
+      formatAppLog("log", "at utils/api.js:44", "请求方法:", finalOptions.method || "GET");
+      formatAppLog("log", "at utils/api.js:45", "请求头:", finalOptions.header);
+      formatAppLog("log", "at utils/api.js:46", "请求数据:", finalOptions.data);
+      formatAppLog("log", "at utils/api.js:47", "Token:", token);
+      formatAppLog("log", "at utils/api.js:48", "用户信息:", userInfo);
       try {
         const response = await uni.request(finalOptions);
+        formatAppLog("log", "at utils/api.js:52", "=== API响应调试信息 ===");
+        formatAppLog("log", "at utils/api.js:53", "响应状态:", response.statusCode);
+        formatAppLog("log", "at utils/api.js:54", "响应数据:", response.data);
         return this.handleResponse(response);
       } catch (error) {
+        formatAppLog("error", "at utils/api.js:57", "=== API请求错误 ===");
+        formatAppLog("error", "at utils/api.js:58", "错误信息:", error);
         return this.handleError(error);
       }
     }
@@ -92,7 +115,7 @@ if (uni.restoreGlobal) {
     }
     // 处理错误
     handleError(error) {
-      formatAppLog("error", "at utils/api.js:43", "API请求错误:", error);
+      formatAppLog("error", "at utils/api.js:74", "API请求错误:", error);
       uni.showToast({
         title: "网络请求失败",
         icon: "none"
@@ -566,30 +589,32 @@ if (uni.restoreGlobal) {
             const userInfo = response.data || response || {
               offline_id: this.loginForm.offline_id,
               tel_no: this.loginForm.tel_no,
-              nickname: "测试用户"
+              nickname: "测试用户",
+              token: "mock-token-" + Date.now()
             };
+            formatAppLog("log", "at pages/login/login.vue:189", "保存用户信息:", userInfo);
             uni.setStorageSync("isLoggedIn", true);
             uni.setStorageSync("userInfo", userInfo);
-            uni.setStorageSync("token", userInfo.token || "mock-token");
+            uni.setStorageSync("token", userInfo.token || "mock-token-" + Date.now());
             uni.showToast({
               title: "登录成功",
               icon: "success"
             });
-            formatAppLog("log", "at pages/login/login.vue:198", "准备跳转到welcome欢迎页面");
+            formatAppLog("log", "at pages/login/login.vue:201", "准备跳转到welcome欢迎页面");
             uni.navigateTo({
               url: "/pages/welcome/welcome",
               success: () => {
-                formatAppLog("log", "at pages/login/login.vue:204", "navigateTo跳转成功");
+                formatAppLog("log", "at pages/login/login.vue:207", "navigateTo跳转成功");
               },
               fail: (err) => {
-                formatAppLog("error", "at pages/login/login.vue:207", "navigateTo跳转失败:", err);
+                formatAppLog("error", "at pages/login/login.vue:210", "navigateTo跳转失败:", err);
                 uni.reLaunch({
                   url: "/pages/welcome/welcome",
                   success: () => {
-                    formatAppLog("log", "at pages/login/login.vue:212", "reLaunch跳转成功");
+                    formatAppLog("log", "at pages/login/login.vue:215", "reLaunch跳转成功");
                   },
                   fail: (err2) => {
-                    formatAppLog("error", "at pages/login/login.vue:215", "reLaunch也失败:", err2);
+                    formatAppLog("error", "at pages/login/login.vue:218", "reLaunch也失败:", err2);
                     uni.showToast({
                       title: "页面跳转失败",
                       icon: "none"
@@ -606,7 +631,7 @@ if (uni.restoreGlobal) {
           }
         } catch (error) {
           uni.hideLoading();
-          formatAppLog("error", "at pages/login/login.vue:232", "登录失败:", error);
+          formatAppLog("error", "at pages/login/login.vue:235", "登录失败:", error);
           uni.showToast({
             title: "网络错误，请重试",
             icon: "none"
@@ -647,7 +672,7 @@ if (uni.restoreGlobal) {
         });
       },
       testJump() {
-        formatAppLog("log", "at pages/login/login.vue:280", "测试跳转");
+        formatAppLog("log", "at pages/login/login.vue:283", "测试跳转");
         uni.showToast({
           title: "开始测试跳转",
           icon: "none"
@@ -656,14 +681,14 @@ if (uni.restoreGlobal) {
           uni.navigateTo({
             url: "/pages/welcome/welcome",
             success: () => {
-              formatAppLog("log", "at pages/login/login.vue:292", "跳转成功");
+              formatAppLog("log", "at pages/login/login.vue:295", "跳转成功");
               uni.showToast({
                 title: "跳转成功",
                 icon: "success"
               });
             },
             fail: (err) => {
-              formatAppLog("error", "at pages/login/login.vue:299", "跳转失败:", err);
+              formatAppLog("error", "at pages/login/login.vue:302", "跳转失败:", err);
               uni.showToast({
                 title: `跳转失败: ${err.errMsg}`,
                 icon: "none"
@@ -673,18 +698,18 @@ if (uni.restoreGlobal) {
         }, 1e3);
       },
       testJumpToOrder() {
-        formatAppLog("log", "at pages/login/login.vue:310", "测试跳转到welcome页");
+        formatAppLog("log", "at pages/login/login.vue:313", "测试跳转到welcome页");
         uni.navigateTo({
           url: "/pages/welcome/welcome",
           success: () => {
-            formatAppLog("log", "at pages/login/login.vue:314", "跳转到welcome页成功");
+            formatAppLog("log", "at pages/login/login.vue:317", "跳转到welcome页成功");
             uni.showToast({
               title: "跳转到welcome页成功",
               icon: "success"
             });
           },
           fail: (err) => {
-            formatAppLog("error", "at pages/login/login.vue:321", "跳转到welcome页失败:", err);
+            formatAppLog("error", "at pages/login/login.vue:324", "跳转到welcome页失败:", err);
             uni.showToast({
               title: "跳转到welcome页失败",
               icon: "none"
@@ -2367,6 +2392,531 @@ if (uni.restoreGlobal) {
     ]);
   }
   const PagesPurchasePurchase = /* @__PURE__ */ _export_sfc(_sfc_main$c, [["render", _sfc_render$c], ["__scopeId", "data-v-313e55f0"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/purchase/purchase.vue"]]);
+  class CommonUtils {
+    // 格式化日期
+    static formatDate(date, format = "YYYY-MM-DD") {
+      if (!date)
+        return "";
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      const hour = String(d.getHours()).padStart(2, "0");
+      const minute = String(d.getMinutes()).padStart(2, "0");
+      const second = String(d.getSeconds()).padStart(2, "0");
+      return format.replace("YYYY", year).replace("MM", month).replace("DD", day).replace("HH", hour).replace("mm", minute).replace("ss", second);
+    }
+    // 格式化金额
+    static formatMoney(amount, currency = "¥") {
+      if (amount === null || amount === void 0)
+        return "0.00";
+      return currency + parseFloat(amount).toFixed(2);
+    }
+    // 格式化文件大小
+    static formatFileSize(bytes) {
+      if (bytes === 0)
+        return "0 B";
+      const k = 1024;
+      const sizes = ["B", "KB", "MB", "GB", "TB"];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+    }
+    // 防抖函数
+    static debounce(func, wait) {
+      let timeout;
+      return function executedFunction(...args) {
+        const later = () => {
+          clearTimeout(timeout);
+          func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+      };
+    }
+    // 节流函数
+    static throttle(func, limit) {
+      let inThrottle;
+      return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+          func.apply(context, args);
+          inThrottle = true;
+          setTimeout(() => inThrottle = false, limit);
+        }
+      };
+    }
+    // 深拷贝
+    static deepClone(obj) {
+      if (obj === null || typeof obj !== "object")
+        return obj;
+      if (obj instanceof Date)
+        return new Date(obj.getTime());
+      if (obj instanceof Array)
+        return obj.map((item) => this.deepClone(item));
+      if (typeof obj === "object") {
+        const clonedObj = {};
+        for (const key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            clonedObj[key] = this.deepClone(obj[key]);
+          }
+        }
+        return clonedObj;
+      }
+    }
+    // 生成随机ID
+    static generateId() {
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
+    // 验证手机号
+    static validatePhone(phone) {
+      const phoneRegex = /^1[3-9]\d{9}$/;
+      return phoneRegex.test(phone);
+    }
+    // 验证邮箱
+    static validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+    // 验证身份证号
+    static validateIdCard(idCard) {
+      const idCardRegex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+      return idCardRegex.test(idCard);
+    }
+    // 获取状态颜色
+    static getStatusColor(status) {
+      const statusColors = {
+        "success": "#52c41a",
+        "warning": "#fa8c16",
+        "error": "#ff4d4f",
+        "info": "#1890ff",
+        "processing": "#1890ff",
+        "default": "#d9d9d9"
+      };
+      return statusColors[status] || statusColors.default;
+    }
+    // 获取状态文本
+    static getStatusText(status) {
+      const statusTexts = {
+        "pending": "待处理",
+        "processing": "处理中",
+        "completed": "已完成",
+        "cancelled": "已取消",
+        "failed": "失败",
+        "success": "成功",
+        "warning": "警告",
+        "error": "错误"
+      };
+      return statusTexts[status] || status;
+    }
+    // 显示加载提示
+    static showLoading(title = "加载中...") {
+      uni.showLoading({
+        title,
+        mask: true
+      });
+    }
+    // 隐藏加载提示
+    static hideLoading() {
+      uni.hideLoading();
+    }
+    // 显示成功提示
+    static showSuccess(message, duration = 2e3) {
+      uni.showToast({
+        title: message,
+        icon: "success",
+        duration
+      });
+    }
+    // 显示错误提示
+    static showError(message, duration = 2e3) {
+      uni.showToast({
+        title: message,
+        icon: "none",
+        duration
+      });
+    }
+    // 显示确认对话框
+    static showConfirm(content, title = "提示") {
+      return new Promise((resolve) => {
+        uni.showModal({
+          title,
+          content,
+          success: (res) => {
+            resolve(res.confirm);
+          }
+        });
+      });
+    }
+    // 显示操作菜单
+    static showActionSheet(itemList) {
+      return new Promise((resolve) => {
+        uni.showActionSheet({
+          itemList,
+          success: (res) => {
+            resolve(res.tapIndex);
+          },
+          fail: () => {
+            resolve(-1);
+          }
+        });
+      });
+    }
+    // 复制到剪贴板
+    static copyToClipboard(text) {
+      uni.setClipboardData({
+        data: text,
+        success: () => {
+          this.showSuccess("复制成功");
+        },
+        fail: () => {
+          this.showError("复制失败");
+        }
+      });
+    }
+    // 获取系统信息
+    static getSystemInfo() {
+      return new Promise((resolve) => {
+        uni.getSystemInfo({
+          success: (res) => {
+            resolve(res);
+          },
+          fail: () => {
+            resolve(null);
+          }
+        });
+      });
+    }
+    // 检查网络状态
+    static checkNetworkStatus() {
+      return new Promise((resolve) => {
+        uni.getNetworkType({
+          success: (res) => {
+            resolve(res.networkType !== "none");
+          },
+          fail: () => {
+            resolve(false);
+          }
+        });
+      });
+    }
+    // 拨打电话
+    static makePhoneCall(phoneNumber) {
+      uni.makePhoneCall({
+        phoneNumber,
+        fail: () => {
+          this.showError("拨打电话失败");
+        }
+      });
+    }
+    // 发送短信
+    static sendSms(phoneNumber, content) {
+      uni.showToast({
+        title: "请手动发送短信",
+        icon: "none"
+      });
+    }
+    // 保存图片到相册
+    static saveImageToPhotosAlbum(filePath) {
+      return new Promise((resolve, reject) => {
+        uni.saveImageToPhotosAlbum({
+          filePath,
+          success: () => {
+            this.showSuccess("保存成功");
+            resolve(true);
+          },
+          fail: () => {
+            this.showError("保存失败");
+            reject(false);
+          }
+        });
+      });
+    }
+    // 选择图片
+    static chooseImage(count = 1, sizeType = ["original", "compressed"]) {
+      return new Promise((resolve, reject) => {
+        uni.chooseImage({
+          count,
+          sizeType,
+          success: (res) => {
+            resolve(res.tempFilePaths);
+          },
+          fail: () => {
+            reject("选择图片失败");
+          }
+        });
+      });
+    }
+    // 选择文件
+    static chooseFile() {
+      return new Promise((resolve, reject) => {
+        uni.chooseFile({
+          success: (res) => {
+            resolve(res.tempFiles);
+          },
+          fail: () => {
+            reject("选择文件失败");
+          }
+        });
+      });
+    }
+    // 获取当前位置
+    static getLocation() {
+      return new Promise((resolve, reject) => {
+        uni.getLocation({
+          type: "gcj02",
+          success: (res) => {
+            resolve(res);
+          },
+          fail: () => {
+            reject("获取位置失败");
+          }
+        });
+      });
+    }
+    // 打开地图
+    static openLocation(latitude, longitude, name = "", address = "") {
+      uni.openLocation({
+        latitude,
+        longitude,
+        name,
+        address,
+        fail: () => {
+          this.showError("打开地图失败");
+        }
+      });
+    }
+    // 设置导航栏标题
+    static setNavigationBarTitle(title) {
+      uni.setNavigationBarTitle({
+        title
+      });
+    }
+    // 设置导航栏颜色
+    static setNavigationBarColor(frontColor, backgroundColor) {
+      uni.setNavigationBarColor({
+        frontColor,
+        backgroundColor
+      });
+    }
+    // 页面跳转
+    static navigateTo(url, params = {}) {
+      const query = Object.keys(params).map((key) => `${key}=${encodeURIComponent(params[key])}`).join("&");
+      const fullUrl = query ? `${url}?${query}` : url;
+      uni.navigateTo({
+        url: fullUrl,
+        fail: () => {
+          this.showError("页面跳转失败");
+        }
+      });
+    }
+    // 重定向页面
+    static redirectTo(url, params = {}) {
+      const query = Object.keys(params).map((key) => `${key}=${encodeURIComponent(params[key])}`).join("&");
+      const fullUrl = query ? `${url}?${query}` : url;
+      uni.redirectTo({
+        url: fullUrl,
+        fail: () => {
+          this.showError("页面跳转失败");
+        }
+      });
+    }
+    // 返回上一页
+    static navigateBack(delta = 1) {
+      uni.navigateBack({
+        delta,
+        fail: () => {
+          this.showError("返回失败");
+        }
+      });
+    }
+    // 重启应用
+    static reLaunch(url) {
+      uni.reLaunch({
+        url,
+        fail: () => {
+          this.showError("重启失败");
+        }
+      });
+    }
+    // 切换Tab（使用 reLaunch 替代 switchTab）
+    static switchTab(url) {
+      uni.reLaunch({
+        url,
+        fail: () => {
+          this.showError("切换失败");
+        }
+      });
+    }
+  }
+  class Store {
+    constructor() {
+      this.state = {
+        // 用户信息
+        userInfo: null,
+        token: null,
+        isLogin: false,
+        // 网络状态
+        networkStatus: true,
+        // 应用配置
+        appConfig: {
+          theme: "light",
+          language: "zh-CN",
+          fontSize: "normal"
+        },
+        // 缓存数据
+        cache: {
+          categories: [],
+          provinces: [],
+          cities: {}
+        },
+        // 页面状态
+        pageState: {
+          currentPage: "",
+          loading: false,
+          refreshing: false
+        }
+      };
+      this.listeners = [];
+    }
+    // 获取状态
+    getState() {
+      return this.state;
+    }
+    // 设置状态
+    setState(newState) {
+      this.state = { ...this.state, ...newState };
+      this.notifyListeners();
+    }
+    // 更新部分状态
+    updateState(path, value) {
+      const keys = path.split(".");
+      let current = this.state;
+      for (let i = 0; i < keys.length - 1; i++) {
+        if (!current[keys[i]]) {
+          current[keys[i]] = {};
+        }
+        current = current[keys[i]];
+      }
+      current[keys[keys.length - 1]] = value;
+      this.notifyListeners();
+    }
+    // 添加监听器
+    addListener(listener) {
+      this.listeners.push(listener);
+      return () => {
+        const index = this.listeners.indexOf(listener);
+        if (index > -1) {
+          this.listeners.splice(index, 1);
+        }
+      };
+    }
+    // 通知监听器
+    notifyListeners() {
+      this.listeners.forEach((listener) => {
+        try {
+          listener(this.state);
+        } catch (error) {
+          formatAppLog("error", "at utils/store.js:82", "状态监听器错误:", error);
+        }
+      });
+    }
+    // 用户相关方法
+    setUserInfo(userInfo) {
+      this.setState({ userInfo, isLogin: true });
+    }
+    setToken(token) {
+      this.setState({ token });
+    }
+    clearUserInfo() {
+      this.setState({
+        userInfo: null,
+        token: null,
+        isLogin: false
+      });
+    }
+    // 网络状态
+    setNetworkStatus(status) {
+      this.setState({ networkStatus: status });
+    }
+    // 应用配置
+    setAppConfig(config2) {
+      this.setState({
+        appConfig: { ...this.state.appConfig, ...config2 }
+      });
+    }
+    // 缓存管理
+    setCache(key, value) {
+      this.updateState(`cache.${key}`, value);
+    }
+    getCache(key) {
+      const keys = key.split(".");
+      let current = this.state.cache;
+      for (const k of keys) {
+        if (current && current[k] !== void 0) {
+          current = current[k];
+        } else {
+          return null;
+        }
+      }
+      return current;
+    }
+    clearCache(key) {
+      if (key) {
+        this.updateState(`cache.${key}`, null);
+      } else {
+        this.setState({ cache: {} });
+      }
+    }
+    // 页面状态
+    setPageState(state) {
+      this.setState({
+        pageState: { ...this.state.pageState, ...state }
+      });
+    }
+    setLoading(loading) {
+      this.setPageState({ loading });
+    }
+    setRefreshing(refreshing) {
+      this.setPageState({ refreshing });
+    }
+    // 持久化存储
+    saveToStorage() {
+      try {
+        const dataToSave = {
+          userInfo: this.state.userInfo,
+          token: this.state.token,
+          isLogin: this.state.isLogin,
+          appConfig: this.state.appConfig
+        };
+        uni.setStorageSync("appState", JSON.stringify(dataToSave));
+      } catch (error) {
+        formatAppLog("error", "at utils/store.js:171", "保存状态失败:", error);
+      }
+    }
+    // 从存储恢复
+    loadFromStorage() {
+      try {
+        const savedData = uni.getStorageSync("appState");
+        if (savedData) {
+          const parsedData = JSON.parse(savedData);
+          this.setState(parsedData);
+        }
+      } catch (error) {
+        formatAppLog("error", "at utils/store.js:184", "恢复状态失败:", error);
+      }
+    }
+    // 清除存储
+    clearStorage() {
+      try {
+        uni.removeStorageSync("appState");
+      } catch (error) {
+        formatAppLog("error", "at utils/store.js:193", "清除存储失败:", error);
+      }
+    }
+  }
+  const store = new Store();
+  store.loadFromStorage();
   const _sfc_main$b = {
     components: {
       SlideMenu,
@@ -2377,99 +2927,142 @@ if (uni.restoreGlobal) {
         slideMenuVisible: false,
         leftSideActive: 0,
         cateA: "",
-        categoryAll: [
-          {
-            id: 1,
-            name: "电子产品",
-            group: [
-              {
-                id: 11,
-                name: "手机",
-                group: [
-                  { id: 111, name: "iPhone" },
-                  { id: 112, name: "Samsung" },
-                  { id: 113, name: "Huawei" }
-                ]
-              },
-              {
-                id: 12,
-                name: "电脑",
-                group: [
-                  { id: 121, name: "MacBook" },
-                  { id: 122, name: "ThinkPad" },
-                  { id: 123, name: "Dell" }
-                ]
-              },
-              {
-                id: 13,
-                name: "平板",
-                group: [
-                  { id: 131, name: "iPad" },
-                  { id: 132, name: "Galaxy Tab" },
-                  { id: 133, name: "MatePad" }
-                ]
-              }
-            ]
-          },
-          {
-            id: 2,
-            name: "配件",
-            group: [
-              {
-                id: 21,
-                name: "耳机",
-                group: [
-                  { id: 211, name: "AirPods" },
-                  { id: 212, name: "Sony" },
-                  { id: 213, name: "Bose" }
-                ]
-              },
-              {
-                id: 22,
-                name: "充电器",
-                group: [
-                  { id: 221, name: "快充" },
-                  { id: 222, name: "无线充" },
-                  { id: 223, name: "数据线" }
-                ]
-              }
-            ]
-          },
-          {
-            id: 3,
-            name: "服装",
-            group: [
-              {
-                id: 31,
-                name: "男装",
-                group: [
-                  { id: 311, name: "T恤" },
-                  { id: 312, name: "衬衫" },
-                  { id: 313, name: "裤子" }
-                ]
-              },
-              {
-                id: 32,
-                name: "女装",
-                group: [
-                  { id: 321, name: "连衣裙" },
-                  { id: 322, name: "上衣" },
-                  { id: 323, name: "裙子" }
-                ]
-              }
-            ]
-          }
-        ],
-        categoryBCur: []
+        categoryAll: [],
+        categoryBCur: [],
+        categoryChooseBean: {
+          id: null,
+          offline_id: this.getOfflineId()
+        }
       };
     },
     mounted() {
-      this.initCategoryData();
+      this.getUserCategory();
+    },
+    // 页面显示时重新加载数据
+    onShow() {
+      const needReload = uni.getStorageSync("category_updated");
+      if (needReload) {
+        this.getUserCategory();
+        uni.removeStorageSync("category_updated");
+      }
     },
     methods: {
-      initCategoryData() {
-        this.categoryBCur = this.categoryAll[0].group;
-        this.cateA = this.categoryAll[0].name;
+      // 获取离线ID
+      getOfflineId() {
+        let offlineId = uni.getStorageSync("offline_id");
+        if (!offlineId) {
+          offlineId = this.generateOfflineId();
+          uni.setStorageSync("offline_id", offlineId);
+        }
+        return offlineId;
+      },
+      // 生成离线ID
+      generateOfflineId() {
+        return "web_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
+      },
+      // 检查登录状态
+      checkLoginStatus() {
+        const isLoggedIn = uni.getStorageSync("isLoggedIn");
+        const token = uni.getStorageSync("token");
+        const userInfo = uni.getStorageSync("userInfo");
+        if (!isLoggedIn || !token || !userInfo) {
+          this.gotoLogin();
+          return false;
+        }
+        return true;
+      },
+      // 获取用户分类数据
+      async getUserCategory() {
+        if (!this.checkLoginStatus()) {
+          return;
+        }
+        try {
+          CommonUtils.showLoading("加载分类数据...");
+          formatAppLog("log", "at pages/product/product.vue:153", "=== 调试信息 ===");
+          formatAppLog("log", "at pages/product/product.vue:154", "登录状态:", uni.getStorageSync("isLoggedIn"));
+          formatAppLog("log", "at pages/product/product.vue:155", "Token:", uni.getStorageSync("token"));
+          formatAppLog("log", "at pages/product/product.vue:156", "用户信息:", uni.getStorageSync("userInfo"));
+          formatAppLog("log", "at pages/product/product.vue:157", "请求参数:", this.categoryChooseBean);
+          const response = await apiService.getUserCategory(this.categoryChooseBean);
+          formatAppLog("log", "at pages/product/product.vue:161", "API响应:", response);
+          if (response.code === 1) {
+            const arr = response.data;
+            if (arr && arr.length > 0) {
+              this.processCategoryData(arr);
+            } else {
+              this.showSetCategoryDialog();
+            }
+          } else if (response.code === 207) {
+            formatAppLog("log", "at pages/product/product.vue:172", "登录状态失效，错误信息:", response.message);
+            CommonUtils.showError(response.message || "登录状态失效");
+            this.gotoLogin();
+          } else {
+            formatAppLog("log", "at pages/product/product.vue:177", "其他错误，错误码:", response.code, "错误信息:", response.message);
+            this.showSetCategoryDialog();
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/product/product.vue:181", "获取分类数据失败:", error);
+          CommonUtils.showError("获取分类数据失败");
+        } finally {
+          CommonUtils.hideLoading();
+        }
+      },
+      // 处理分类数据
+      processCategoryData(arr) {
+        const level_A = [];
+        const level_B = [];
+        const level_C = [];
+        arr.forEach((item) => {
+          if (item.level === "1") {
+            level_A.push(item);
+          } else if (item.level === "2") {
+            level_B.push(item);
+          } else if (item.level === "3") {
+            level_C.push(item);
+          }
+        });
+        level_A.forEach((categoryA) => {
+          const group_b = [];
+          level_B.forEach((categoryB) => {
+            if (categoryB.parentid === categoryA.id) {
+              const group_c = [];
+              level_C.forEach((categoryC) => {
+                if (categoryC.parentid === categoryB.id) {
+                  group_c.push(categoryC);
+                }
+              });
+              categoryB.group = group_c;
+              group_b.push(categoryB);
+            }
+          });
+          categoryA.group = group_b;
+        });
+        this.categoryAll = level_A;
+        this.categoryBCur = level_A[0] ? level_A[0].group : [];
+        this.cateA = level_A[0] ? level_A[0].name : "";
+      },
+      // 显示设置分类对话框
+      showSetCategoryDialog() {
+        CommonUtils.showConfirm(
+          "请设置您销售的商品种类",
+          "提示"
+        ).then((confirmed) => {
+          if (confirmed) {
+            this.gotoSetCategory();
+          }
+        });
+      },
+      // 跳转到设置分类页面
+      gotoSetCategory() {
+        uni.navigateTo({
+          url: "/pages/setting-category/setting-category"
+        });
+      },
+      // 跳转到登录页面
+      gotoLogin() {
+        uni.reLaunch({
+          url: "/pages/login/login"
+        });
       },
       selectCategoryA(index, pid, name) {
         this.leftSideActive = index;
@@ -2483,7 +3076,7 @@ if (uni.restoreGlobal) {
         }
       },
       gotoProductList(item, subItem, cateA, category_id) {
-        formatAppLog("log", "at pages/product/product.vue:196", "跳转到商品列表:", item, subItem, cateA, category_id);
+        formatAppLog("log", "at pages/product/product.vue:268", "跳转到商品列表:", item, subItem, cateA, category_id);
         uni.navigateTo({
           url: `/pages/product/detail?cate1=${cateA}&cate2=${item}&cate3=${subItem}&category_id=${category_id}`
         });
@@ -5808,7 +6401,7 @@ if (uni.restoreGlobal) {
             this.categoryList.first = response.data;
           }
         } catch (error) {
-          formatAppLog("error", "at pages/product/add.vue:295", "加载分类失败:", error);
+          formatAppLog("error", "at pages/product/add.vue:299", "加载分类失败:", error);
           uni.showToast({
             title: "加载分类失败",
             icon: "none"
@@ -5845,40 +6438,40 @@ if (uni.restoreGlobal) {
       // 加载二级分类
       async loadSecondCategories(parentId) {
         try {
-          const response = await apiService.getSecondCategory({ parentId });
+          const response = await apiService.getSecondCategory({ id: parentId });
           if (response && response.data) {
             this.categoryList.second = response.data;
           }
         } catch (error) {
-          formatAppLog("error", "at pages/product/add.vue:343", "加载二级分类失败:", error);
+          formatAppLog("error", "at pages/product/add.vue:347", "加载二级分类失败:", error);
         }
       },
       // 加载三级分类
       async loadThirdCategories(parentId) {
         try {
-          const response = await apiService.getThirdCategory({ parentId });
+          const response = await apiService.getThirdCategory({ id: parentId });
           if (response && response.data) {
             this.categoryList.third = response.data;
           }
         } catch (error) {
-          formatAppLog("error", "at pages/product/add.vue:355", "加载三级分类失败:", error);
+          formatAppLog("error", "at pages/product/add.vue:359", "加载三级分类失败:", error);
         }
       },
       // 选择图片
       chooseImage() {
-        formatAppLog("log", "at pages/product/add.vue:361", "开始选择图片");
+        formatAppLog("log", "at pages/product/add.vue:365", "开始选择图片");
         uni.chooseImage({
           count: 5 - this.formData.images.length,
           sizeType: ["compressed"],
           sourceType: ["album", "camera"],
           success: (res) => {
-            formatAppLog("log", "at pages/product/add.vue:367", "选择图片成功:", res);
-            formatAppLog("log", "at pages/product/add.vue:368", "选择的图片路径:", res.tempFilePaths);
+            formatAppLog("log", "at pages/product/add.vue:371", "选择图片成功:", res);
+            formatAppLog("log", "at pages/product/add.vue:372", "选择的图片路径:", res.tempFilePaths);
             this.addLocalImages(res.tempFilePaths);
             this.uploadImages(res.tempFilePaths);
           },
           fail: (error) => {
-            formatAppLog("error", "at pages/product/add.vue:375", "选择图片失败:", error);
+            formatAppLog("error", "at pages/product/add.vue:379", "选择图片失败:", error);
             uni.showToast({
               title: "选择图片失败",
               icon: "none"
@@ -5888,17 +6481,19 @@ if (uni.restoreGlobal) {
       },
       // 添加本地图片到显示列表
       addLocalImages(tempFilePaths) {
-        formatAppLog("log", "at pages/product/add.vue:386", "添加本地图片到显示列表:", tempFilePaths);
+        formatAppLog("log", "at pages/product/add.vue:390", "添加本地图片到显示列表:", tempFilePaths);
         for (let i = 0; i < tempFilePaths.length; i++) {
           const imageData = {
             url: tempFilePaths[i],
             isLocal: true,
             uploading: true
           };
-          formatAppLog("log", "at pages/product/add.vue:393", "添加图片数据:", imageData);
+          formatAppLog("log", "at pages/product/add.vue:397", "添加图片数据:", imageData);
           this.formData.images.push(imageData);
         }
-        formatAppLog("log", "at pages/product/add.vue:396", "当前图片列表:", this.formData.images);
+        formatAppLog("log", "at pages/product/add.vue:400", "当前图片列表:", this.formData.images);
+        formatAppLog("log", "at pages/product/add.vue:401", "formData.images长度:", this.formData.images.length);
+        this.$forceUpdate();
       },
       // 上传图片
       async uploadImages(tempFilePaths) {
@@ -5940,7 +6535,7 @@ if (uni.restoreGlobal) {
                 this.formData.images[imageIndex].uploading = false;
               }
             } catch (error) {
-              formatAppLog("error", "at pages/product/add.vue:444", "上传单张图片失败:", error);
+              formatAppLog("error", "at pages/product/add.vue:451", "上传单张图片失败:", error);
               this.formData.images[imageIndex].uploading = false;
             }
           }
@@ -5949,7 +6544,7 @@ if (uni.restoreGlobal) {
             icon: "success"
           });
         } catch (error) {
-          formatAppLog("error", "at pages/product/add.vue:455", "上传失败:", error);
+          formatAppLog("error", "at pages/product/add.vue:462", "上传失败:", error);
           uni.showToast({
             title: "部分图片上传失败",
             icon: "none"
@@ -6022,16 +6617,27 @@ if (uni.restoreGlobal) {
         });
         try {
           const imageUrls = this.formData.images.map((img) => img.url);
-          const productData = {
-            ...this.formData,
-            images: imageUrls,
+          const goodsBean = {
+            name: this.formData.name,
+            code: this.formData.code,
+            description: this.formData.description,
             categoryId,
             costPrice: parseFloat(this.formData.costPrice),
             salePrice: parseFloat(this.formData.salePrice),
             marketPrice: this.formData.marketPrice ? parseFloat(this.formData.marketPrice) : 0,
             stock: parseInt(this.formData.stock),
             stockWarning: this.formData.stockWarning ? parseInt(this.formData.stockWarning) : 0,
+            brand: this.formData.brand,
+            specification: this.formData.specification,
+            unit: this.formData.unit,
             weight: this.formData.weight ? parseFloat(this.formData.weight) : 0
+          };
+          const productData = {
+            goodsBean,
+            listGoodsSpec: [],
+            // 商品规格列表，暂时为空
+            listGoodsImg: imageUrls
+            // 商品图片列表
           };
           const response = await apiService.addProduct(productData);
           uni.hideLoading();
@@ -6293,38 +6899,54 @@ if (uni.restoreGlobal) {
             ]),
             vue.createElementVNode("view", { class: "image-upload" }, [
               vue.createElementVNode("view", { class: "image-list" }, [
-                _ctx.image && _ctx.image.url ? (vue.openBlock(true), vue.createElementBlock(
+                vue.createCommentVNode(" 调试信息 "),
+                vue.createElementVNode(
+                  "view",
+                  { style: { "font-size": "12px", "color": "#999", "margin-bottom": "10px" } },
+                  " 图片数量: " + vue.toDisplayString($data.formData.images.length),
+                  1
+                  /* TEXT */
+                ),
+                (vue.openBlock(true), vue.createElementBlock(
                   vue.Fragment,
-                  { key: 0 },
+                  null,
                   vue.renderList($data.formData.images, (image, index) => {
-                    return vue.openBlock(), vue.createElementBlock("view", {
-                      class: "image-item",
-                      key: index
-                    }, [
-                      vue.createElementVNode("image", {
-                        class: "uploaded-image",
-                        src: image.url,
-                        mode: "aspectFill"
-                      }, null, 8, ["src"]),
-                      image.uploading ? (vue.openBlock(), vue.createElementBlock("view", {
-                        key: 0,
-                        class: "upload-status"
-                      }, [
-                        vue.createElementVNode("text", { class: "status-text" }, "上传中...")
-                      ])) : vue.createCommentVNode("v-if", true),
-                      vue.createElementVNode("view", {
-                        class: "delete-btn",
-                        onClick: ($event) => $options.deleteImage(index)
-                      }, [
-                        vue.createElementVNode("text", { class: "delete-icon" }, "×")
-                      ], 8, ["onClick"])
-                    ]);
+                    return vue.openBlock(), vue.createElementBlock(
+                      vue.Fragment,
+                      { key: index },
+                      [
+                        image && image.url ? (vue.openBlock(), vue.createElementBlock("view", {
+                          key: 0,
+                          class: "image-item"
+                        }, [
+                          vue.createElementVNode("image", {
+                            class: "uploaded-image",
+                            src: image.url,
+                            mode: "aspectFill"
+                          }, null, 8, ["src"]),
+                          image.uploading ? (vue.openBlock(), vue.createElementBlock("view", {
+                            key: 0,
+                            class: "upload-status"
+                          }, [
+                            vue.createElementVNode("text", { class: "status-text" }, "上传中...")
+                          ])) : vue.createCommentVNode("v-if", true),
+                          vue.createElementVNode("view", {
+                            class: "delete-btn",
+                            onClick: ($event) => $options.deleteImage(index)
+                          }, [
+                            vue.createElementVNode("text", { class: "delete-icon" }, "×")
+                          ], 8, ["onClick"])
+                        ])) : vue.createCommentVNode("v-if", true)
+                      ],
+                      64
+                      /* STABLE_FRAGMENT */
+                    );
                   }),
                   128
                   /* KEYED_FRAGMENT */
-                )) : vue.createCommentVNode("v-if", true),
+                )),
                 $data.formData.images.length < 5 ? (vue.openBlock(), vue.createElementBlock("view", {
-                  key: 1,
+                  key: 0,
                   class: "upload-btn",
                   onClick: _cache[11] || (_cache[11] = (...args) => $options.chooseImage && $options.chooseImage(...args))
                 }, [
@@ -6823,140 +7445,186 @@ if (uni.restoreGlobal) {
     name: "SettingCategory",
     data() {
       return {
+        loading: false,
         categories: [
           {
-            id: 1,
-            name: "电子产品",
-            icon: "📱",
-            description: "手机、电脑、平板等电子设备",
-            productCount: 25,
-            sort: 1
+            id: "00001",
+            name: "护肤",
+            enabled: false
           },
           {
-            id: 2,
-            name: "服装配饰",
-            icon: "👕",
-            description: "男装、女装、鞋帽等服饰类",
-            productCount: 18,
-            sort: 2
+            id: "00002",
+            name: "彩妆",
+            enabled: false
           },
           {
-            id: 3,
-            name: "家居用品",
-            icon: "🏠",
-            description: "家具、装饰、生活用品",
-            productCount: 12,
-            sort: 3
+            id: "00003",
+            name: "香水/美体/美发",
+            enabled: false
           },
           {
-            id: 4,
-            name: "运动户外",
-            icon: "⚽",
-            description: "运动器材、户外装备",
-            productCount: 8,
-            sort: 4
+            id: "00004",
+            name: "箱包/钱包",
+            enabled: false
+          },
+          {
+            id: "00005",
+            name: "手表/首饰",
+            enabled: false
+          },
+          {
+            id: "00006",
+            name: "时尚/配件",
+            enabled: false
+          },
+          {
+            id: "00007",
+            name: "数码电器",
+            enabled: false
+          },
+          {
+            id: "00008",
+            name: "食品/生活",
+            enabled: false
           }
         ],
-        showModal: false,
-        isEditing: false,
-        editingIndex: -1,
-        formData: {
-          name: "",
-          icon: "📁",
-          description: "",
-          sort: 0
-        },
-        iconOptions: ["📁", "📱", "💻", "👕", "👖", "👟", "🏠", "🛋️", "⚽", "🏃", "🎒", "👜", "💄", "🧴", "🍎", "🥤", "📚", "✏️", "🎨", "🎵"]
+        changeFlags: [false, false, false, false, false, false, false, false]
       };
     },
     methods: {
       goBack() {
         uni.navigateBack();
       },
-      addCategory() {
-        this.isEditing = false;
-        this.editingIndex = -1;
-        this.formData = {
-          name: "",
-          icon: "📁",
-          description: "",
-          sort: this.categories.length + 1
-        };
-        this.showModal = true;
-      },
-      editCategory(category) {
-        this.isEditing = true;
-        this.editingIndex = this.categories.findIndex((item) => item.id === category.id);
-        this.formData = {
-          name: category.name,
-          icon: category.icon,
-          description: category.description,
-          sort: category.sort
-        };
-        this.showModal = true;
-      },
-      deleteCategory(category) {
-        uni.showModal({
-          title: "确认删除",
-          content: `确定要删除分类"${category.name}"吗？删除后该分类下的商品将变为未分类状态。`,
-          confirmText: "删除",
-          confirmColor: "#ff4757",
-          success: (res) => {
-            if (res.confirm) {
-              const index = this.categories.findIndex((item) => item.id === category.id);
-              if (index > -1) {
-                this.categories.splice(index, 1);
-                uni.showToast({
-                  title: "删除成功",
-                  icon: "success"
-                });
-              }
-            }
-          }
+      // 跳转到登录页面
+      gotoLogin() {
+        uni.reLaunch({
+          url: "/pages/login/login"
         });
       },
-      selectIcon(icon) {
-        this.formData.icon = icon;
+      toggleCategory(index) {
+        this.categories[index].enabled = !this.categories[index].enabled;
+        this.changeFlags[index] = true;
       },
-      closeModal() {
-        this.showModal = false;
+      // 检查登录状态
+      checkLoginStatus() {
+        const isLoggedIn = uni.getStorageSync("isLoggedIn");
+        const token = uni.getStorageSync("token");
+        const userInfo = uni.getStorageSync("userInfo");
+        if (!isLoggedIn || !token || !userInfo) {
+          this.gotoLogin();
+          return false;
+        }
+        return true;
       },
-      saveCategory() {
-        if (!this.formData.name.trim()) {
-          uni.showToast({
-            title: "请输入分类名称",
-            icon: "none"
-          });
+      // 获取用户分类设置
+      async getUserCategory() {
+        if (!this.checkLoginStatus()) {
           return;
         }
-        if (this.isEditing) {
-          if (this.editingIndex > -1) {
-            this.categories[this.editingIndex] = {
-              ...this.categories[this.editingIndex],
-              name: this.formData.name,
-              icon: this.formData.icon,
-              description: this.formData.description,
-              sort: parseInt(this.formData.sort) || 0
-            };
+        try {
+          this.loading = true;
+          const paramObj = {};
+          const response = await apiService.getUserCategory(paramObj);
+          if (response && response.data) {
+            const arr = response.data;
+            if (arr && arr.length > 0) {
+              arr.forEach((item) => {
+                if (item.level === "1") {
+                  const categoryIndex = this.categories.findIndex((cat) => cat.id === item.id);
+                  if (categoryIndex !== -1) {
+                    this.categories[categoryIndex].enabled = true;
+                  }
+                }
+              });
+            }
           }
-        } else {
-          const newCategory = {
-            id: Date.now(),
-            name: this.formData.name,
-            icon: this.formData.icon,
-            description: this.formData.description,
-            productCount: 0,
-            sort: parseInt(this.formData.sort) || this.categories.length + 1
-          };
-          this.categories.push(newCategory);
+        } catch (error) {
+          formatAppLog("error", "at pages/setting-category/setting-category.vue:165", "获取用户分类失败:", error);
+          uni.showToast({
+            title: "获取分类设置失败",
+            icon: "none"
+          });
+        } finally {
+          this.loading = false;
         }
-        this.categories.sort((a, b) => a.sort - b.sort);
-        this.closeModal();
-        uni.showToast({
-          title: this.isEditing ? "编辑成功" : "添加成功",
-          icon: "success"
-        });
+      },
+      // 添加分类
+      async addCategory(categoryId, index) {
+        try {
+          const paramObj = {
+            id: categoryId
+          };
+          const response = await apiService.setFirstCategory(paramObj);
+          if (response && response.message) {
+            uni.showToast({
+              title: response.message,
+              icon: "success"
+            });
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/setting-category/setting-category.vue:191", "添加分类失败:", error);
+          uni.showToast({
+            title: "操作失败",
+            icon: "none"
+          });
+        }
+      },
+      // 移除分类
+      async removeCategory(categoryId, index) {
+        try {
+          const paramObj = {
+            id: categoryId
+          };
+          const response = await apiService.removeFirstCategory(paramObj);
+          if (response && response.message) {
+            uni.showToast({
+              title: response.message,
+              icon: "success"
+            });
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/setting-category/setting-category.vue:215", "移除分类失败:", error);
+          uni.showToast({
+            title: "操作失败",
+            icon: "none"
+          });
+        }
+      },
+      // 保存设置
+      async saveSettings() {
+        try {
+          this.loading = true;
+          for (let i = 0; i < this.categories.length; i++) {
+            const category = this.categories[i];
+            const categoryId = category.id;
+            if (category.enabled) {
+              await this.addCategory(categoryId, i);
+            } else {
+              await this.removeCategory(categoryId, i);
+            }
+          }
+          this.changeFlags = [false, false, false, false, false, false, false, false];
+          uni.showToast({
+            title: "设置已保存",
+            icon: "success"
+          });
+          uni.setStorageSync("category_updated", true);
+          setTimeout(() => {
+            uni.navigateBack();
+          }, 1500);
+        } catch (error) {
+          formatAppLog("error", "at pages/setting-category/setting-category.vue:257", "保存设置失败:", error);
+          uni.showToast({
+            title: "保存失败",
+            icon: "none"
+          });
+        } finally {
+          this.loading = false;
+        }
       }
+    },
+    onLoad() {
+      this.getUserCategory();
     }
   };
   function _sfc_render$1(_ctx, _cache, $props, $setup, $data, $options) {
@@ -6967,16 +7635,16 @@ if (uni.restoreGlobal) {
           class: "header-left",
           onClick: _cache[0] || (_cache[0] = (...args) => $options.goBack && $options.goBack(...args))
         }, [
-          vue.createElementVNode("text", { class: "header-icon" }, "‹")
+          vue.createElementVNode("text", { class: "header-icon" }, "✕")
         ]),
         vue.createElementVNode("view", { class: "header-center" }, [
           vue.createElementVNode("text", { class: "header-title" }, "商品分类设置")
         ]),
         vue.createElementVNode("view", {
           class: "header-right",
-          onClick: _cache[1] || (_cache[1] = (...args) => $options.addCategory && $options.addCategory(...args))
+          onClick: _cache[1] || (_cache[1] = (...args) => $options.saveSettings && $options.saveSettings(...args))
         }, [
-          vue.createElementVNode("text", { class: "header-icon" }, "+")
+          vue.createElementVNode("text", { class: "header-icon" }, "✓")
         ])
       ]),
       vue.createCommentVNode(" 分类列表 "),
@@ -6987,58 +7655,26 @@ if (uni.restoreGlobal) {
           vue.renderList($data.categories, (category, index) => {
             return vue.openBlock(), vue.createElementBlock("view", {
               class: "category-item",
-              key: category.id,
-              onClick: ($event) => $options.editCategory(category)
+              key: category.id
             }, [
               vue.createElementVNode("view", { class: "category-info" }, [
-                vue.createElementVNode("view", { class: "category-icon" }, [
-                  vue.createElementVNode(
-                    "text",
-                    { class: "icon-text" },
-                    vue.toDisplayString(category.icon || "📁"),
-                    1
-                    /* TEXT */
-                  )
-                ]),
-                vue.createElementVNode("view", { class: "category-details" }, [
-                  vue.createElementVNode(
-                    "text",
-                    { class: "category-name" },
-                    vue.toDisplayString(category.name),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode(
-                    "text",
-                    { class: "category-desc" },
-                    vue.toDisplayString(category.description || "暂无描述"),
-                    1
-                    /* TEXT */
-                  ),
-                  vue.createElementVNode(
-                    "text",
-                    { class: "category-count" },
-                    vue.toDisplayString(category.productCount || 0) + " 个商品",
-                    1
-                    /* TEXT */
-                  )
-                ])
+                vue.createElementVNode(
+                  "text",
+                  { class: "category-name" },
+                  vue.toDisplayString(category.name),
+                  1
+                  /* TEXT */
+                )
               ]),
-              vue.createElementVNode("view", { class: "category-actions" }, [
-                vue.createElementVNode("view", {
-                  class: "action-btn edit-btn",
-                  onClick: vue.withModifiers(($event) => $options.editCategory(category), ["stop"])
-                }, [
-                  vue.createElementVNode("text", { class: "action-icon" }, "✏️")
-                ], 8, ["onClick"]),
-                vue.createElementVNode("view", {
-                  class: "action-btn delete-btn",
-                  onClick: vue.withModifiers(($event) => $options.deleteCategory(category), ["stop"])
-                }, [
-                  vue.createElementVNode("text", { class: "action-icon" }, "🗑️")
-                ], 8, ["onClick"])
+              vue.createElementVNode("view", { class: "category-toggle" }, [
+                vue.createElementVNode("switch", {
+                  checked: category.enabled,
+                  onChange: ($event) => $options.toggleCategory(index),
+                  color: "#FF5C5C",
+                  style: { "transform": "scale(0.8)" }
+                }, null, 40, ["checked", "onChange"])
               ])
-            ], 8, ["onClick"]);
+            ]);
           }),
           128
           /* KEYED_FRAGMENT */
@@ -7051,130 +7687,16 @@ if (uni.restoreGlobal) {
       }, [
         vue.createElementVNode("view", { class: "empty-icon" }, "📂"),
         vue.createElementVNode("text", { class: "empty-text" }, "暂无分类"),
-        vue.createElementVNode("text", { class: "empty-desc" }, '点击右上角"+"添加第一个分类')
+        vue.createElementVNode("text", { class: "empty-desc" }, "请先添加商品分类")
       ])) : vue.createCommentVNode("v-if", true),
-      vue.createCommentVNode(" 添加/编辑分类弹窗 "),
-      $data.showModal ? (vue.openBlock(), vue.createElementBlock("view", {
+      vue.createCommentVNode(" 加载状态 "),
+      $data.loading ? (vue.openBlock(), vue.createElementBlock("view", {
         key: 1,
-        class: "modal-overlay",
-        onClick: _cache[9] || (_cache[9] = (...args) => $options.closeModal && $options.closeModal(...args))
+        class: "loading-overlay"
       }, [
-        vue.createElementVNode("view", {
-          class: "modal-content",
-          onClick: _cache[8] || (_cache[8] = vue.withModifiers(() => {
-          }, ["stop"]))
-        }, [
-          vue.createElementVNode("view", { class: "modal-header" }, [
-            vue.createElementVNode(
-              "text",
-              { class: "modal-title" },
-              vue.toDisplayString($data.isEditing ? "编辑分类" : "添加分类"),
-              1
-              /* TEXT */
-            ),
-            vue.createElementVNode("view", {
-              class: "modal-close",
-              onClick: _cache[2] || (_cache[2] = (...args) => $options.closeModal && $options.closeModal(...args))
-            }, [
-              vue.createElementVNode("text", { class: "close-icon" }, "✕")
-            ])
-          ]),
-          vue.createElementVNode("view", { class: "modal-body" }, [
-            vue.createElementVNode("view", { class: "form-item" }, [
-              vue.createElementVNode("text", { class: "form-label" }, "分类名称"),
-              vue.withDirectives(vue.createElementVNode(
-                "input",
-                {
-                  class: "form-input",
-                  "onUpdate:modelValue": _cache[3] || (_cache[3] = ($event) => $data.formData.name = $event),
-                  placeholder: "请输入分类名称",
-                  maxlength: "20"
-                },
-                null,
-                512
-                /* NEED_PATCH */
-              ), [
-                [vue.vModelText, $data.formData.name]
-              ])
-            ]),
-            vue.createElementVNode("view", { class: "form-item" }, [
-              vue.createElementVNode("text", { class: "form-label" }, "分类图标"),
-              vue.createElementVNode("view", { class: "icon-selector" }, [
-                (vue.openBlock(true), vue.createElementBlock(
-                  vue.Fragment,
-                  null,
-                  vue.renderList($data.iconOptions, (icon) => {
-                    return vue.openBlock(), vue.createElementBlock("view", {
-                      class: vue.normalizeClass(["icon-option", { active: $data.formData.icon === icon }]),
-                      key: icon,
-                      onClick: ($event) => $options.selectIcon(icon)
-                    }, [
-                      vue.createElementVNode(
-                        "text",
-                        { class: "icon-text" },
-                        vue.toDisplayString(icon),
-                        1
-                        /* TEXT */
-                      )
-                    ], 10, ["onClick"]);
-                  }),
-                  128
-                  /* KEYED_FRAGMENT */
-                ))
-              ])
-            ]),
-            vue.createElementVNode("view", { class: "form-item" }, [
-              vue.createElementVNode("text", { class: "form-label" }, "分类描述"),
-              vue.withDirectives(vue.createElementVNode(
-                "textarea",
-                {
-                  class: "form-textarea",
-                  "onUpdate:modelValue": _cache[4] || (_cache[4] = ($event) => $data.formData.description = $event),
-                  placeholder: "请输入分类描述（可选）",
-                  maxlength: "100"
-                },
-                null,
-                512
-                /* NEED_PATCH */
-              ), [
-                [vue.vModelText, $data.formData.description]
-              ])
-            ]),
-            $data.isEditing ? (vue.openBlock(), vue.createElementBlock("view", {
-              key: 0,
-              class: "form-item"
-            }, [
-              vue.createElementVNode("text", { class: "form-label" }, "排序"),
-              vue.withDirectives(vue.createElementVNode(
-                "input",
-                {
-                  class: "form-input",
-                  "onUpdate:modelValue": _cache[5] || (_cache[5] = ($event) => $data.formData.sort = $event),
-                  type: "number",
-                  placeholder: "数字越小越靠前"
-                },
-                null,
-                512
-                /* NEED_PATCH */
-              ), [
-                [vue.vModelText, $data.formData.sort]
-              ])
-            ])) : vue.createCommentVNode("v-if", true)
-          ]),
-          vue.createElementVNode("view", { class: "modal-footer" }, [
-            vue.createElementVNode("view", {
-              class: "btn btn-cancel",
-              onClick: _cache[6] || (_cache[6] = (...args) => $options.closeModal && $options.closeModal(...args))
-            }, [
-              vue.createElementVNode("text", { class: "btn-text" }, "取消")
-            ]),
-            vue.createElementVNode("view", {
-              class: "btn btn-confirm",
-              onClick: _cache[7] || (_cache[7] = (...args) => $options.saveCategory && $options.saveCategory(...args))
-            }, [
-              vue.createElementVNode("text", { class: "btn-text" }, "保存")
-            ])
-          ])
+        vue.createElementVNode("view", { class: "loading-content" }, [
+          vue.createElementVNode("view", { class: "loading-spinner" }),
+          vue.createElementVNode("text", { class: "loading-text" }, "加载中...")
         ])
       ])) : vue.createCommentVNode("v-if", true)
     ]);

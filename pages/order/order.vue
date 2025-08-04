@@ -651,7 +651,7 @@ export default {
 
 .fab-button {
   position: fixed;
-  bottom: var(--spacing-xl);
+  bottom: calc(100rpx + var(--spacing-xl) + env(safe-area-inset-bottom));
   right: var(--spacing-xl);
   width: 100rpx;
   height: 100rpx;
@@ -662,7 +662,7 @@ export default {
   justify-content: center;
   box-shadow: var(--shadow-heavy);
   transition: all 0.2s ease;
-  z-index: 999;
+  z-index: 1000;
 }
 
 .fab-button:active {

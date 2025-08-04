@@ -447,7 +447,7 @@ body {
 /* 浮动按钮 */
 .fab-button {
   position: fixed;
-  bottom: var(--spacing-xl);
+  bottom: calc(3.125rem + var(--spacing-xl) + env(safe-area-inset-bottom));
   right: var(--spacing-xl);
   width: 3.125rem;
   height: 3.125rem;
@@ -458,7 +458,7 @@ body {
   justify-content: center;
   box-shadow: var(--shadow-heavy);
   transition: all 0.2s ease;
-  z-index: 999;
+  z-index: 1000;
 }
 .fab-button:active {
   transform: scale(0.9);

@@ -583,7 +583,7 @@ export default {
 
 .fab-button {
   position: fixed;
-  bottom: 40rpx;
+  bottom: calc(100rpx + 40rpx + env(safe-area-inset-bottom));
   right: 40rpx;
   width: 100rpx;
   height: 100rpx;
@@ -593,6 +593,7 @@ export default {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4rpx 20rpx rgba(0, 122, 255, 0.3);
+  z-index: 1000;
 }
 
 .fab-icon {

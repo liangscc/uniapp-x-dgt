@@ -11,6 +11,10 @@ class ApiService {
 
   // 通用请求方法
   async request(url, options = {}) {
+    // 获取认证信息
+    const token = uni.getStorageSync('token')
+    const userInfo = uni.getStorageSync('userInfo')
+    
     const defaultOptions = {
       url: url,
       timeout: this.timeout,
@@ -19,12 +23,39 @@ class ApiService {
       }
     };
 
+    // 如果有token，添加到请求头
+    if (token) {
+      defaultOptions.header['Authorization'] = `Bearer ${token}`
+    }
+
+    // 如果有用户信息，添加离线ID
+    if (userInfo && userInfo.offline_id) {
+      if (!options.data) {
+        options.data = {}
+      }
+      options.data.offline_id = userInfo.offline_id
+    }
+
     const finalOptions = { ...defaultOptions, ...options };
+
+    // 添加调试信息
+    console.log('=== API请求调试信息 ===')
+    console.log('请求URL:', finalOptions.url)
+    console.log('请求方法:', finalOptions.method || 'GET')
+    console.log('请求头:', finalOptions.header)
+    console.log('请求数据:', finalOptions.data)
+    console.log('Token:', token)
+    console.log('用户信息:', userInfo)
 
     try {
       const response = await uni.request(finalOptions);
+      console.log('=== API响应调试信息 ===')
+      console.log('响应状态:', response.statusCode)
+      console.log('响应数据:', response.data)
       return this.handleResponse(response);
     } catch (error) {
+      console.error('=== API请求错误 ===')
+      console.error('错误信息:', error)
       return this.handleError(error);
     }
   }

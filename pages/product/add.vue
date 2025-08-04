@@ -165,20 +165,24 @@
           
           <view class="image-upload">
             <view class="image-list">
-              <view 
-                class="image-item" 
-                v-for="(image, index) in formData.images" 
-                :key="index"
-                v-if="image && image.url"
-              >
-                <image class="uploaded-image" :src="image.url" mode="aspectFill" />
-                <view class="upload-status" v-if="image.uploading">
-                  <text class="status-text">上传中...</text>
-                </view>
-                <view class="delete-btn" @click="deleteImage(index)">
-                  <text class="delete-icon">×</text>
-                </view>
+              <!-- 调试信息 -->
+              <view style="font-size: 12px; color: #999; margin-bottom: 10px;">
+                图片数量: {{ formData.images.length }}
               </view>
+              <template v-for="(image, index) in formData.images" :key="index">
+                <view 
+                  class="image-item" 
+                  v-if="image && image.url"
+                >
+                  <image class="uploaded-image" :src="image.url" mode="aspectFill" />
+                  <view class="upload-status" v-if="image.uploading">
+                    <text class="status-text">上传中...</text>
+                  </view>
+                  <view class="delete-btn" @click="deleteImage(index)">
+                    <text class="delete-icon">×</text>
+                  </view>
+                </view>
+              </template>
               
               <view class="upload-btn" @click="chooseImage" v-if="formData.images.length < 5">
                 <text class="upload-icon">+</text>
@@ -335,7 +339,7 @@ export default {
     // 加载二级分类
     async loadSecondCategories(parentId) {
       try {
-        const response = await apiService.getSecondCategory({ parentId })
+        const response = await apiService.getSecondCategory({ id: parentId })
         if (response && response.data) {
           this.categoryList.second = response.data
         }
@@ -347,7 +351,7 @@ export default {
     // 加载三级分类
     async loadThirdCategories(parentId) {
       try {
-        const response = await apiService.getThirdCategory({ parentId })
+        const response = await apiService.getThirdCategory({ id: parentId })
         if (response && response.data) {
           this.categoryList.third = response.data
         }
@@ -394,6 +398,9 @@ export default {
         this.formData.images.push(imageData)
       }
       console.log('当前图片列表:', this.formData.images)
+      console.log('formData.images长度:', this.formData.images.length)
+      // 强制更新视图
+      this.$forceUpdate()
     },
     
     // 上传图片
@@ -540,16 +547,27 @@ export default {
         // 处理图片数据，只保留URL
         const imageUrls = this.formData.images.map(img => img.url)
         
-        const productData = {
-          ...this.formData,
-          images: imageUrls,
+        // 构建符合后端API期望的数据结构
+        const goodsBean = {
+          name: this.formData.name,
+          code: this.formData.code,
+          description: this.formData.description,
           categoryId: categoryId,
           costPrice: parseFloat(this.formData.costPrice),
           salePrice: parseFloat(this.formData.salePrice),
           marketPrice: this.formData.marketPrice ? parseFloat(this.formData.marketPrice) : 0,
           stock: parseInt(this.formData.stock),
           stockWarning: this.formData.stockWarning ? parseInt(this.formData.stockWarning) : 0,
+          brand: this.formData.brand,
+          specification: this.formData.specification,
+          unit: this.formData.unit,
           weight: this.formData.weight ? parseFloat(this.formData.weight) : 0
+        }
+        
+        const productData = {
+          goodsBean: goodsBean,
+          listGoodsSpec: [], // 商品规格列表，暂时为空
+          listGoodsImg: imageUrls // 商品图片列表
         }
         
         const response = await apiService.addProduct(productData)

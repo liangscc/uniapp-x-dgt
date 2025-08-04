@@ -183,11 +183,14 @@ export default {
               offline_id: this.loginForm.offline_id,
               tel_no: this.loginForm.tel_no,
               nickname: '测试用户',
+              token: 'mock-token-' + Date.now()
             }
 
+          console.log('保存用户信息:', userInfo)
+          
           uni.setStorageSync('isLoggedIn', true)
           uni.setStorageSync('userInfo', userInfo)
-          uni.setStorageSync('token', userInfo.token || 'mock-token')
+          uni.setStorageSync('token', userInfo.token || 'mock-token-' + Date.now())
 
           uni.showToast({
             title: '登录成功',

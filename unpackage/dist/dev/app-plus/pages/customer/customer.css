@@ -501,7 +501,7 @@ to {
 }
 .fab-button[data-v-02222c4a] {
   position: fixed;
-  bottom: 1.25rem;
+  bottom: calc(3.125rem + 1.25rem + env(safe-area-inset-bottom));
   right: 1.25rem;
   width: 3.125rem;
   height: 3.125rem;
@@ -511,6 +511,7 @@ to {
   align-items: center;
   justify-content: center;
   box-shadow: 0 0.125rem 0.625rem rgba(0, 122, 255, 0.3);
+  z-index: 1000;
 }
 .fab-icon[data-v-02222c4a] {
   color: #fff;
