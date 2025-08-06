@@ -105,25 +105,11 @@ export default {
           this.todoBean = response.data
         } else {
           console.error('加载首页数据失败:', response.message)
-          this.loadMockData()
+          // 接口失败时保持默认值
         }
       } catch (error) {
         console.error('加载首页数据失败:', error)
-        this.loadMockData()
-      }
-    },
-
-    loadMockData() {
-      // 模拟数据
-      this.todoBean = {
-        monthOrderCount: 156,
-        monthPayMoneySum: 89.5,
-        monthSaleMoneySum: 120.3,
-        monthProfit: 23.8,
-        waitToBuy: 12,
-        waitToMail: 25,
-        waitToPay: 15,
-        waitToVisit: 8,
+        // 接口异常时保持默认值
       }
     },
 
@@ -168,6 +154,7 @@ export default {
 
 .stats-section {
   padding: 40rpx;
+	flex-direction: column;
 }
 
 .stat-item {

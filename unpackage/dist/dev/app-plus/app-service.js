@@ -548,14 +548,14 @@ if (uni.restoreGlobal) {
     methods: {
       // 自动登录方法
       async autoLogin() {
-        formatAppLog("log", "at pages/login/login.vue:128", "开始自动登录");
+        formatAppLog("log", "at pages/login/login.vue:124", "开始自动登录");
         try {
           const response = await apiService.login({
             offline_id: this.loginForm.offline_id,
             tel_no: this.loginForm.tel_no,
             password: this.loginForm.password
           });
-          formatAppLog("log", "at pages/login/login.vue:136", "自动登录响应:", response);
+          formatAppLog("log", "at pages/login/login.vue:132", "自动登录响应:", response);
           if (response.success || response.code === 1) {
             const userInfo = response.data || response || {
               offline_id: this.loginForm.offline_id,
@@ -563,7 +563,7 @@ if (uni.restoreGlobal) {
               nickname: "测试用户",
               token: "mock-token-" + Date.now()
             };
-            formatAppLog("log", "at pages/login/login.vue:147", "保存用户信息:", userInfo);
+            formatAppLog("log", "at pages/login/login.vue:143", "保存用户信息:", userInfo);
             uni.setStorageSync("isLoggedIn", true);
             uni.setStorageSync("userInfo", userInfo);
             uni.setStorageSync("token", userInfo.token || "mock-token-" + Date.now());
@@ -577,11 +577,11 @@ if (uni.restoreGlobal) {
               });
             }, 1500);
           } else {
-            formatAppLog("log", "at pages/login/login.vue:165", "自动登录失败，显示登录表单");
+            formatAppLog("log", "at pages/login/login.vue:161", "自动登录失败，显示登录表单");
           }
         } catch (error) {
-          formatAppLog("error", "at pages/login/login.vue:168", "自动登录失败:", error);
-          formatAppLog("log", "at pages/login/login.vue:169", "自动登录失败，显示登录表单");
+          formatAppLog("error", "at pages/login/login.vue:164", "自动登录失败:", error);
+          formatAppLog("log", "at pages/login/login.vue:165", "自动登录失败，显示登录表单");
         }
       },
       async handleLogin() {
@@ -617,7 +617,7 @@ if (uni.restoreGlobal) {
           title: "登录中..."
         });
         try {
-          formatAppLog("log", "at pages/login/login.vue:216", "发送登录请求:", {
+          formatAppLog("log", "at pages/login/login.vue:212", "发送登录请求:", {
             offline_id: this.loginForm.offline_id,
             tel_no: this.loginForm.tel_no,
             password: this.loginForm.password
@@ -628,7 +628,7 @@ if (uni.restoreGlobal) {
             password: this.loginForm.password
           });
           uni.hideLoading();
-          formatAppLog("log", "at pages/login/login.vue:231", "登录响应:", response);
+          formatAppLog("log", "at pages/login/login.vue:227", "登录响应:", response);
           const mockSuccess = false;
           if (mockSuccess || response.success || response.code === 1) {
             const userInfo = response.data || response || {
@@ -637,7 +637,7 @@ if (uni.restoreGlobal) {
               nickname: "测试用户",
               token: "mock-token-" + Date.now()
             };
-            formatAppLog("log", "at pages/login/login.vue:246", "保存用户信息:", userInfo);
+            formatAppLog("log", "at pages/login/login.vue:242", "保存用户信息:", userInfo);
             uni.setStorageSync("isLoggedIn", true);
             uni.setStorageSync("userInfo", userInfo);
             uni.setStorageSync("token", userInfo.token || "mock-token-" + Date.now());
@@ -645,21 +645,21 @@ if (uni.restoreGlobal) {
               title: "登录成功",
               icon: "success"
             });
-            formatAppLog("log", "at pages/login/login.vue:258", "准备跳转到welcome欢迎页面");
+            formatAppLog("log", "at pages/login/login.vue:254", "准备跳转到welcome欢迎页面");
             uni.navigateTo({
               url: "/pages/welcome/welcome",
               success: () => {
-                formatAppLog("log", "at pages/login/login.vue:264", "navigateTo跳转成功");
+                formatAppLog("log", "at pages/login/login.vue:260", "navigateTo跳转成功");
               },
               fail: (err) => {
-                formatAppLog("error", "at pages/login/login.vue:267", "navigateTo跳转失败:", err);
+                formatAppLog("error", "at pages/login/login.vue:263", "navigateTo跳转失败:", err);
                 uni.reLaunch({
                   url: "/pages/welcome/welcome",
                   success: () => {
-                    formatAppLog("log", "at pages/login/login.vue:272", "reLaunch跳转成功");
+                    formatAppLog("log", "at pages/login/login.vue:268", "reLaunch跳转成功");
                   },
                   fail: (err2) => {
-                    formatAppLog("error", "at pages/login/login.vue:275", "reLaunch也失败:", err2);
+                    formatAppLog("error", "at pages/login/login.vue:271", "reLaunch也失败:", err2);
                     uni.showToast({
                       title: "页面跳转失败",
                       icon: "none"
@@ -676,7 +676,7 @@ if (uni.restoreGlobal) {
           }
         } catch (error) {
           uni.hideLoading();
-          formatAppLog("error", "at pages/login/login.vue:292", "登录失败:", error);
+          formatAppLog("error", "at pages/login/login.vue:288", "登录失败:", error);
           uni.showToast({
             title: "网络错误，请重试",
             icon: "none"
@@ -717,7 +717,7 @@ if (uni.restoreGlobal) {
         });
       },
       testJump() {
-        formatAppLog("log", "at pages/login/login.vue:340", "测试跳转");
+        formatAppLog("log", "at pages/login/login.vue:336", "测试跳转");
         uni.showToast({
           title: "开始测试跳转",
           icon: "none"
@@ -726,14 +726,14 @@ if (uni.restoreGlobal) {
           uni.navigateTo({
             url: "/pages/welcome/welcome",
             success: () => {
-              formatAppLog("log", "at pages/login/login.vue:352", "跳转成功");
+              formatAppLog("log", "at pages/login/login.vue:348", "跳转成功");
               uni.showToast({
                 title: "跳转成功",
                 icon: "success"
               });
             },
             fail: (err) => {
-              formatAppLog("error", "at pages/login/login.vue:359", "跳转失败:", err);
+              formatAppLog("error", "at pages/login/login.vue:355", "跳转失败:", err);
               uni.showToast({
                 title: `跳转失败: ${err.errMsg}`,
                 icon: "none"
@@ -743,18 +743,18 @@ if (uni.restoreGlobal) {
         }, 1e3);
       },
       testJumpToOrder() {
-        formatAppLog("log", "at pages/login/login.vue:370", "测试跳转到welcome页");
+        formatAppLog("log", "at pages/login/login.vue:366", "测试跳转到welcome页");
         uni.navigateTo({
           url: "/pages/welcome/welcome",
           success: () => {
-            formatAppLog("log", "at pages/login/login.vue:374", "跳转到welcome页成功");
+            formatAppLog("log", "at pages/login/login.vue:370", "跳转到welcome页成功");
             uni.showToast({
               title: "跳转到welcome页成功",
               icon: "success"
             });
           },
           fail: (err) => {
-            formatAppLog("error", "at pages/login/login.vue:381", "跳转到welcome页失败:", err);
+            formatAppLog("error", "at pages/login/login.vue:377", "跳转到welcome页失败:", err);
             uni.showToast({
               title: "跳转到welcome页失败",
               icon: "none"
@@ -855,67 +855,37 @@ if (uni.restoreGlobal) {
           class: "login-btn",
           onClick: _cache[5] || (_cache[5] = (...args) => $options.handleLogin && $options.handleLogin(...args))
         }, "登录"),
-        vue.createCommentVNode(" 测试跳转按钮 "),
-        vue.createElementVNode("button", {
-          class: "test-btn",
-          onClick: _cache[6] || (_cache[6] = (...args) => $options.testJump && $options.testJump(...args))
-        }, "测试跳转"),
-        vue.createElementVNode("button", {
-          class: "test-btn",
-          onClick: _cache[7] || (_cache[7] = (...args) => $options.testJumpToOrder && $options.testJumpToOrder(...args))
-        }, "跳转到欢迎页"),
         vue.createElementVNode("view", { class: "register-link" }, [
           vue.createElementVNode("text", null, "还没有账号？"),
           vue.createElementVNode("text", {
             class: "register-text",
-            onClick: _cache[8] || (_cache[8] = (...args) => $options.goToRegister && $options.goToRegister(...args))
+            onClick: _cache[6] || (_cache[6] = (...args) => $options.goToRegister && $options.goToRegister(...args))
           }, "立即注册")
         ])
       ]),
       vue.createCommentVNode(" 第三方登录 "),
-      vue.createElementVNode("view", { class: "third-party-login" }, [
-        vue.createElementVNode("view", { class: "divider" }, [
-          vue.createElementVNode("text", { class: "divider-text" }, "其他登录方式")
-        ]),
-        vue.createElementVNode("view", { class: "third-party-buttons" }, [
-          vue.createElementVNode("view", {
-            class: "third-party-btn wechat",
-            onClick: _cache[9] || (_cache[9] = ($event) => $options.thirdPartyLogin("wechat"))
-          }, [
-            vue.createElementVNode("text", { class: "third-party-icon" }, "微"),
-            vue.createElementVNode("text", { class: "third-party-text" }, "微信")
-          ]),
-          vue.createElementVNode("view", {
-            class: "third-party-btn qq",
-            onClick: _cache[10] || (_cache[10] = ($event) => $options.thirdPartyLogin("qq"))
-          }, [
-            vue.createElementVNode("text", { class: "third-party-icon" }, "Q"),
-            vue.createElementVNode("text", { class: "third-party-text" }, "QQ")
-          ]),
-          vue.createElementVNode("view", {
-            class: "third-party-btn weibo",
-            onClick: _cache[11] || (_cache[11] = ($event) => $options.thirdPartyLogin("weibo"))
-          }, [
-            vue.createElementVNode("text", { class: "third-party-icon" }, "微"),
-            vue.createElementVNode("text", { class: "third-party-text" }, "微博")
-          ])
-        ])
-      ]),
+      vue.createCommentVNode(` <view class="third-party-login">
+      <view class="divider">
+        <text class="divider-text">其他登录方式</text>
+      </view>
+
+      <view class="third-party-buttons">
+        <view class="third-party-btn wechat" @click="thirdPartyLogin('wechat')">
+          <text class="third-party-icon">微</text>
+          <text class="third-party-text">微信</text>
+        </view>
+        <view class="third-party-btn qq" @click="thirdPartyLogin('qq')">
+          <text class="third-party-icon">Q</text>
+          <text class="third-party-text">QQ</text>
+        </view>
+        <view class="third-party-btn weibo" @click="thirdPartyLogin('weibo')">
+          <text class="third-party-icon">微</text>
+          <text class="third-party-text">微博</text>
+        </view>
+      </view>
+    </view> `),
       vue.createCommentVNode(" 底部协议 "),
-      vue.createElementVNode("view", { class: "agreement-section" }, [
-        vue.createElementVNode("text", { class: "agreement-text" }, [
-          vue.createTextVNode(" 登录即表示同意 "),
-          vue.createElementVNode("text", {
-            class: "agreement-link",
-            onClick: _cache[12] || (_cache[12] = (...args) => $options.viewUserAgreement && $options.viewUserAgreement(...args))
-          }, "《用户协议》"),
-          vue.createTextVNode(" 和 "),
-          vue.createElementVNode("text", {
-            class: "agreement-link",
-            onClick: _cache[13] || (_cache[13] = (...args) => $options.viewPrivacyPolicy && $options.viewPrivacyPolicy(...args))
-          }, "《隐私政策》")
-        ])
-      ])
+      vue.createCommentVNode(' <view class="agreement-section">\n      <text class="agreement-text">\n        登录即表示同意\n        <text class="agreement-link" @click="viewUserAgreement"\n          >《用户协议》</text\n        >\n        和\n        <text class="agreement-link" @click="viewPrivacyPolicy"\n          >《隐私政策》</text\n        >\n      </text>\n    </view> ')
     ]);
   }
   const PagesLoginLogin = /* @__PURE__ */ _export_sfc(_sfc_main$h, [["render", _sfc_render$h], ["__scopeId", "data-v-e4e4508d"], ["__file", "/Users/neil/Documents/CodeRepository/uniapp-x-dgt/pages/login/login.vue"]]);
@@ -957,33 +927,19 @@ if (uni.restoreGlobal) {
             this.todoBean = response.data;
           } else {
             formatAppLog("error", "at pages/welcome/welcome.vue:107", "加载首页数据失败:", response.message);
-            this.loadMockData();
           }
         } catch (error) {
           formatAppLog("error", "at pages/welcome/welcome.vue:111", "加载首页数据失败:", error);
-          this.loadMockData();
         }
-      },
-      loadMockData() {
-        this.todoBean = {
-          monthOrderCount: 156,
-          monthPayMoneySum: 89.5,
-          monthSaleMoneySum: 120.3,
-          monthProfit: 23.8,
-          waitToBuy: 12,
-          waitToMail: 25,
-          waitToPay: 15,
-          waitToVisit: 8
-        };
       },
       goInto() {
         uni.reLaunch({
           url: "/pages/order/order",
           success: () => {
-            formatAppLog("log", "at pages/welcome/welcome.vue:135", "跳转到订单页面成功");
+            formatAppLog("log", "at pages/welcome/welcome.vue:121", "跳转到订单页面成功");
           },
           fail: (err) => {
-            formatAppLog("error", "at pages/welcome/welcome.vue:138", "跳转到订单页面失败:", err);
+            formatAppLog("error", "at pages/welcome/welcome.vue:124", "跳转到订单页面失败:", err);
             uni.showToast({
               title: "跳转失败",
               icon: "none"

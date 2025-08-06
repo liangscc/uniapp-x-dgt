@@ -50,10 +50,6 @@
 
       <button class="login-btn" @click="handleLogin">登录</button>
 
-      <!-- 测试跳转按钮 -->
-      <button class="test-btn" @click="testJump">测试跳转</button>
-      <button class="test-btn" @click="testJumpToOrder">跳转到欢迎页</button>
-
       <view class="register-link">
         <text>还没有账号？</text>
         <text class="register-text" @click="goToRegister">立即注册</text>
@@ -61,7 +57,7 @@
     </view>
 
     <!-- 第三方登录 -->
-    <view class="third-party-login">
+    <!-- <view class="third-party-login">
       <view class="divider">
         <text class="divider-text">其他登录方式</text>
       </view>
@@ -80,10 +76,10 @@
           <text class="third-party-text">微博</text>
         </view>
       </view>
-    </view>
+    </view> -->
 
     <!-- 底部协议 -->
-    <view class="agreement-section">
+    <!-- <view class="agreement-section">
       <text class="agreement-text">
         登录即表示同意
         <text class="agreement-link" @click="viewUserAgreement"
@@ -94,7 +90,7 @@
           >《隐私政策》</text
         >
       </text>
-    </view>
+    </view> -->
   </view>
 </template>
 

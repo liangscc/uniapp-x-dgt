@@ -16,6 +16,7 @@
 }
 .stats-section[data-v-085f0530] {
   padding: 1.25rem;
+	flex-direction: column;
 }
 .stat-item[data-v-085f0530] {
   display: flex;
