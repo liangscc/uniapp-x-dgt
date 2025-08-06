@@ -112,7 +112,64 @@ export default {
       rememberPassword: false,
     }
   },
+  
+  onLoad() {
+    // 检查是否是从登录状态校验失败跳转过来的
+    const isFromAuthFail = uni.getStorageSync('authFailRedirect')
+    if (isFromAuthFail) {
+      uni.removeStorageSync('authFailRedirect')
+      // 自动登录
+      this.autoLogin()
+    }
+  },
   methods: {
+    // 自动登录方法
+    async autoLogin() {
+      console.log('开始自动登录')
+      try {
+        const response = await apiService.login({
+          offline_id: this.loginForm.offline_id,
+          tel_no: this.loginForm.tel_no,
+          password: this.loginForm.password,
+        })
+
+        console.log('自动登录响应:', response)
+
+        if (response.success || response.code === 1) {
+          // 保存登录状态和用户信息
+          const userInfo = response.data || response || {
+            offline_id: this.loginForm.offline_id,
+            tel_no: this.loginForm.tel_no,
+            nickname: '测试用户',
+            token: 'mock-token-' + Date.now()
+          }
+
+          console.log('保存用户信息:', userInfo)
+          
+          uni.setStorageSync('isLoggedIn', true)
+          uni.setStorageSync('userInfo', userInfo)
+          uni.setStorageSync('token', userInfo.token || 'mock-token-' + Date.now())
+
+          uni.showToast({
+            title: '自动登录成功',
+            icon: 'success',
+          })
+
+          // 跳转到welcome欢迎页面
+          setTimeout(() => {
+            uni.reLaunch({
+              url: '/pages/welcome/welcome'
+            })
+          }, 1500)
+        } else {
+          console.log('自动登录失败，显示登录表单')
+        }
+      } catch (error) {
+        console.error('自动登录失败:', error)
+        console.log('自动登录失败，显示登录表单')
+      }
+    },
+
     async handleLogin() {
       // 验证离线ID
       if (!this.loginForm.offline_id) {

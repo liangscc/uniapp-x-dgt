@@ -538,7 +538,52 @@ if (uni.restoreGlobal) {
         rememberPassword: false
       };
     },
+    onLoad() {
+      const isFromAuthFail = uni.getStorageSync("authFailRedirect");
+      if (isFromAuthFail) {
+        uni.removeStorageSync("authFailRedirect");
+        this.autoLogin();
+      }
+    },
     methods: {
+      // 自动登录方法
+      async autoLogin() {
+        formatAppLog("log", "at pages/login/login.vue:128", "开始自动登录");
+        try {
+          const response = await apiService.login({
+            offline_id: this.loginForm.offline_id,
+            tel_no: this.loginForm.tel_no,
+            password: this.loginForm.password
+          });
+          formatAppLog("log", "at pages/login/login.vue:136", "自动登录响应:", response);
+          if (response.success || response.code === 1) {
+            const userInfo = response.data || response || {
+              offline_id: this.loginForm.offline_id,
+              tel_no: this.loginForm.tel_no,
+              nickname: "测试用户",
+              token: "mock-token-" + Date.now()
+            };
+            formatAppLog("log", "at pages/login/login.vue:147", "保存用户信息:", userInfo);
+            uni.setStorageSync("isLoggedIn", true);
+            uni.setStorageSync("userInfo", userInfo);
+            uni.setStorageSync("token", userInfo.token || "mock-token-" + Date.now());
+            uni.showToast({
+              title: "自动登录成功",
+              icon: "success"
+            });
+            setTimeout(() => {
+              uni.reLaunch({
+                url: "/pages/welcome/welcome"
+              });
+            }, 1500);
+          } else {
+            formatAppLog("log", "at pages/login/login.vue:165", "自动登录失败，显示登录表单");
+          }
+        } catch (error) {
+          formatAppLog("error", "at pages/login/login.vue:168", "自动登录失败:", error);
+          formatAppLog("log", "at pages/login/login.vue:169", "自动登录失败，显示登录表单");
+        }
+      },
       async handleLogin() {
         if (!this.loginForm.offline_id) {
           uni.showToast({
@@ -572,7 +617,7 @@ if (uni.restoreGlobal) {
           title: "登录中..."
         });
         try {
-          formatAppLog("log", "at pages/login/login.vue:159", "发送登录请求:", {
+          formatAppLog("log", "at pages/login/login.vue:216", "发送登录请求:", {
             offline_id: this.loginForm.offline_id,
             tel_no: this.loginForm.tel_no,
             password: this.loginForm.password
@@ -583,7 +628,7 @@ if (uni.restoreGlobal) {
             password: this.loginForm.password
           });
           uni.hideLoading();
-          formatAppLog("log", "at pages/login/login.vue:174", "登录响应:", response);
+          formatAppLog("log", "at pages/login/login.vue:231", "登录响应:", response);
           const mockSuccess = false;
           if (mockSuccess || response.success || response.code === 1) {
             const userInfo = response.data || response || {
@@ -592,7 +637,7 @@ if (uni.restoreGlobal) {
               nickname: "测试用户",
               token: "mock-token-" + Date.now()
             };
-            formatAppLog("log", "at pages/login/login.vue:189", "保存用户信息:", userInfo);
+            formatAppLog("log", "at pages/login/login.vue:246", "保存用户信息:", userInfo);
             uni.setStorageSync("isLoggedIn", true);
             uni.setStorageSync("userInfo", userInfo);
             uni.setStorageSync("token", userInfo.token || "mock-token-" + Date.now());
@@ -600,21 +645,21 @@ if (uni.restoreGlobal) {
               title: "登录成功",
               icon: "success"
             });
-            formatAppLog("log", "at pages/login/login.vue:201", "准备跳转到welcome欢迎页面");
+            formatAppLog("log", "at pages/login/login.vue:258", "准备跳转到welcome欢迎页面");
             uni.navigateTo({
               url: "/pages/welcome/welcome",
               success: () => {
-                formatAppLog("log", "at pages/login/login.vue:207", "navigateTo跳转成功");
+                formatAppLog("log", "at pages/login/login.vue:264", "navigateTo跳转成功");
               },
               fail: (err) => {
-                formatAppLog("error", "at pages/login/login.vue:210", "navigateTo跳转失败:", err);
+                formatAppLog("error", "at pages/login/login.vue:267", "navigateTo跳转失败:", err);
                 uni.reLaunch({
                   url: "/pages/welcome/welcome",
                   success: () => {
-                    formatAppLog("log", "at pages/login/login.vue:215", "reLaunch跳转成功");
+                    formatAppLog("log", "at pages/login/login.vue:272", "reLaunch跳转成功");
                   },
                   fail: (err2) => {
-                    formatAppLog("error", "at pages/login/login.vue:218", "reLaunch也失败:", err2);
+                    formatAppLog("error", "at pages/login/login.vue:275", "reLaunch也失败:", err2);
                     uni.showToast({
                       title: "页面跳转失败",
                       icon: "none"
@@ -631,7 +676,7 @@ if (uni.restoreGlobal) {
           }
         } catch (error) {
           uni.hideLoading();
-          formatAppLog("error", "at pages/login/login.vue:235", "登录失败:", error);
+          formatAppLog("error", "at pages/login/login.vue:292", "登录失败:", error);
           uni.showToast({
             title: "网络错误，请重试",
             icon: "none"
@@ -672,7 +717,7 @@ if (uni.restoreGlobal) {
         });
       },
       testJump() {
-        formatAppLog("log", "at pages/login/login.vue:283", "测试跳转");
+        formatAppLog("log", "at pages/login/login.vue:340", "测试跳转");
         uni.showToast({
           title: "开始测试跳转",
           icon: "none"
@@ -681,14 +726,14 @@ if (uni.restoreGlobal) {
           uni.navigateTo({
             url: "/pages/welcome/welcome",
             success: () => {
-              formatAppLog("log", "at pages/login/login.vue:295", "跳转成功");
+              formatAppLog("log", "at pages/login/login.vue:352", "跳转成功");
               uni.showToast({
                 title: "跳转成功",
                 icon: "success"
               });
             },
             fail: (err) => {
-              formatAppLog("error", "at pages/login/login.vue:302", "跳转失败:", err);
+              formatAppLog("error", "at pages/login/login.vue:359", "跳转失败:", err);
               uni.showToast({
                 title: `跳转失败: ${err.errMsg}`,
                 icon: "none"
@@ -698,18 +743,18 @@ if (uni.restoreGlobal) {
         }, 1e3);
       },
       testJumpToOrder() {
-        formatAppLog("log", "at pages/login/login.vue:313", "测试跳转到welcome页");
+        formatAppLog("log", "at pages/login/login.vue:370", "测试跳转到welcome页");
         uni.navigateTo({
           url: "/pages/welcome/welcome",
           success: () => {
-            formatAppLog("log", "at pages/login/login.vue:317", "跳转到welcome页成功");
+            formatAppLog("log", "at pages/login/login.vue:374", "跳转到welcome页成功");
             uni.showToast({
               title: "跳转到welcome页成功",
               icon: "success"
             });
           },
           fail: (err) => {
-            formatAppLog("error", "at pages/login/login.vue:324", "跳转到welcome页失败:", err);
+            formatAppLog("error", "at pages/login/login.vue:381", "跳转到welcome页失败:", err);
             uni.showToast({
               title: "跳转到welcome页失败",
               icon: "none"
