@@ -59,11 +59,6 @@
       </scroll-view>
     </view>
 
-    <!-- 悬浮添加按钮 -->
-    <view class="fab-button" @click="addProduct">
-      <text class="fab-icon">+</text>
-    </view>
-
     <!-- 自定义 TabBar -->
     <CustomTabBar />
   </view>
@@ -267,19 +262,13 @@ export default {
     gotoProductList(item, subItem, cateA, category_id) {
       console.log('跳转到商品列表:', item, subItem, cateA, category_id)
       uni.navigateTo({
-        url: `/pages/product/detail?cate1=${cateA}&cate2=${item}&cate3=${subItem}&category_id=${category_id}`,
+        url: `/pages/product-list/product-list?cate1=${cateA}&cate2=${item}&cate3=${subItem}&category_id=${category_id}`,
       })
     },
 
     gotoChart() {
       uni.navigateTo({
         url: '/pages/statistics/statistics',
-      })
-    },
-
-    addProduct() {
-      uni.navigateTo({
-        url: '/pages/product/add'
       })
     },
     
@@ -442,33 +431,5 @@ export default {
   font-size: 26rpx;
   color: #666;
 }
-
-.fab-button {
-  position: fixed;
-  bottom: calc(100rpx + var(--spacing-xl) + env(safe-area-inset-bottom));
-  right: var(--spacing-xl);
-  width: 100rpx;
-  height: 100rpx;
-  background: var(--primary-color);
-  border-radius: var(--radius-circle);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-heavy);
-  transition: all 0.2s ease;
-  z-index: 1000;
-}
-
-.fab-button:active {
-  transform: scale(0.9);
-  box-shadow: var(--shadow-medium);
-}
-
-.fab-icon {
-  color: #FFFFFF;
-  font-size: var(--font-size-xl);
-  font-weight: bold;
-}
-
 
 </style>

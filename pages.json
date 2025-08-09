@@ -97,6 +97,13 @@
 				"navigationBarTitleText": "商品分类设置",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path": "pages/product-list/product-list",
+			"style": {
+				"navigationBarTitleText": "商品列表",
+				"navigationStyle": "custom"
+			}
 		}
 	],
 	"globalStyle": {

@@ -28,8 +28,8 @@ class ApiService {
       defaultOptions.header['Authorization'] = `Bearer ${token}`
     }
 
-    // 如果有用户信息，添加离线ID
-    if (userInfo && userInfo.offline_id) {
+    // 如果有用户信息，添加离线ID（除非明确禁用）
+    if (userInfo && userInfo.offline_id && !options.skipOfflineId) {
       if (!options.data) {
         options.data = {}
       }
@@ -63,7 +63,36 @@ class ApiService {
   // 处理响应
   handleResponse(response) {
     if (response.statusCode === 200) {
-      return response.data;
+      const data = response.data;
+      
+      // 检查登录状态
+      if (data && data.code === 207) {
+        console.log('登录状态校验失败，清除登录信息')
+        // 清除本地存储的登录信息
+        uni.removeStorageSync('token')
+        uni.removeStorageSync('userInfo')
+        
+        // 设置标记，表示是从登录状态校验失败跳转的
+        uni.setStorageSync('authFailRedirect', true)
+        
+        // 显示提示
+        uni.showToast({
+          title: '登录已过期，正在重新登录...',
+          icon: 'none',
+          duration: 2000
+        })
+        
+        // 延迟跳转到登录页面
+        setTimeout(() => {
+          uni.reLaunch({
+            url: '/pages/login/login'
+          })
+        }, 2000)
+        
+        throw new Error('登录状态校验失败')
+      }
+      
+      return data;
     } else {
       throw new Error(`请求失败: ${response.statusCode}`);
     }
@@ -98,10 +127,11 @@ class ApiService {
   }
 
   // PUT请求
-  async put(url, data = {}) {
+  async put(url, data = {}, options = {}) {
     return this.request(url, {
       method: 'PUT',
-      data: data
+      data: data,
+      ...options
     });
   }
 
@@ -306,7 +336,9 @@ class ApiService {
 
   // 添加商品
   async addProduct(paramObj) {
-    return this.put(`${this.configUrl}/goods/add`, paramObj);
+    const normalizedPayload = this.normalizeAddProductPayload(paramObj)
+    console.log('addProduct normalized payload:', normalizedPayload)
+    return this.put(`${this.configUrl}/goods/add`, normalizedPayload, { skipOfflineId: true });
   }
 
   // 更新商品
@@ -322,6 +354,118 @@ class ApiService {
   // 上传图片
   async uploadImg(paramObj) {
     return this.put(`${this.configUrl}/goods/uploadImg`, paramObj);
+  }
+
+  // =============== 内部辅助：添加商品入参归一化 ===============
+  normalizeAddProductPayload(paramObj) {
+     // 允许两种形状：
+     // 1) 平台现有：{ goodsBean, listGoodsSpec, listGoodsImg }
+     // 2) 测试入参（猜测）：扁平结构 + images/specs 等
+    if (paramObj && typeof paramObj === 'object' && paramObj.goodsBean) {
+      const listGoodsImg = this.normalizeImageList(paramObj.listGoodsImg || paramObj.images || [])
+      const goodsBean = this.normalizeGoodsBean(paramObj.goodsBean, listGoodsImg)
+      const listGoodsSpec = Array.isArray(paramObj.listGoodsSpec)
+        ? paramObj.listGoodsSpec
+        : (Array.isArray(paramObj.specs) ? paramObj.specs : [])
+      return { goodsBean, listGoodsSpec, listGoodsImg }
+    }
+ 
+    const listGoodsImg = this.normalizeImageList(paramObj?.images || paramObj?.listGoodsImg || [])
+    const goodsBean = this.normalizeGoodsBean({
+      name: paramObj?.name,
+      code: paramObj?.code,
+      description: paramObj?.description,
+      category_id: paramObj?.category_id || paramObj?.categoryId || paramObj?.cateId,
+      brand: paramObj?.brand,
+      specification: paramObj?.specification,
+      unit: paramObj?.unit,
+      weight: paramObj?.weight,
+      account_id: paramObj?.account_id || paramObj?.accountId,
+      offline_id: paramObj?.offline_id || paramObj?.offlineId
+    }, listGoodsImg)
+    const listGoodsSpec = Array.isArray(paramObj?.specs) ? paramObj.specs : []
+    return { goodsBean, listGoodsSpec, listGoodsImg }
+  }
+ 
+  normalizeGoodsBean(bean, imageList = []) {
+    const userInfo = uni.getStorageSync('userInfo') || {}
+    const storageOfflineId = uni.getStorageSync('offline_id')
+    const storageAccountId = uni.getStorageSync('account_id')
+    const resolvedAccountId = (
+      bean?.account_id ||
+      bean?.accountId ||
+      userInfo?.account_id ||
+      userInfo?.accountId ||
+      userInfo?.id ||
+      userInfo?.user_id ||
+      userInfo?.userId ||
+      storageAccountId ||
+      ''
+    )
+    const resolvedOfflineId = bean?.offline_id || bean?.offlineId || userInfo?.offline_id || storageOfflineId || ''
+    const toNumberOrDefault = (val, def = 0) => {
+      if (val === undefined || val === null || val === '') return def
+      const n = Number(val)
+      return Number.isNaN(n) ? def : n
+    }
+    const toIntOrDefault = (val, def = 0) => {
+      if (val === undefined || val === null || val === '') return def
+      const n = parseInt(val, 10)
+      return Number.isNaN(n) ? def : n
+    }
+
+    // 仅返回后端模型允许的字段，并进行必要映射
+    const mapped = {
+      uuid: bean?.uuid || '',
+      show_name: bean?.show_name || bean?.name || '',
+      name: bean?.name || '',
+      hs_code: bean?.hs_code || '',
+      unit: bean?.unit || '',
+      model: bean?.model || bean?.specification || '',
+      bar_code: bean?.bar_code || bean?.code || '',
+      brand: bean?.brand || '',
+      currency: bean?.currency || '',
+      is_gift: toIntOrDefault(bean?.is_gift, 0),
+      color: bean?.color || '',
+      weight: toNumberOrDefault(bean?.weight, 0),
+      remark: bean?.remark || bean?.description || '',
+      category_id: (bean?.category_id || bean?.categoryId || '') + '',
+      discount_rate: toIntOrDefault(bean?.discount_rate, 0),
+      publish_status: toIntOrDefault(bean?.publish_status, 0),
+      // 以下日期/时间类字段若前端无值则不传或传空字符串
+      input_date: bean?.input_date || '',
+      remind_day: toIntOrDefault(bean?.remind_day, 0),
+      limit_date: bean?.limit_date || '',
+      buy_way: bean?.buy_way || '',
+      promotion_time: bean?.promotion_time || '',
+      tax_rate: toIntOrDefault(bean?.tax_rate, 0),
+      in_store: toIntOrDefault(bean?.in_store, 0),
+      visit_day: toIntOrDefault(bean?.visit_day, 0),
+      visit_flag: toIntOrDefault(bean?.visit_flag, 0),
+      from_name: bean?.from_name || '',
+      country: bean?.country || '',
+      // 将图片数组转为后端期望的字符串（逗号分隔）
+      image_arr: Array.isArray(imageList) && imageList.length > 0 ? imageList.join(',') : (bean?.image_arr || ''),
+      account_id: resolvedAccountId ? String(resolvedAccountId) : '',
+      offline_id: resolvedOfflineId ? String(resolvedOfflineId) : '',
+      slogan: bean?.slogan || ''
+    }
+
+    return mapped
+  }
+
+  normalizeImageList(list) {
+    if (!Array.isArray(list)) return []
+    const urls = list
+      .map((item) => {
+        if (typeof item === 'string') return item
+        if (item && typeof item === 'object') {
+          return item.url || item.imgUrl || item.imageUrl || ''
+        }
+        return ''
+      })
+      .filter((u) => !!u)
+    return urls
   }
 
   // ==================== 采购相关接口 ====================

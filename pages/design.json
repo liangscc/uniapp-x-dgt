@@ -1,0 +1,148 @@
+{
+  "designSystem": {
+      "overallStyle": {
+          "colorScheme": {
+              "primary": "#F44336", 
+              "background": "#FFFFFF", 
+              "text": "#000000", 
+              "separator": "#E0E0E0" 
+          },
+          "fontStyle": {
+              "family": "Roboto, sans-serif", 
+              "size": {
+                  "title": 20, 
+                  "label": 16, 
+                  "text": 14 
+              },
+              "weight": {
+                  "title": "bold", 
+                  "label": "regular", 
+                  "text": "regular" 
+              }
+          },
+          "spacing": {
+              "vertical": 16, 
+              "horizontal": 16 
+          },
+          "visualHierarchy": {
+              "title": {
+                  "position": "top",
+                  "emphasis": "high"
+              },
+              "sections": {
+                  "divider": true, 
+                  "headingEmphasis": "medium" 
+              },
+              "fields": {
+                  "labelPosition": "top", 
+                  "inputSpacing": 8 
+              }
+          }
+      },
+      "structuralElements": {
+          "container": {
+              "type": "scrollable", 
+              "padding": 16 
+          },
+          "sections": {
+              "heading": {
+                  "type": "text", 
+                  "style": "sectionHeading" 
+              },
+              "divider": {
+                  "type": "line", 
+                  "color": "#E0E0E0", 
+                  "thickness": 1 
+              }
+          },
+          "formFields": {
+              "label": {
+                  "type": "text", 
+                  "position": "top", 
+                  "marginBottom": 4 
+              },
+              "input": {
+                  "type": "textField", 
+                  "border": {
+                      "color": "#E0E0E0", 
+                      "thickness": 1, 
+                      "radius": 4 
+                  },
+                  "padding": 8 
+              },
+              "dropdown": {
+                  "type": "select", 
+                  "indicator": "chevronRight", 
+                  "border": {
+                      "color": "#E0E0E0", 
+                      "thickness": 1, 
+                      "radius": 4 
+                  },
+                  "padding": 8 
+              }
+          },
+          "buttons": {
+              "primary": {
+                  "type": "iconButton", 
+                  "position": "topRight", 
+                  "icon": "check", 
+                  "color": "#FFFFFF", 
+                  "background": "#F44336", 
+                  "size": 24 
+              },
+              "secondary": {
+                  "type": "textButton", 
+                  "position": "inline", 
+                  "color": "#F44336", 
+                  "background": "transparent", 
+                  "size": 14 
+              }
+          },
+          "addElement": {
+              "type": "button", 
+              "label": "添加规格", 
+              "icon": "plus", 
+              "position": "bottom", 
+              "marginTop": 16 
+          },
+          "imagePlaceholder": {
+              "type": "icon", 
+              "icon": "image", 
+              "color": "#BDBDBD", 
+              "size": 48, 
+              "marginTop": 16 
+          }
+      },
+      "layoutPrinciples": {
+          "arrangement": "vertical", 
+          "grouping": {
+              "relatedFields": {
+                  "type": "section", 
+                  "spacing": 16 
+              }
+          },
+          "alignment": {
+              "labels": "left", 
+              "inputs": "left", 
+              "buttons": "right" 
+          }
+      },
+      "keyReplicationAttributes": {
+          "consistency": {
+              "colors": "strict", 
+              "fonts": "strict", 
+              "spacing": "strict" 
+          },
+          "scalability": {
+              "sections": "addable", 
+              "fields": "addable", 
+              "variants": "defined" 
+          },
+          "accessibility": {
+              "contrast": "AA", 
+              "labels": "required", 
+              "navigation": "logical" 
+          }
+      }
+  }
+}

@@ -387,29 +387,4 @@ to {
   font-size: 0.8125rem;
   color: #666;
 }
-.fab-button[data-v-946a9793] {
-  position: fixed;
-  bottom: calc(3.125rem + var(--spacing-xl) + env(safe-area-inset-bottom));
-  right: var(--spacing-xl);
-  width: 3.125rem;
-  height: 3.125rem;
-  background: var(--primary-color);
-  border-radius: var(--radius-circle);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: var(--shadow-heavy);
-  transition: all 0.2s ease;
-  z-index: 1000;
-}
-.fab-button[data-v-946a9793]:active {
-  transform: scale(0.9);
-  box-shadow: var(--shadow-medium);
-}
-.fab-icon[data-v-946a9793] {
-  color: #FFFFFF;
-  font-size: var(--font-size-xl);
-  font-weight: bold;
-}
-
 

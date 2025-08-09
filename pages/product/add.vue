@@ -1,250 +1,108 @@
 <template>
-  <view class="add-product-container">
-    <!-- 表单内容 -->
-    <scroll-view class="form-scroll" scroll-y="true">
-      <view class="form-content">
-        
-        <!-- 基本信息 -->
-        <view class="form-section">
-          <view class="section-title">
-            <text class="title-text">基本信息</text>
-          </view>
-          
-          <view class="form-item">
-            <text class="label">商品名称 *</text>
-            <input 
-              class="input-field" 
-              v-model="formData.name" 
-              placeholder="请输入商品名称"
-              maxlength="50"
-            />
-          </view>
-          
-          <view class="form-item">
-            <text class="label">商品编码</text>
-            <input 
-              class="input-field" 
-              v-model="formData.code" 
-              placeholder="请输入商品编码"
-              maxlength="20"
-            />
-          </view>
-          
-          <view class="form-item">
-            <text class="label">商品描述</text>
-            <textarea 
-              class="textarea-field" 
-              v-model="formData.description" 
-              placeholder="请输入商品描述"
-              maxlength="200"
-            />
+  <view class="add-product-page">
+    <!-- 顶部导航 -->
+    <view class="header">
+      <view class="header-left" @click="goBack">
+        <text class="header-icon">‹</text>
+      </view>
+      <view class="header-center">
+        <text class="header-title">新商品</text>
+      </view>
+      <view class="header-right" @click="saveProduct">
+        <text class="header-icon">✓</text>
+      </view>
+    </view>
+
+    <scroll-view class="page-scroll" scroll-y="true">
+      <!-- 必填内容 -->
+      <view class="section-divider">必填内容</view>
+      <view class="list-card">
+        <view class="list-item-row">
+          <text class="row-label">商品名称：</text>
+          <input class="row-input" v-model="formData.name" placeholder="请输入商品名称" maxlength="50" />
+        </view>
+        <view class="list-item-row">
+          <text class="row-label">品牌</text>
+          <input class="row-input" v-model="formData.brand" placeholder="请输入品牌" />
+        </view>
+        <view class="list-item-row">
+          <text class="row-label">分类</text>
+          <view class="row-value">
+            <text class="value-text">{{ categoryPathText || '未设置' }}</text>
           </view>
         </view>
-
-        <!-- 分类信息 -->
-        <view class="form-section">
-          <view class="section-title">
-            <text class="title-text">分类信息</text>
-          </view>
-          
-          <view class="form-item">
-            <text class="label">一级分类 *</text>
-            <picker 
-              class="picker-field" 
-              :value="categoryIndex.first" 
-              :range="categoryList.first" 
-              range-key="name"
-              @change="onFirstCategoryChange"
-            >
-              <view class="picker-text">
-                {{ categoryList.first[categoryIndex.first]?.name || '请选择一级分类' }}
-              </view>
-            </picker>
-          </view>
-          
-          <view class="form-item">
-            <text class="label">二级分类</text>
-            <picker 
-              class="picker-field" 
-              :value="categoryIndex.second" 
-              :range="categoryList.second" 
-              range-key="name"
-              @change="onSecondCategoryChange"
-            >
-              <view class="picker-text">
-                {{ categoryList.second[categoryIndex.second]?.name || '请选择二级分类' }}
-              </view>
-            </picker>
-          </view>
-          
-          <view class="form-item">
-            <text class="label">三级分类</text>
-            <picker 
-              class="picker-field" 
-              :value="categoryIndex.third" 
-              :range="categoryList.third" 
-              range-key="name"
-              @change="onThirdCategoryChange"
-            >
-              <view class="picker-text">
-                {{ categoryList.third[categoryIndex.third]?.name || '请选择三级分类' }}
-              </view>
-            </picker>
+        <view class="list-item-row selectable" @click="openPurchasePlacePicker">
+          <text class="row-label">商品采购地</text>
+          <view class="row-value">
+            <text class="value-text">{{ extraForm.purchasePlace || '请选择采购地' }}</text>
+            <text class="arrow">›</text>
           </view>
         </view>
+      </view>
 
-        <!-- 价格信息 -->
-        <view class="form-section">
-          <view class="section-title">
-            <text class="title-text">价格信息</text>
-          </view>
-          
-          <view class="form-item">
-            <text class="label">成本价 *</text>
-            <input 
-              class="input-field" 
-              v-model="formData.costPrice" 
-              type="digit"
-              placeholder="请输入成本价"
-            />
-          </view>
-          
-          <view class="form-item">
-            <text class="label">销售价 *</text>
-            <input 
-              class="input-field" 
-              v-model="formData.salePrice" 
-              type="digit"
-              placeholder="请输入销售价"
-            />
-          </view>
-          
-          <view class="form-item">
-            <text class="label">市场价</text>
-            <input 
-              class="input-field" 
-              v-model="formData.marketPrice" 
-              type="digit"
-              placeholder="请输入市场价"
-            />
+      <!-- 选填内容 -->
+      <view class="section-divider">选填内容</view>
+      <view class="list-card">
+        <view class="list-item-row">
+          <text class="row-label">过期提醒提前天数</text>
+          <input class="row-input" v-model.number="extraForm.expireAdvanceDays" type="number" placeholder="如：7" />
+        </view>
+        <view class="list-item-row selectable" @click="toggleNeedVisit">
+          <text class="row-label">是否需要回访</text>
+          <view class="row-value">
+            <text class="value-text">{{ extraForm.needVisit ? '需要' : '不需要' }}</text>
+            <text class="arrow">›</text>
           </view>
         </view>
-
-        <!-- 库存信息 -->
-        <view class="form-section">
-          <view class="section-title">
-            <text class="title-text">库存信息</text>
-          </view>
-          
-          <view class="form-item">
-            <text class="label">初始库存 *</text>
-            <input 
-              class="input-field" 
-              v-model="formData.stock" 
-              type="number"
-              placeholder="请输入初始库存"
-            />
-          </view>
-          
-          <view class="form-item">
-            <text class="label">库存预警值</text>
-            <input 
-              class="input-field" 
-              v-model="formData.stockWarning" 
-              type="number"
-              placeholder="请输入库存预警值"
-            />
-          </view>
+        <view class="list-item-row" v-if="extraForm.needVisit">
+          <text class="row-label">回访提醒天数(货到几天)</text>
+          <input class="row-input" v-model.number="extraForm.visitReminderDays" type="number" placeholder="如：3" />
         </view>
+        <view class="list-item-row">
+          <text class="row-label">宣传语</text>
+          <input class="row-input" v-model="formData.description" placeholder="用于商品展示的简短文案" maxlength="200" />
+        </view>
+        <view class="list-item-row">
+          <text class="row-label">备注</text>
+          <input class="row-input" v-model="extraForm.remark" placeholder="可填写补充信息" maxlength="200" />
+        </view>
+      </view>
 
-        <!-- 商品图片 -->
-        <view class="form-section">
-          <view class="section-title">
-            <text class="title-text">商品图片</text>
-          </view>
-          
-          <view class="image-upload">
-            <view class="image-list">
-              <!-- 调试信息 -->
-              <view style="font-size: 12px; color: #999; margin-bottom: 10px;">
-                图片数量: {{ formData.images.length }}
+      <!-- 添加规格条 -->
+      <view class="specs-bar">
+        <text class="specs-label">添加规格：</text>
+        <view class="add-spec-btn" @click="onAddSpec">
+          <text class="plus">＋</text>
+          <text class="btn-text">添加规格</text>
+        </view>
+      </view>
+
+      <!-- 图片上传（保持原逻辑） -->
+      <view class="image-upload-card">
+        <view class="image-list">
+          <template v-for="(image, index) in formData.images" :key="index">
+            <view class="image-item" v-if="image && image.url">
+              <image class="uploaded-image" :src="image.url" mode="aspectFill" />
+              <view class="upload-status" v-if="image.uploading">
+                <text class="status-text">上传中...</text>
               </view>
-              <template v-for="(image, index) in formData.images" :key="index">
-                <view 
-                  class="image-item" 
-                  v-if="image && image.url"
-                >
-                  <image class="uploaded-image" :src="image.url" mode="aspectFill" />
-                  <view class="upload-status" v-if="image.uploading">
-                    <text class="status-text">上传中...</text>
-                  </view>
-                  <view class="delete-btn" @click="deleteImage(index)">
-                    <text class="delete-icon">×</text>
-                  </view>
-                </view>
-              </template>
-              
-              <view class="upload-btn" @click="chooseImage" v-if="formData.images.length < 5">
-                <text class="upload-icon">+</text>
-                <text class="upload-text">添加图片</text>
+              <view class="delete-btn" @click="deleteImage(index)">
+                <text class="delete-icon">×</text>
               </view>
             </view>
-            <text class="upload-tip">最多上传5张图片</text>
+          </template>
+
+          <view class="upload-btn" @click="chooseImage" v-if="formData.images.length < 5">
+            <text class="upload-icon">＋</text>
+            <text class="upload-text">添加图片</text>
           </view>
         </view>
-
-        <!-- 其他信息 -->
-        <view class="form-section">
-          <view class="section-title">
-            <text class="title-text">其他信息</text>
-          </view>
-          
-          <view class="form-item">
-            <text class="label">品牌</text>
-            <input 
-              class="input-field" 
-              v-model="formData.brand" 
-              placeholder="请输入品牌"
-            />
-          </view>
-          
-          <view class="form-item">
-            <text class="label">规格</text>
-            <input 
-              class="input-field" 
-              v-model="formData.specification" 
-              placeholder="请输入规格"
-            />
-          </view>
-          
-          <view class="form-item">
-            <text class="label">单位</text>
-            <input 
-              class="input-field" 
-              v-model="formData.unit" 
-              placeholder="请输入单位"
-            />
-          </view>
-          
-          <view class="form-item">
-            <text class="label">重量(kg)</text>
-            <input 
-              class="input-field" 
-              v-model="formData.weight" 
-              type="digit"
-              placeholder="请输入重量"
-            />
-          </view>
-        </view>
-
+        <text class="upload-tip">最多上传5张图片</text>
       </view>
-    </scroll-view>
 
-    <!-- 底部操作按钮 -->
-    <view class="bottom-actions">
-      <button class="btn btn-cancel" @click="goBack">取消</button>
-      <button class="btn btn-save" @click="saveProduct">保存商品</button>
-    </view>
+      <!-- 分类选择器已移除 -->
+    <!-- 分类信息从商品列表页面传递过来 -->
+    </scroll-view>
   </view>
 </template>
 
@@ -258,7 +116,7 @@ export default {
         name: '',
         code: '',
         description: '',
-        categoryId: '',
+        category_Id: '',
         costPrice: '',
         salePrice: '',
         marketPrice: '',
@@ -270,540 +128,280 @@ export default {
         weight: '',
         images: []
       },
-      categoryList: {
-        first: [],
-        second: [],
-        third: []
+      // 仅用于界面展示的扩展字段（不参与接口入参）
+      extraForm: {
+        purchasePlace: '',
+        expireAdvanceDays: '',
+        needVisit: false,
+        visitReminderDays: '',
+        remark: ''
       },
-      categoryIndex: {
-        first: 0,
-        second: 0,
-        third: 0
-      }
+      // 从商品列表页面传递过来的分类信息
+      cate1: '',
+      cate2: '',
+      cate3: '',
+      // 采购地选项
+      purchasePlaceOptions: ['中国', '韩国', '日本', '美国', '东南亚', '欧洲', '澳洲', '非洲', '其他']
     }
   },
-  
-  onLoad() {
-    this.loadCategories()
+
+  onLoad(options) {
+    // 接收从商品列表页面传递过来的分类参数
+    this.cate1 = options.cate1 || ''
+    this.cate2 = options.cate2 || ''
+    this.cate3 = options.cate3 || ''
+    this.category_id = options.category_id || ''
   },
-  
+
+  computed: {
+    categoryPathText() {
+      return [this.cate1, this.cate2, this.cate3].filter(Boolean).join(' > ')
+    }
+  },
+
   methods: {
-    // 加载分类数据
-    async loadCategories() {
-      try {
-        const response = await apiService.getCategory({})
-        if (response && response.data) {
-          this.categoryList.first = response.data
-        }
-      } catch (error) {
-        console.error('加载分类失败:', error)
-        uni.showToast({
-          title: '加载分类失败',
-          icon: 'none'
-        })
-      }
+    toggleNeedVisit() {
+      this.extraForm.needVisit = !this.extraForm.needVisit
     },
-    
-    // 一级分类变化
-    onFirstCategoryChange(e) {
-      const index = e.detail.value
-      this.categoryIndex.first = index
-      this.categoryIndex.second = 0
-      this.categoryIndex.third = 0
-      this.categoryList.second = []
-      this.categoryList.third = []
-      
-      if (this.categoryList.first[index]) {
-        this.loadSecondCategories(this.categoryList.first[index].id)
-      }
-    },
-    
-    // 二级分类变化
-    onSecondCategoryChange(e) {
-      const index = e.detail.value
-      this.categoryIndex.second = index
-      this.categoryIndex.third = 0
-      this.categoryList.third = []
-      
-      if (this.categoryList.second[index]) {
-        this.loadThirdCategories(this.categoryList.second[index].id)
-      }
-    },
-    
-    // 三级分类变化
-    onThirdCategoryChange(e) {
-      const index = e.detail.value
-      this.categoryIndex.third = index
-    },
-    
-    // 加载二级分类
-    async loadSecondCategories(parentId) {
-      try {
-        const response = await apiService.getSecondCategory({ id: parentId })
-        if (response && response.data) {
-          this.categoryList.second = response.data
-        }
-      } catch (error) {
-        console.error('加载二级分类失败:', error)
-      }
-    },
-    
-    // 加载三级分类
-    async loadThirdCategories(parentId) {
-      try {
-        const response = await apiService.getThirdCategory({ id: parentId })
-        if (response && response.data) {
-          this.categoryList.third = response.data
-        }
-      } catch (error) {
-        console.error('加载三级分类失败:', error)
-      }
-    },
-    
+
     // 选择图片
     chooseImage() {
-      console.log('开始选择图片')
       uni.chooseImage({
         count: 5 - this.formData.images.length,
         sizeType: ['compressed'],
         sourceType: ['album', 'camera'],
         success: (res) => {
-          console.log('选择图片成功:', res)
-          console.log('选择的图片路径:', res.tempFilePaths)
-          // 先显示本地图片
           this.addLocalImages(res.tempFilePaths)
-          // 然后异步上传
           this.uploadImages(res.tempFilePaths)
-        },
-        fail: (error) => {
-          console.error('选择图片失败:', error)
-          uni.showToast({
-            title: '选择图片失败',
-            icon: 'none'
-          })
         }
       })
     },
-    
+
     // 添加本地图片到显示列表
     addLocalImages(tempFilePaths) {
-      console.log('添加本地图片到显示列表:', tempFilePaths)
       for (let i = 0; i < tempFilePaths.length; i++) {
-        const imageData = {
-          url: tempFilePaths[i],
-          isLocal: true,
-          uploading: true
-        }
-        console.log('添加图片数据:', imageData)
-        this.formData.images.push(imageData)
+        this.formData.images.push({ url: tempFilePaths[i], isLocal: true, uploading: true })
       }
-      console.log('当前图片列表:', this.formData.images)
-      console.log('formData.images长度:', this.formData.images.length)
-      // 强制更新视图
       this.$forceUpdate()
     },
-    
+
     // 上传图片
     async uploadImages(tempFilePaths) {
       try {
         for (let i = 0; i < tempFilePaths.length; i++) {
           const filePath = tempFilePaths[i]
           const imageIndex = this.formData.images.findIndex(img => img.url === filePath)
-          
           if (imageIndex === -1) continue
-          
+
           try {
-            // 使用uni.uploadFile上传图片
             const uploadResult = await new Promise((resolve, reject) => {
               uni.uploadFile({
                 url: `${apiService.configUrl}/goods/uploadImg`,
                 filePath: filePath,
                 name: 'file',
-                header: {
-                  'Content-Type': 'multipart/form-data'
-                },
+                header: { 'Content-Type': 'multipart/form-data' },
                 success: (res) => {
-                  try {
-                    const data = JSON.parse(res.data)
-                    resolve(data)
-                  } catch (e) {
-                    reject(new Error('解析响应失败'))
-                  }
+                  try { resolve(JSON.parse(res.data)) } catch (e) { reject(new Error('解析响应失败')) }
                 },
-                fail: (error) => {
-                  reject(error)
-                }
+                fail: (error) => reject(error)
               })
             })
-            
+
             if (uploadResult && uploadResult.code === 200 && uploadResult.data) {
-              // 更新图片URL为服务器地址
               this.formData.images[imageIndex] = {
                 url: uploadResult.data.url || uploadResult.data,
                 isLocal: false,
                 uploading: false
               }
             } else {
-              // 上传失败，标记为本地图片
               this.formData.images[imageIndex].uploading = false
             }
           } catch (error) {
-            console.error('上传单张图片失败:', error)
-            // 上传失败，标记为本地图片
             this.formData.images[imageIndex].uploading = false
           }
         }
-        
-        uni.showToast({
-          title: '图片处理完成',
-          icon: 'success'
-        })
+        uni.showToast({ title: '图片处理完成', icon: 'success' })
       } catch (error) {
-        console.error('上传失败:', error)
-        uni.showToast({
-          title: '部分图片上传失败',
-          icon: 'none'
-        })
+        uni.showToast({ title: '部分图片上传失败', icon: 'none' })
       }
     },
-    
+
     // 删除图片
     deleteImage(index) {
       this.formData.images.splice(index, 1)
     },
-    
-    // 验证表单
+
+    onAddSpec() {
+      uni.showToast({ title: '规格功能待扩展', icon: 'none' })
+    },
+
+    // 验证表单（仅校验与接口相关字段）
     validateForm() {
       if (!this.formData.name.trim()) {
-        uni.showToast({
-          title: '请输入商品名称',
-          icon: 'none'
-        })
+        uni.showToast({ title: '请输入商品名称', icon: 'none' })
         return false
       }
-      
-      if (!this.formData.costPrice) {
-        uni.showToast({
-          title: '请输入成本价',
-          icon: 'none'
-        })
-        return false
-      }
-      
-      if (!this.formData.salePrice) {
-        uni.showToast({
-          title: '请输入销售价',
-          icon: 'none'
-        })
-        return false
-      }
-      
-      if (!this.formData.stock) {
-        uni.showToast({
-          title: '请输入初始库存',
-          icon: 'none'
-        })
-        return false
-      }
-      
       return true
     },
-    
-    // 获取分类ID
-    getCategoryId() {
-      let categoryId = ''
-      
-      if (this.categoryIndex.third >= 0 && this.categoryList.third[this.categoryIndex.third]) {
-        categoryId = this.categoryList.third[this.categoryIndex.third].id
-      } else if (this.categoryIndex.second >= 0 && this.categoryList.second[this.categoryIndex.second]) {
-        categoryId = this.categoryList.second[this.categoryIndex.second].id
-      } else if (this.categoryIndex.first >= 0 && this.categoryList.first[this.categoryIndex.first]) {
-        categoryId = this.categoryList.first[this.categoryIndex.first].id
-      }
-      
-      return categoryId
-    },
-    
-    // 保存商品
+
+    // 保存商品（保持接口入参不变）
     async saveProduct() {
-      if (!this.validateForm()) {
-        return
-      }
-      
-      const categoryId = this.getCategoryId()
-      if (!categoryId) {
-        uni.showToast({
-          title: '请选择商品分类',
-          icon: 'none'
-        })
-        return
-      }
-      
-      uni.showLoading({
-        title: '保存中...'
-      })
-      
+      if (!this.validateForm()) return
+
+      uni.showLoading({ title: '保存中...' })
       try {
-        // 处理图片数据，只保留URL
         const imageUrls = this.formData.images.map(img => img.url)
-        
-        // 构建符合后端API期望的数据结构
         const goodsBean = {
           name: this.formData.name,
           code: this.formData.code,
           description: this.formData.description,
-          categoryId: categoryId,
-          costPrice: parseFloat(this.formData.costPrice),
-          salePrice: parseFloat(this.formData.salePrice),
+          costPrice: this.formData.costPrice ? parseFloat(this.formData.costPrice) : undefined,
+          salePrice: this.formData.salePrice ? parseFloat(this.formData.salePrice) : undefined,
           marketPrice: this.formData.marketPrice ? parseFloat(this.formData.marketPrice) : 0,
-          stock: parseInt(this.formData.stock),
+          stock: this.formData.stock ? parseInt(this.formData.stock) : undefined,
           stockWarning: this.formData.stockWarning ? parseInt(this.formData.stockWarning) : 0,
           brand: this.formData.brand,
           specification: this.formData.specification,
           unit: this.formData.unit,
-          weight: this.formData.weight ? parseFloat(this.formData.weight) : 0
+          weight: this.formData.weight ? parseFloat(this.formData.weight) : 0,
+          category_id: this.category_id,
         }
-        
-        const productData = {
-          goodsBean: goodsBean,
-          listGoodsSpec: [], // 商品规格列表，暂时为空
-          listGoodsImg: imageUrls // 商品图片列表
-        }
-        
+        const productData = { goodsBean, listGoodsSpec: [], listGoodsImg: imageUrls }
         const response = await apiService.addProduct(productData)
-        
         uni.hideLoading()
-        
-        if (response && response.code === 200) {
-          uni.showToast({
-            title: '保存成功',
-            icon: 'success'
-          })
-          
-          // 返回上一页并刷新
-          setTimeout(() => {
-            uni.navigateBack()
-          }, 1500)
-        } else {
-          uni.showToast({
-            title: response?.message || '保存失败',
-            icon: 'none'
-          })
+        if (response && response.code === 1) {
+            uni.showToast({ title: '商品添加成功', icon: 'success' })
+            setTimeout(() => {
+              // uni.redirectTo({
+              //   url: '/pages/product-list/product-list.vue?cate1=' + encodeURIComponent(this.cate1) + '&cate2=' + encodeURIComponent(this.cate2) + '&cate3=' + encodeURIComponent(this.cate3) + '&category_id=' + encodeURIComponent(this.category_id) + '&refresh=' + Date.now()
+              // })
+              uni.navigateBack({
+                delta: 1
+              })  
+            }, 1200)
+          } else {
+          uni.showToast({ title: response?.message || '保存失败', icon: 'none' })
         }
       } catch (error) {
         uni.hideLoading()
-        uni.showToast({
-          title: '保存失败',
-          icon: 'none'
-        })
+        uni.showToast({ title: '保存失败', icon: 'none' })
       }
     },
-    
+
     // 返回上一页
-    goBack() {
-      uni.navigateBack()
-    }
+    // 打开采购地选择器
+    openPurchasePlacePicker() {
+      uni.showActionSheet({
+        itemList: this.purchasePlaceOptions,
+        success: ({ tapIndex }) => {
+          this.extraForm.purchasePlace = this.purchasePlaceOptions[tapIndex]
+        }
+      })
+    },
+
+    goBack() { uni.navigateBack() }
   }
 }
 </script>
 
 <style scoped>
-.add-product-container {
-  height: 100vh;
-  background: #f5f5f5;
-  display: flex;
-  flex-direction: column;
+.add-product-page {
+  min-height: 100vh;
+  background: var(--background-color);
+  padding-top: calc(120rpx + var(--status-bar-height));
+}
+.page-scroll {
+  height: calc(100vh - (120rpx + var(--status-bar-height)));
 }
 
-.form-scroll {
-  flex: 1;
-  padding: 20rpx;
-}
-
-.form-content {
-  background: #fff;
-  border-radius: 20rpx;
-  padding: 30rpx;
-}
-
-.form-section {
-  margin-bottom: 40rpx;
-}
-
-.section-title {
-  margin-bottom: 30rpx;
-  border-bottom: 1rpx solid #eee;
-  padding-bottom: 20rpx;
-}
-
-.title-text {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #333;
-}
-
-.form-item {
-  margin-bottom: 30rpx;
-}
-
-.label {
-  display: block;
-  font-size: 28rpx;
-  color: #333;
-  margin-bottom: 15rpx;
-  font-weight: 500;
-}
-
-.input-field {
-  width: 100%;
-  height: 80rpx;
-  border: 1rpx solid #ddd;
-  border-radius: 10rpx;
-  padding: 0 20rpx;
-  font-size: 28rpx;
-  background: #fff;
-}
-
-.textarea-field {
-  width: 100%;
-  height: 120rpx;
-  border: 1rpx solid #ddd;
-  border-radius: 10rpx;
-  padding: 20rpx;
-  font-size: 28rpx;
-  background: #fff;
-}
-
-.picker-field {
-  width: 100%;
-  height: 80rpx;
-  border: 1rpx solid #ddd;
-  border-radius: 10rpx;
-  background: #fff;
-}
-
-.picker-text {
-  height: 80rpx;
-  line-height: 80rpx;
-  padding: 0 20rpx;
-  font-size: 28rpx;
-  color: #333;
-}
-
-.image-upload {
-  margin-top: 20rpx;
-}
-
-.image-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20rpx;
-}
-
-.image-item {
-  position: relative;
-  width: 160rpx;
-  height: 160rpx;
-}
-
-.uploaded-image {
-  width: 100%;
-  height: 100%;
-  border-radius: 10rpx;
-}
-
-.upload-status {
-  position: absolute;
+/* 顶部导航：珊瑚红 */
+.header {
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  background: var(--primary-color);
+  padding: var(--spacing-md) var(--spacing-xl);
+  padding-top: calc(var(--spacing-md) + var(--status-bar-height));
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  border-radius: 10rpx;
+  color: #FFFFFF;
+  box-shadow: var(--shadow-medium);
+}
+.header-left, .header-right { width: 60rpx; height: 60rpx; display:flex; align-items:center; justify-content:center; border-radius: var(--radius-circle); background: rgba(255,255,255,0.2); }
+.header-icon { font-size: var(--font-size-lg); color: #FFFFFF; }
+.header-center { flex: 1; text-align: center; }
+.header-title { font-size: var(--font-size-lg); font-weight: 600; color: #FFFFFF; }
+
+.section-divider {
+  background: #f7f7f7;
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+  padding: 20rpx var(--spacing-xl);
 }
 
-.status-text {
-  color: #fff;
-  font-size: 24rpx;
-  background: rgba(0, 0, 0, 0.7);
-  padding: 10rpx 20rpx;
-  border-radius: 20rpx;
-}
-
-.delete-btn {
-  position: absolute;
-  top: -10rpx;
-  right: -10rpx;
-  width: 40rpx;
-  height: 40rpx;
-  background: #ff4444;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.delete-icon {
-  color: #fff;
-  font-size: 24rpx;
-  font-weight: bold;
-}
-
-.upload-btn {
-  width: 160rpx;
-  height: 160rpx;
-  border: 2rpx dashed #ddd;
-  border-radius: 10rpx;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #fafafa;
-}
-
-.upload-icon {
-  font-size: 40rpx;
-  color: #999;
-  margin-bottom: 10rpx;
-}
-
-.upload-text {
-  font-size: 24rpx;
-  color: #999;
-}
-
-.upload-tip {
-  font-size: 24rpx;
-  color: #999;
-  margin-top: 20rpx;
-}
-
-.bottom-actions {
-  padding: 30rpx;
+.list-card {
   background: #fff;
-  border-top: 1rpx solid #eee;
+  box-shadow: var(--shadow-light);
+  margin-bottom: var(--spacing-md);
+}
+
+.list-item-row {
   display: flex;
-  gap: 20rpx;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28rpx var(--spacing-xl);
+  border-bottom: 1rpx solid var(--divider-color);
 }
+.list-item-row:last-child { border-bottom: none; }
 
-.btn {
+.row-label {
+  font-size: 30rpx;
+  color: #fff; /* placeholder, will be corrected below */
+}
+.row-label { color: var(--text-primary); min-width: 220rpx; }
+
+.row-input {
   flex: 1;
-  height: 80rpx;
-  border-radius: 10rpx;
-  font-size: 28rpx;
+  height: 72rpx;
   border: none;
+  text-align: right;
+  font-size: 28rpx;
+  color: var(--text-primary);
 }
 
-.btn-cancel {
-  background: #f5f5f5;
-  color: #666;
-}
+.selectable .row-value { display: flex; align-items: center; }
+.value-text { color: var(--text-secondary); font-size: 28rpx; }
+.arrow { margin-left: 12rpx; color: var(--text-tertiary); font-size: 32rpx; }
 
-.btn-save {
-  background: #007aff;
-  color: #fff;
+.specs-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 24rpx var(--spacing-xl);
+  margin-top: var(--spacing-md);
+  border-top: 1rpx solid var(--divider-color);
+  border-bottom: 1rpx solid var(--divider-color);
 }
-</style> 
+.specs-label { font-size: 30rpx; color: var(--text-primary); }
+.add-spec-btn { display: flex; align-items: center; }
+.plus { font-size: 36rpx; color: var(--text-secondary); margin-right: 8rpx; }
+.btn-text { color: var(--text-secondary); font-size: 28rpx; }
+
+.image-upload-card { background: #fff; padding: 24rpx var(--spacing-xl); }
+.image-list { display: flex; flex-wrap: wrap; gap: 20rpx; }
+.image-item { position: relative; width: 160rpx; height: 160rpx; }
+.uploaded-image { width: 100%; height: 100%; border-radius: 10rpx; }
+.upload-btn { width: 160rpx; height: 160rpx; border: 2rpx dashed #ddd; border-radius: 10rpx; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fafafa; }
+.upload-icon { font-size: 40rpx; color: #999; margin-bottom: 10rpx; }
+.upload-text { font-size: 24rpx; color: #999; }
+.upload-tip { font-size: 24rpx; color: #999; margin-top: 20rpx; display: block; }
+
+.upload-status { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; border-radius: 10rpx; }
+.status-text { color: #fff; font-size: 24rpx; background: rgba(0,0,0,0.7); padding: 10rpx 20rpx; border-radius: 20rpx; }
+.delete-btn { position: absolute; top: -10rpx; right: -10rpx; width: 40rpx; height: 40rpx; background: #ff4444; border-radius: 50%; display:flex; align-items:center; justify-content:center; }
+.delete-icon { color: #fff; font-size: 24rpx; font-weight: bold; }
+</style>
