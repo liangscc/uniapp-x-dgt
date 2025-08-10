@@ -18,21 +18,23 @@
 
     <!-- 仓库统计 -->
     <view class="stats-section">
-      <view class="stat-item">
-        <text class="stat-number">{{ warehouseStats.totalProducts }}</text>
-        <text class="stat-label">总商品数</text>
+      <view class="stats-number">
+        <text class="main-stat-number">{{ warehouseStats.totalProducts }}</text>
       </view>
-      <view class="stat-item">
-        <text class="stat-number">{{ warehouseStats.totalValue }}</text>
-        <text class="stat-label">库存总值(万)</text>
+      <view class="status-labels">
+        <text class="status-label gray">空白</text>
+        <text class="status-label green">无预警</text>
+        <text class="status-label green">无过期</text>
       </view>
-      <view class="stat-item">
-        <text class="stat-number">{{ warehouseStats.lowStock }}</text>
-        <text class="stat-label">库存不足</text>
+    </view>
+
+    <!-- 仓库管理按钮 -->
+    <view class="action-buttons">
+      <view class="action-button" @click="viewWarehouseDetails">
+        <text class="button-text">仓库商品详情</text>
       </view>
-      <view class="stat-item">
-        <text class="stat-number">{{ warehouseStats.expiring }}</text>
-        <text class="stat-label">即将过期</text>
+      <view class="action-button" @click="viewWarehouseFlow">
+        <text class="button-text">仓库流水</text>
       </view>
     </view>
 
@@ -232,7 +234,7 @@ export default {
 		return {
 			slideMenuVisible: false,
 			warehouseStats: {
-				totalProducts: 1256,
+				totalProducts: 111,
 				totalValue: 89.5,
 				lowStock: 23,
 				expiring: 8
@@ -452,6 +454,22 @@ export default {
 			uni.navigateTo({
 				url: '/pages/statistics/statistics'
 			})
+		},
+		
+		// 查看仓库商品详情
+		viewWarehouseDetails() {
+			uni.showToast({
+				title: '仓库商品详情功能开发中',
+				icon: 'none'
+			});
+		},
+		
+		// 查看仓库流水
+		viewWarehouseFlow() {
+			uni.showToast({
+				title: '仓库流水功能开发中',
+				icon: 'none'
+			});
 		}
 	}
 }
@@ -474,7 +492,7 @@ export default {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #007aff;
+  background: #F44336;
   padding: 20rpx 40rpx;
   padding-top: calc(20rpx + var(--status-bar-height));
   display: flex;
@@ -516,24 +534,61 @@ export default {
   padding: 40rpx;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.stat-item {
-  text-align: center;
+.stats-number {
   flex: 1;
 }
 
-.stat-number {
-  display: block;
-  font-size: 36rpx;
+.main-stat-number {
+  font-size: 72rpx;
   font-weight: bold;
-  color: #007aff;
-  margin-bottom: 10rpx;
+  color: #333;
 }
 
-.stat-label {
+.status-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.status-label {
+  padding: 6rpx 12rpx;
+  border-radius: 4rpx;
   font-size: 24rpx;
-  color: #666;
+  color: #fff;
+  text-align: center;
+  min-width: 60rpx;
+}
+
+.status-label.gray {
+  background: #888888;
+}
+
+.status-label.green {
+  background: #4CAF50;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+  margin: 0 40rpx 20rpx;
+}
+
+.action-button {
+  flex: 1;
+  background: #F44336;
+  border-radius: 4rpx;
+  padding: 20rpx;
+  text-align: center;
+  border: 2rpx solid #F44336;
+}
+
+.button-text {
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: regular;
 }
 
 .warehouse-section,
@@ -562,7 +617,7 @@ export default {
 
 .section-action {
   font-size: 28rpx;
-  color: #007aff;
+  color: #F44336;
 }
 
 .warehouse-list,
@@ -693,7 +748,7 @@ export default {
 }
 
 .action-btn.view {
-  background: #007aff;
+  background: #F44336;
   color: #fff;
 }
 
@@ -749,7 +804,7 @@ export default {
 
 .summary-value {
   font-size: 32rpx;
-  color: #007aff;
+  color: #F44336;
   font-weight: bold;
 }
 
@@ -759,12 +814,12 @@ export default {
   right: 40rpx;
   width: 100rpx;
   height: 100rpx;
-  background: #007aff;
+  background: #F44336;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 20rpx rgba(0, 122, 255, 0.3);
+  box-shadow: 0 4rpx 20rpx rgba(244, 67, 54, 0.3);
   z-index: 1000;
 }
 

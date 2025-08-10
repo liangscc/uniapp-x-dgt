@@ -1,148 +1,106 @@
 {
   "designSystem": {
-      "overallStyle": {
-          "colorScheme": {
-              "primary": "#F44336", 
-              "background": "#FFFFFF", 
-              "text": "#000000", 
-              "separator": "#E0E0E0" 
-          },
-          "fontStyle": {
-              "family": "Roboto, sans-serif", 
-              "size": {
-                  "title": 20, 
-                  "label": 16, 
-                  "text": 14 
-              },
-              "weight": {
-                  "title": "bold", 
-                  "label": "regular", 
-                  "text": "regular" 
-              }
-          },
-          "spacing": {
-              "vertical": 16, 
-              "horizontal": 16 
-          },
-          "visualHierarchy": {
-              "title": {
-                  "position": "top",
-                  "emphasis": "high"
-              },
-              "sections": {
-                  "divider": true, 
-                  "headingEmphasis": "medium" 
-              },
-              "fields": {
-                  "labelPosition": "top", 
-                  "inputSpacing": 8 
-              }
-          }
+    "styleGuide": {
+      "colorScheme": {
+        "primaryColor": "#FF4D4F",
+        "secondaryColor": "#FFFFFF",
+        "textColor": "#333333",
+        "background": "#F5F5F5"
       },
-      "structuralElements": {
-          "container": {
-              "type": "scrollable", 
-              "padding": 16 
-          },
-          "sections": {
-              "heading": {
-                  "type": "text", 
-                  "style": "sectionHeading" 
-              },
-              "divider": {
-                  "type": "line", 
-                  "color": "#E0E0E0", 
-                  "thickness": 1 
-              }
-          },
-          "formFields": {
-              "label": {
-                  "type": "text", 
-                  "position": "top", 
-                  "marginBottom": 4 
-              },
-              "input": {
-                  "type": "textField", 
-                  "border": {
-                      "color": "#E0E0E0", 
-                      "thickness": 1, 
-                      "radius": 4 
-                  },
-                  "padding": 8 
-              },
-              "dropdown": {
-                  "type": "select", 
-                  "indicator": "chevronRight", 
-                  "border": {
-                      "color": "#E0E0E0", 
-                      "thickness": 1, 
-                      "radius": 4 
-                  },
-                  "padding": 8 
-              }
-          },
-          "buttons": {
-              "primary": {
-                  "type": "iconButton", 
-                  "position": "topRight", 
-                  "icon": "check", 
-                  "color": "#FFFFFF", 
-                  "background": "#F44336", 
-                  "size": 24 
-              },
-              "secondary": {
-                  "type": "textButton", 
-                  "position": "inline", 
-                  "color": "#F44336", 
-                  "background": "transparent", 
-                  "size": 14 
-              }
-          },
-          "addElement": {
-              "type": "button", 
-              "label": "添加规格", 
-              "icon": "plus", 
-              "position": "bottom", 
-              "marginTop": 16 
-          },
-          "imagePlaceholder": {
-              "type": "icon", 
-              "icon": "image", 
-              "color": "#BDBDBD", 
-              "size": 48, 
-              "marginTop": 16 
-          }
+      "fontStyles": {
+        "fontFamily": "Arial, sans-serif",
+        "fontSize": {
+          "header": "18px",
+          "body": "14px",
+          "caption": "12px"
+        },
+        "fontWeight": {
+          "normal": "400",
+          "bold": "700"
+        }
       },
-      "layoutPrinciples": {
-          "arrangement": "vertical", 
-          "grouping": {
-              "relatedFields": {
-                  "type": "section", 
-                  "spacing": 16 
-              }
-          },
-          "alignment": {
-              "labels": "left", 
-              "inputs": "left", 
-              "buttons": "right" 
-          }
+      "spacing": {
+        "margin": {
+          "small": "8px",
+          "medium": "16px",
+          "large": "24px"
+        },
+        "padding": {
+          "small": "8px",
+          "medium": "16px",
+          "large": "24px"
+        }
       },
-      "keyReplicationAttributes": {
-          "consistency": {
-              "colors": "strict", 
-              "fonts": "strict", 
-              "spacing": "strict" 
-          },
-          "scalability": {
-              "sections": "addable", 
-              "fields": "addable", 
-              "variants": "defined" 
-          },
-          "accessibility": {
-              "contrast": "AA", 
-              "labels": "required", 
-              "navigation": "logical" 
-          }
+      "visualHierarchy": {
+        "header": {
+          "fontSize": "18px",
+          "fontWeight": "bold"
+        },
+        "subHeader": {
+          "fontSize": "16px",
+          "fontWeight": "normal"
+        },
+        "body": {
+          "fontSize": "14px",
+          "fontWeight": "normal"
+        }
       }
+    },
+    "structuralElements": {
+      "layout": {
+        "grid": {
+          "columns": 12,
+          "gutter": "16px"
+        },
+        "container": {
+          "maxWidth": "1200px",
+          "padding": "0 16px"
+        }
+      },
+      "components": {
+        "button": {
+          "padding": "8px 16px",
+          "borderRadius": "4px",
+          "hoverEffect": "background-color: #FF4D4F"
+        },
+        "input": {
+          "padding": "8px",
+          "borderRadius": "4px",
+          "border": "1px solid #CCCCCC"
+        },
+        "card": {
+          "padding": "16px",
+          "borderRadius": "8px",
+          "shadow": "0 2px 4px rgba(0, 0, 0, 0.1)"
+        }
+      }
+    },
+    "layoutPrinciples": {
+      "responsive": {
+        "breakpoints": {
+          "small": "600px",
+          "medium": "900px",
+          "large": "1200px"
+        }
+      },
+      "alignment": {
+        "horizontal": "flex-start",
+        "vertical": "flex-start"
+      },
+      "spacing": {
+        "consistent": true,
+        "scalable": true
+      }
+    },
+    "otherAttributes": {
+      "accessibility": {
+        "contrastRatio": "4.5:1",
+        "fontScaling": "responsive"
+      },
+      "performance": {
+        "loading": "lazy",
+        "compression": "enabled"
+      }
+    }
   }
 }

@@ -6,7 +6,7 @@
         <text class="header-icon">👤</text>
       </view>
       <view class="header-center">
-        <text class="header-title">客户管理</text>
+        <text class="header-title">客户列表</text>
       </view>
       <view class="header-right" @click="gotoChart">
         <text class="header-icon">📊</text>
@@ -16,56 +16,27 @@
     <!-- 侧滑菜单 -->
     <SlideMenu :visible="slideMenuVisible" @close="hideSlideMenu" />
 
-    <!-- 客户统计 -->
-    <view class="stats-section">
-      <view class="stat-item">
-        <text class="stat-number">{{ customerStats.total }}</text>
-        <text class="stat-label">总客户</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-number">{{ customerStats.vip }}</text>
-        <text class="stat-label">VIP客户</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-number">{{ customerStats.new }}</text>
-        <text class="stat-label">新增客户</text>
-      </view>
-      <view class="stat-item">
-        <text class="stat-number">{{ customerStats.active }}</text>
-        <text class="stat-label">活跃客户</text>
-      </view>
-    </view>
-
-    <!-- 客户等级筛选 -->
-    <view class="level-section">
-      <scroll-view class="level-scroll" scroll-x="true">
-        <view class="level-list">
-          <text
-            class="level-item"
-            :class="{ active: currentLevel === 'all' }"
-            @click="setLevel('all')"
-            >全部</text
-          >
-          <text
-            class="level-item"
-            :class="{ active: currentLevel === 'vip' }"
-            @click="setLevel('vip')"
-            >VIP</text
-          >
-          <text
-            class="level-item"
-            :class="{ active: currentLevel === 'regular' }"
-            @click="setLevel('regular')"
-            >普通</text
-          >
-          <text
-            class="level-item"
-            :class="{ active: currentLevel === 'new' }"
-            @click="setLevel('new')"
-            >新客户</text
-          >
+    <!-- 筛选条件区域 -->
+    <view class="filter-section">
+      <view class="filter-row">
+        <view class="filter-item" @click="showLocationPicker">
+          <text class="filter-text">{{ selectedLocation }}</text>
+          <text class="filter-arrow">▼</text>
         </view>
-      </scroll-view>
+        <view class="filter-item" @click="showTypePicker">
+          <text class="filter-text">{{ selectedType }}</text>
+          <text class="filter-arrow">▼</text>
+        </view>
+        <view class="filter-reset" @click="resetLocation" v-if="selectedLocation !== '全部地区'">
+          <text class="reset-text">重置</text>
+        </view>
+      </view>
+      
+      <!-- 搜索框 -->
+      <view class="search-box">
+        <text class="search-icon">🔍</text>
+        <input class="search-input" placeholder="客户姓名或电话" v-model="searchKeyword" />
+      </view>
     </view>
 
     <!-- 客户列表 -->
@@ -76,46 +47,11 @@
         :key="index"
         @click="viewCustomerDetail(customer.id)"
       >
-        <view class="customer-avatar">
-          <text class="avatar-text">{{ customer.name.charAt(0) }}</text>
-          <view class="vip-badge" v-if="customer.isVip">VIP</view>
+        <view class="customer-content">
+          <view class="customer-name">{{ customer.name }}</view>
+          <view class="customer-address">地址：{{ customer.address }}</view>
         </view>
-
-        <view class="customer-info">
-          <view class="customer-header">
-            <text class="customer-name">{{ customer.name }}</text>
-            <text class="customer-level" :class="customer.level">{{
-              customer.levelText
-            }}</text>
-          </view>
-
-          <view class="customer-details">
-            <text class="customer-phone">{{ customer.phone }}</text>
-            <text class="customer-orders">{{ customer.orderCount }}个订单</text>
-          </view>
-
-          <view class="customer-stats">
-            <text class="stat-item">
-              <text class="stat-label">消费总额:</text>
-              <text class="stat-value">¥{{ customer.totalAmount }}</text>
-            </text>
-            <text class="stat-item">
-              <text class="stat-label">最后购买:</text>
-              <text class="stat-value">{{ customer.lastOrderTime }}</text>
-            </text>
-          </view>
-        </view>
-
-        <view class="customer-actions">
-          <text class="action-btn edit" @click.stop="editCustomer(customer.id)"
-            >编辑</text
-          >
-          <text
-            class="action-btn delete"
-            @click.stop="deleteCustomer(customer.id)"
-            >删除</text
-          >
-        </view>
+        <view class="customer-phone">{{ customer.phone }}</view>
       </view>
     </view>
 
@@ -133,113 +69,120 @@
 
     <!-- 自定义 TabBar -->
     <CustomTabBar />
+    
+    <!-- 城市选择器 -->
+    <CityPicker 
+      :visible="cityPickerVisible"
+      :defaultValue="selectedLocationData"
+      @confirm="onLocationConfirm"
+      @close="onLocationClose"
+    />
   </view>
 </template>
 
 <script>
 import SlideMenu from '../../components/SlideMenu.vue'
 import CustomTabBar from '../../components/CustomTabBar.vue'
+import CityPicker from '../../components/CityPicker.vue'
 
 export default {
   components: {
     SlideMenu,
-    CustomTabBar
+    CustomTabBar,
+    CityPicker
   },
   data() {
     return {
       slideMenuVisible: false,
-      currentLevel: 'all',
-      customerStats: {
-        total: 234,
-        vip: 45,
-        new: 23,
-        active: 156,
+      searchKeyword: '',
+      selectedLocation: '全部地区',
+      selectedType: '客户类型',
+      cityPickerVisible: false,
+      selectedLocationData: {
+        province: {},
+        city: {},
+        district: {}
       },
       customerList: [
         {
           id: 1,
-          name: '张三',
-          phone: '138****8888',
-          level: 'vip',
-          levelText: 'VIP客户',
-          isVip: true,
-          orderCount: 15,
-          totalAmount: '25,680.00',
-          lastOrderTime: '2024-12-01',
+          name: 'Z',
+          phone: '17711111111',
+          address: '北京市北京市东城区11111',
         },
         {
           id: 2,
-          name: '李四',
-          phone: '139****9999',
-          level: 'regular',
-          levelText: '普通客户',
-          isVip: false,
-          orderCount: 8,
-          totalAmount: '12,450.00',
-          lastOrderTime: '2024-11-28',
+          name: '赵',
+          phone: '17711111112',
+          address: '北京市北京市朝阳区22222',
         },
         {
           id: 3,
-          name: '王五',
-          phone: '137****7777',
-          level: 'vip',
-          levelText: 'VIP客户',
-          isVip: true,
-          orderCount: 22,
-          totalAmount: '38,920.00',
-          lastOrderTime: '2024-11-30',
+          name: '王明',
+          phone: '17711111113',
+          address: '上海市上海市浦东新区33333',
         },
         {
           id: 4,
-          name: '赵六',
-          phone: '136****6666',
-          level: 'new',
-          levelText: '新客户',
-          isVip: false,
-          orderCount: 2,
-          totalAmount: '3,200.00',
-          lastOrderTime: '2024-11-25',
+          name: '李华',
+          phone: '17711111114',
+          address: '广东省广州市天河区44444',
         },
         {
           id: 5,
-          name: '钱七',
-          phone: '135****5555',
-          level: 'regular',
-          levelText: '普通客户',
-          isVip: false,
-          orderCount: 5,
-          totalAmount: '8,750.00',
-          lastOrderTime: '2024-11-20',
+          name: '张三',
+          phone: '17711111115',
+          address: '江苏省南京市鼓楼区55555',
         },
         {
           id: 6,
-          name: '孙八',
-          phone: '134****4444',
-          level: 'vip',
-          levelText: 'VIP客户',
-          isVip: true,
-          orderCount: 18,
-          totalAmount: '31,600.00',
-          lastOrderTime: '2024-11-29',
+          name: '刘强',
+          phone: '17711111116',
+          address: '浙江省杭州市西湖区66666',
         },
       ],
     }
   },
   computed: {
     filteredCustomers() {
-      if (this.currentLevel === 'all') {
-        return this.customerList
+      let filtered = this.customerList
+      
+      // 根据搜索关键词过滤
+      if (this.searchKeyword) {
+        filtered = filtered.filter(customer => 
+          customer.name.includes(this.searchKeyword) || 
+          customer.phone.includes(this.searchKeyword)
+        )
       }
-      return this.customerList.filter(
-        (customer) => customer.level === this.currentLevel
-      )
+      
+      // 根据地理位置过滤
+      if (this.selectedLocation !== '全部地区' && this.selectedLocationData.province.name) {
+        filtered = filtered.filter(customer => {
+          const address = customer.address || ''
+          
+          // 检查省份
+          if (this.selectedLocationData.province.name && !address.includes(this.selectedLocationData.province.name)) {
+            return false
+          }
+          
+          // 检查城市（如果选择了城市）
+          if (this.selectedLocationData.city.name && !address.includes(this.selectedLocationData.city.name)) {
+            return false
+          }
+          
+          // 检查区县（如果选择了区县）
+          if (this.selectedLocationData.district.name && !address.includes(this.selectedLocationData.district.name)) {
+            return false
+          }
+          
+          return true
+        })
+      }
+      
+      return filtered
     },
   },
   methods: {
-    setLevel(level) {
-      this.currentLevel = level
-    },
-
     viewCustomerDetail(customerId) {
       uni.navigateTo({
         url: `/pages/customer/detail?id=${customerId}`,
@@ -247,38 +190,44 @@ export default {
     },
 
     addCustomer() {
-      uni.showToast({
-        title: '新增客户功能开发中',
-        icon: 'none',
+      uni.navigateTo({
+        url: '/pages/customer/add'
       })
     },
 
-    editCustomer(customerId) {
-      uni.showToast({
-        title: '编辑客户功能开发中',
-        icon: 'none',
-      })
+    showLocationPicker() {
+      this.cityPickerVisible = true
     },
 
-    deleteCustomer(customerId) {
-      uni.showModal({
-        title: '确认删除',
-        content: '确定要删除这个客户吗？',
+    onLocationConfirm(result) {
+      this.selectedLocationData = result
+      this.selectedLocation = result.fullAddress
+      this.cityPickerVisible = false
+      
+      // 这里可以根据选择的地区过滤客户列表
+      // 暂时先更新显示文本
+    },
+
+    onLocationClose() {
+      this.cityPickerVisible = false
+    },
+
+    resetLocation() {
+      this.selectedLocation = '全部地区'
+      this.selectedLocationData = {
+        province: {},
+        city: {},
+        district: {}
+      }
+    },
+
+    showTypePicker() {
+      uni.showActionSheet({
+        itemList: ['全部类型', 'VIP客户', '普通客户', '新客户'],
         success: (res) => {
-          if (res.confirm) {
-            // 从列表中移除客户
-            const index = this.customerList.findIndex(
-              (customer) => customer.id === customerId
-            )
-            if (index > -1) {
-              this.customerList.splice(index, 1)
-              uni.showToast({
-                title: '删除成功',
-                icon: 'success',
-              })
-            }
-          }
-        },
+          const types = ['全部类型', 'VIP客户', '普通客户', '新客户']
+          this.selectedType = types[res.tapIndex]
+        }
       })
     },
     
@@ -305,12 +254,8 @@ export default {
 <style scoped>
 .customer-container {
   min-height: 100vh;
-  background: #f5f5f5;
-  padding-bottom: 120rpx;
-  /* 为自定义 tabbar 留出空间 */
+  background: #F5F5F5;
   padding-bottom: calc(120rpx + 100rpx);
-  /* 为固定 header 留出空间 */
-  padding-top: calc(120rpx + var(--status-bar-height));
 }
 
 .header {
@@ -319,7 +264,7 @@ export default {
   left: 0;
   right: 0;
   z-index: 1000;
-  background: #007aff;
+  background: #FF4D4F;
   padding: 20rpx 40rpx;
   padding-top: calc(20rpx + var(--status-bar-height));
   display: flex;
@@ -354,208 +299,112 @@ export default {
   font-weight: bold;
 }
 
-.stats-section {
-  background: #fff;
-  margin: 20rpx 40rpx;
-  border-radius: 20rpx;
-  padding: 40rpx;
-  display: flex;
-  justify-content: space-between;
+.filter-section {
+  background: #FF4D4F;
+  padding: 20rpx 40rpx;
+  padding-top: calc(120rpx + var(--status-bar-height));
 }
 
-.stat-item {
-  text-align: center;
+.filter-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.filter-item {
   flex: 1;
-}
-
-.stat-number {
-  display: block;
-  font-size: 36rpx;
-  font-weight: bold;
-  color: #007aff;
-  margin-bottom: 10rpx;
-}
-
-.stat-label {
-  font-size: 24rpx;
-  color: #666;
-}
-
-.level-section {
-  background: #fff;
-  margin: 0 40rpx 20rpx;
-  border-radius: 20rpx;
-  padding: 30rpx 0;
-}
-
-.level-scroll {
-  white-space: nowrap;
-}
-
-.level-list {
   display: flex;
-  padding: 0 40rpx;
-}
-
-.level-item {
-  display: inline-block;
-  padding: 15rpx 30rpx;
+  align-items: center;
+  justify-content: center;
+  padding: 15rpx 20rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8rpx;
   margin-right: 20rpx;
-  background: #f8f9fa;
-  border-radius: 25rpx;
-  font-size: 26rpx;
-  color: #666;
-  transition: all 0.3s;
 }
 
-.level-item.active {
-  background: #007aff;
+.filter-item:last-child {
+  margin-right: 0;
+}
+
+.filter-text {
   color: #fff;
+  font-size: 28rpx;
+  margin-right: 10rpx;
+}
+
+.filter-arrow {
+  color: #fff;
+  font-size: 24rpx;
+}
+
+.filter-reset {
+  padding: 15rpx 20rpx;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 8rpx;
+  margin-left: 20rpx;
+}
+
+.reset-text {
+  color: #fff;
+  font-size: 26rpx;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  border-radius: 8rpx;
+  padding: 15rpx 20rpx;
+}
+
+.search-icon {
+  font-size: 32rpx;
+  color: #999;
+  margin-right: 15rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
 }
 
 .customer-list {
-  padding: 0 40rpx;
+  padding: 20rpx 40rpx;
+  background: #F5F5F5;
 }
 
 .customer-item {
   background: #fff;
-  border-radius: 20rpx;
+  border-radius: 8rpx;
   padding: 30rpx;
   margin-bottom: 20rpx;
   display: flex;
   align-items: center;
-  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+  justify-content: space-between;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.1);
 }
 
-.customer-avatar {
-  position: relative;
-  margin-right: 30rpx;
-}
-
-.avatar-text {
-  width: 80rpx;
-  height: 80rpx;
-  background: #007aff;
-  color: #fff;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32rpx;
-  font-weight: bold;
-}
-
-.vip-badge {
-  position: absolute;
-  top: -5rpx;
-  right: -5rpx;
-  background: #ffd700;
-  color: #333;
-  padding: 4rpx 8rpx;
-  border-radius: 10rpx;
-  font-size: 18rpx;
-  font-weight: bold;
-}
-
-.customer-info {
+.customer-content {
   flex: 1;
 }
 
-.customer-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15rpx;
-}
-
 .customer-name {
-  font-size: 28rpx;
+  font-size: 32rpx;
   color: #333;
   font-weight: bold;
-  margin-right: 15rpx;
+  margin-bottom: 10rpx;
 }
 
-.customer-level {
-  padding: 4rpx 12rpx;
-  border-radius: 10rpx;
-  font-size: 20rpx;
-}
-
-.customer-level.vip {
-  background: #ffd700;
-  color: #333;
-}
-
-.customer-level.regular {
-  background: #8e8e93;
-  color: #fff;
-}
-
-.customer-level.new {
-  background: #34c759;
-  color: #fff;
-}
-
-.customer-details {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15rpx;
+.customer-address {
+  font-size: 24rpx;
+  color: #666;
 }
 
 .customer-phone {
-  font-size: 24rpx;
-  color: #666;
-  margin-right: 20rpx;
-}
-
-.customer-orders {
-  font-size: 24rpx;
-  color: #007aff;
-}
-
-.customer-stats {
-  display: flex;
-  flex-direction: column;
-  gap: 8rpx;
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-}
-
-.stat-label {
-  font-size: 22rpx;
-  color: #666;
-  margin-right: 10rpx;
-}
-
-.stat-value {
-  font-size: 22rpx;
+  font-size: 28rpx;
   color: #333;
   font-weight: bold;
-}
-
-.customer-actions {
-  display: flex;
-  flex-direction: column;
-  gap: 10rpx;
-}
-
-.action-btn {
-  padding: 8rpx 16rpx;
-  border-radius: 15rpx;
-  font-size: 22rpx;
-  text-align: center;
-}
-
-.action-btn.edit {
-  background: #ff9500;
-  color: #fff;
-}
-
-.action-btn.delete {
-  background: #ff3b30;
-  color: #fff;
 }
 
 .empty-state {
@@ -587,12 +436,12 @@ export default {
   right: 40rpx;
   width: 100rpx;
   height: 100rpx;
-  background: #007aff;
+  background: #FF4D4F;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 20rpx rgba(0, 122, 255, 0.3);
+  box-shadow: 0 4rpx 20rpx rgba(255, 77, 79, 0.3);
   z-index: 1000;
 }
 

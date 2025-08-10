@@ -278,11 +278,10 @@ export default {
       })
     },
 
-    async addOrder() {
-      uni.showToast({
-        title: '新增订单功能开发中',
-        icon: 'none',
-      })
+    async addOrder() {      
+      uni.navigateTo({
+          url: '/pages/order/add'
+        })
     },
 
     async editOrder(orderId) {

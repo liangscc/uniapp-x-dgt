@@ -1,0 +1,117 @@
+
+.product-category-container[data-v-eae17a56] {
+  height: 100vh;
+  background-color: #F5F5F5;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 头部导航 */
+.header[data-v-eae17a56] {
+  height: 48px;
+  background-color: #F44336;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+.header-left[data-v-eae17a56],
+.header-right[data-v-eae17a56] {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-center[data-v-eae17a56] {
+  flex: 1;
+  text-align: center;
+}
+.header-title[data-v-eae17a56] {
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: bold;
+}
+.header-icon[data-v-eae17a56] {
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: bold;
+}
+.category-wrap[data-v-eae17a56] {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.left-side[data-v-eae17a56] {
+  width: 6.25rem;
+  background: #fff;
+  border-right: 0.03125rem solid #eee;
+}
+.category-list[data-v-eae17a56] {
+  padding: 0;
+}
+.category-item[data-v-eae17a56] {
+  padding: 0.9375rem 0.625rem;
+  text-align: center;
+  border-bottom: 0.03125rem solid #f0f0f0;
+  transition: all 0.3s;
+}
+.category-item.active[data-v-eae17a56] {
+  background: #f4f4f4;
+  color: #F44336;
+  border-left: 0.125rem solid #F44336;
+}
+.category-name[data-v-eae17a56] {
+  font-size: 0.875rem;
+  color: #333;
+}
+.category-item.active .category-name[data-v-eae17a56] {
+  color: #F44336;
+  font-weight: bold;
+}
+.right-side[data-v-eae17a56] {
+  flex: 1;
+  background: #fff;
+  padding: 0.625rem;
+}
+.subcategory-section[data-v-eae17a56] {
+  margin-bottom: 1.25rem;
+}
+.category-name[data-v-eae17a56] {
+  margin: 0.625rem 0 0.625rem;
+}
+.name-text[data-v-eae17a56] {
+  font-size: 0.9375rem;
+  font-weight: bold;
+  color: #333;
+  border-left: 0.125rem solid #F44336;
+  padding-left: 0.625rem;
+}
+.subcategory-grid[data-v-eae17a56] {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.0625rem;
+  background: #f0f0f0;
+  border-radius: 0.3125rem;
+  overflow: hidden;
+}
+.subcategory-item[data-v-eae17a56] {
+  background: #fff;
+  padding: 0.9375rem 0.625rem;
+  text-align: center;
+  border: 0.03125rem solid #f0f0f0;
+  transition: all 0.3s;
+}
+.subcategory-item[data-v-eae17a56]:active {
+  background: #f8f9fa;
+}
+.subcategory-name[data-v-eae17a56] {
+  font-size: 0.8125rem;
+  color: #666;
+}

@@ -40,7 +40,7 @@
       <view v-if="goodsList.length === 0 && !loading" class="empty">
         <text>暂无商品</text>
       </view>
-      <view class="goods-card" v-for="item in goodsList" :key="item.id" @click="gotoDetail(item)">
+      <view class="goods-card" v-for="item in goodsList" :key="item.id" @click="handleCardClick(item)">
         <image class="cover" :src="getCover(item)" mode="aspectFill"></image>
         <view class="meta">
           <text class="name">{{ item.show_name || item.name || '-' }}</text>
@@ -49,6 +49,10 @@
             <text class="tag" v-if="item.unit">{{ item.unit }}</text>
             <text class="tag" v-if="item.color">{{ item.color }}</text>
           </view>
+        </view>
+        <!-- 选择模式下显示添加按钮 -->
+        <view v-if="mode === 'select'" class="add-btn" @click.stop="selectProduct(item)">
+          <text class="add-btn-text">添加</text>
         </view>
       </view>
       <view class="loading-more" v-if="loadingMore">
@@ -59,8 +63,8 @@
       </view>
     </scroll-view>
 
-    <!-- 悬浮添加按钮 -->
-    <view class="fab-button" @click="addProduct">
+    <!-- 悬浮添加按钮 (非选择模式时显示) -->
+    <view v-if="mode !== 'select'" class="fab-button" @click="addProduct">
       <text class="fab-icon">+</text>
     </view>
   </view>
@@ -85,6 +89,8 @@ export default {
       hasMore: true,
       loading: false,
       loadingMore: false,
+      mode: '', // 页面模式：select表示选择模式
+      fromPage: '', // 来源页面
     }
   },
   onLoad(options) {
@@ -93,10 +99,16 @@ export default {
     this.cate2 = options.cate2 || ''
     this.cate3 = options.cate3 || ''
     this.category_id = options.category_id || ''
+    this.mode = options.mode || ''
+    this.fromPage = options.from || ''
     this.pageTitle = this.cate3 || this.cate2 || '商品列表'
+    
+    // 如果是选择模式，修改页面标题
+    if (this.mode === 'select') {
+      this.pageTitle = '选择商品'
+    }
   },
   onShow() {
-    debugger
     this.resetAndLoad()
   },
   onPullDownRefresh() {
@@ -200,6 +212,16 @@ export default {
         CommonUtils.hideLoading()
       }
     },
+    handleCardClick(item) {
+      if (this.mode === 'select') {
+        // 选择模式下点击卡片也是选择商品
+        this.selectProduct(item)
+      } else {
+        // 正常模式下点击查看详情
+        this.gotoDetail(item)
+      }
+    },
+
     gotoDetail(item) {
       const id = item.id || item.goods_id || item.uuid || ''
       if (!id) {
@@ -208,6 +230,43 @@ export default {
       }
       uni.navigateTo({
         url: `/pages/product/detail?id=${id}`
+      })
+    },
+
+    selectProduct(item) {
+      // 选择商品并返回到订单页面
+      uni.showModal({
+        title: '添加商品',
+        content: `确定要添加"${item.show_name || item.name}"到订单中吗？`,
+        success: (res) => {
+          if (res.confirm) {
+            // 构造商品数据
+            const productData = {
+              id: item.id || item.uuid || '',
+              name: item.show_name || item.name || '',
+              spec: item.specification || item.model || '',
+              price: item.price || '0.00',
+              quantity: 1,
+              brand: item.brand || '',
+              unit: item.unit || '',
+              color: item.color || '',
+              barCode: item.bar_code || '',
+              image: this.getCover(item)
+            }
+
+            // 将商品数据存储到全局
+            uni.setStorageSync('selected_product', productData)
+
+            // 返回到订单页面
+            if (this.fromPage === 'order') {
+              uni.navigateBack({
+                delta: 2 // 返回两层，跳过product-category页面
+              })
+            } else {
+              uni.navigateBack()
+            }
+          }
+        }
       })
     },
     
@@ -330,6 +389,7 @@ export default {
   border-radius: 16rpx;
   padding: 20rpx;
   margin-bottom: 20rpx;
+  position: relative;
 }
 .cover {
   width: 160rpx;
@@ -395,6 +455,33 @@ export default {
 .fab-icon {
   color: #FFFFFF;
   font-size: var(--font-size-xl);
+  font-weight: bold;
+}
+
+/* 添加按钮样式 */
+.add-btn {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  background: #F44336;
+  color: #FFFFFF;
+  border-radius: 8rpx;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+  min-width: 60rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(244, 67, 54, 0.3);
+  transition: all 0.2s ease;
+}
+
+.add-btn:active {
+  transform: scale(0.95);
+  background: #E53935;
+}
+
+.add-btn-text {
+  color: #FFFFFF;
+  font-size: 24rpx;
   font-weight: bold;
 }
 </style>

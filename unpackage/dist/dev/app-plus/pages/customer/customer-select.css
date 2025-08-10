@@ -1,0 +1,219 @@
+
+/* 整体容器 */
+.customer-select-container[data-v-9e46147c] {
+  height: 100vh;
+  background-color: #F5F5F5;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 头部导航 */
+.header[data-v-9e46147c] {
+  height: 48px;
+  background-color: #F44336;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+.header-left[data-v-9e46147c],
+.header-right[data-v-9e46147c] {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-center[data-v-9e46147c] {
+  flex: 1;
+  text-align: center;
+}
+.header-title[data-v-9e46147c] {
+  color: #FFFFFF;
+  font-size: 18px;
+  font-weight: bold;
+}
+.header-icon[data-v-9e46147c] {
+  color: #FFFFFF;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* 搜索栏 */
+.search-section[data-v-9e46147c] {
+  margin-top: 48px;
+  padding: 16px;
+  background-color: #FFFFFF;
+}
+.search-box[data-v-9e46147c] {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #F5F5F5;
+  border-radius: 8px;
+  padding: 0 12px;
+  height: 40px;
+}
+.search-icon[data-v-9e46147c] {
+  color: #999999;
+  font-size: 16px;
+  margin-right: 8px;
+}
+.search-input[data-v-9e46147c] {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  color: #333333;
+}
+.search-clear[data-v-9e46147c] {
+  color: #999999;
+  font-size: 18px;
+  padding: 0 4px;
+}
+
+/* 客户列表 */
+.customer-list[data-v-9e46147c] {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #FFFFFF;
+  margin: 8px 16px;
+  border-radius: 8px;
+}
+.customer-item[data-v-9e46147c] {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #F0F0F0;
+}
+.customer-item[data-v-9e46147c]:last-child {
+  border-bottom: none;
+}
+.customer-avatar[data-v-9e46147c] {
+  position: relative;
+  margin-right: 16px;
+}
+.avatar-text[data-v-9e46147c] {
+  width: 48px;
+  height: 48px;
+  background-color: #F44336;
+  color: #FFFFFF;
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+}
+.vip-badge[data-v-9e46147c] {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #FFD700;
+  color: #333333;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.customer-info[data-v-9e46147c] {
+  flex: 1;
+}
+.customer-header[data-v-9e46147c] {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.customer-name[data-v-9e46147c] {
+  color: #333333;
+  font-size: 16px;
+  font-weight: bold;
+}
+.customer-level[data-v-9e46147c] {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.customer-level.vip[data-v-9e46147c] {
+  background-color: #FFE0E0;
+  color: #F44336;
+}
+.customer-level.regular[data-v-9e46147c] {
+  background-color: #E0F0FF;
+  color: #2196F3;
+}
+.customer-level.new[data-v-9e46147c] {
+  background-color: #E0FFE0;
+  color: #4CAF50;
+}
+.customer-details[data-v-9e46147c] {
+  margin-bottom: 4px;
+}
+.customer-phone[data-v-9e46147c] {
+  color: #666666;
+  font-size: 14px;
+  display: block;
+}
+.customer-location[data-v-9e46147c] {
+  color: #999999;
+  font-size: 12px;
+  display: block;
+  margin-top: 2px;
+}
+.customer-stats[data-v-9e46147c] {
+  display: flex;
+  gap: 16px;
+}
+.stat-item[data-v-9e46147c] {
+  color: #999999;
+  font-size: 12px;
+}
+.select-indicator[data-v-9e46147c] {
+  margin-left: 8px;
+}
+.arrow-icon[data-v-9e46147c] {
+  color: #CCCCCC;
+  font-size: 16px;
+}
+
+/* 空状态 */
+.empty-state[data-v-9e46147c] {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+.empty-icon[data-v-9e46147c] {
+  font-size: 64px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+.empty-text[data-v-9e46147c] {
+  color: #666666;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.empty-tip[data-v-9e46147c] {
+  color: #999999;
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.add-customer-btn[data-v-9e46147c] {
+  background-color: #F44336;
+  padding: 12px 24px;
+  border-radius: 24px;
+}
+.add-customer-text[data-v-9e46147c] {
+  color: #FFFFFF;
+  font-size: 16px;
+  font-weight: bold;
+}

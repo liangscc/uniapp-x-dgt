@@ -74,6 +74,13 @@
 			}
 		},
 		{
+			"path": "pages/order/add",
+			"style": {
+				"navigationBarTitleText": "新订单",
+				"navigationStyle": "custom"
+			}
+		},
+		{
 			"path": "pages/product/detail",
 			"style": {
 				"navigationBarTitleText": "商品详情"
@@ -83,6 +90,13 @@
 			"path": "pages/product/add",
 			"style": {
 				"navigationBarTitleText": "添加商品"
+			}
+		},
+		{
+			"path": "pages/product/product-category",
+			"style": {
+				"navigationBarTitleText": "选择商品",
+				"navigationStyle": "custom"
 			}
 		},
 		{
@@ -102,6 +116,20 @@
 			"path": "pages/product-list/product-list",
 			"style": {
 				"navigationBarTitleText": "商品列表",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/customer/customer-select",
+			"style": {
+				"navigationBarTitleText": "选择客户",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/customer/add",
+			"style": {
+				"navigationBarTitleText": "添加客户",
 				"navigationStyle": "custom"
 			}
 		}

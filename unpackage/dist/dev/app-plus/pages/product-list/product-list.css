@@ -100,6 +100,7 @@
   border-radius: 0.5rem;
   padding: 0.625rem;
   margin-bottom: 0.625rem;
+  position: relative;
 }
 .cover[data-v-4317cb7a] {
   width: 5rem;
@@ -161,5 +162,30 @@
 .fab-icon[data-v-4317cb7a] {
   color: #FFFFFF;
   font-size: var(--font-size-xl);
+  font-weight: bold;
+}
+
+/* 添加按钮样式 */
+.add-btn[data-v-4317cb7a] {
+  position: absolute;
+  top: 0.625rem;
+  right: 0.625rem;
+  background: #F44336;
+  color: #FFFFFF;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  min-width: 1.875rem;
+  text-align: center;
+  box-shadow: 0 0.0625rem 0.25rem rgba(244, 67, 54, 0.3);
+  transition: all 0.2s ease;
+}
+.add-btn[data-v-4317cb7a]:active {
+  transform: scale(0.95);
+  background: #E53935;
+}
+.add-btn-text[data-v-4317cb7a] {
+  color: #FFFFFF;
+  font-size: 0.75rem;
   font-weight: bold;
 }
